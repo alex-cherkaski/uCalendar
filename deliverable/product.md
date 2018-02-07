@@ -15,6 +15,9 @@ Our application will be a desktop application instead of our alternatives such a
 *listing alternatives*
 
 How to integrate a server into the application - github/purchase a server/localhost server
+
 Managing uploads and downloads - server/local file system
+
 How to import acorn schedules - google calendar
+
 We debated implementing the solution as either a mobile app, a desktop app, or a web app and at the end, we settled for a desktop solution that would connect to a server. 
