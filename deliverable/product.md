@@ -12,7 +12,7 @@ Users would choose our product because it allows them to organize in a centraliz
 ### Highlights
 Our application will be a desktop application instead of our alternatives such as a mobile application or a web application. The application allows us to manage our schedule and view notes that the student has taken or received from others. The team agreed that a desktop experience would be most beneficial as editing and viewing experiences are more restricting on a mobile device. Our next decision on managing uploads and downloads is dependant on how we simulate a server that can host our files for students to access. A server is more accessible on a desktop platform which led us to consider options such as a localhost server just for presentation purposes or purchase an actual server. As a team, we decided that we should simulate a server through other means and landed on the alternative of github or google drive. Java has a google drive api that we can implement file retrieval and submissions for our application. Another function of our application is to allow a student to view their schedules along with their notes specific to lecture slot. Similar to google calendar where one can import schedules, our team decides to import schedules directly from our student account on Acorn.
 
-*listing alternatives*
+# *listing alternatives*
 How to integrate a server into the application - github/purchase a server/localhost server
 Managing uploads and downloads - server/local file system
 How to import acorn schedules - google calendar
