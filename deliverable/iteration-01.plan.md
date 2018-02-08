@@ -45,8 +45,8 @@ App implementation:
 * Mock-up of the interface and respective dialog windows.
 *This artifact is for the purpose of having a visual representation of the interface that can be used to decide what works and what needs to be removed. 
 * Dummy class schedules to showcase the process of generating meeting times.
-*This artifact is for the purpose of 
+*This will allow us to show our interpretation of how it should work and receive feedback about whether our interpretation is in line with what others consider good.
 * Video/gif demonstration of sharing notes between users
-*This artifact is for the purpose of 
+*This artifact serves the same purpose as the above but in a different format.
 * A partially/fully coded algorithm to show how we would generate times where all the set of student who want to meet are available.
 *Allowing students to get together is an important aspect of our application so showing a concrete idea of how we are planning to tackle this problem is very beneficial.
