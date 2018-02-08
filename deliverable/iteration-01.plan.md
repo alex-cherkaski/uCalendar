@@ -9,6 +9,7 @@
  
  #### Goals and tasks 
 The main purpose that we have this iteration is to figure out exactly what our product is and who will use it. The goals that we have to accomplish this seem to go hand in hand as they kind of follow from one another. The goal of what to make the app about stems from what problems the user group faces, the kind of problems this user group faces is dependant on the user group. This then implies the main topics: the user base, what problems these people suffer from, and what solution we are providing. Following these, we then have to figure out what features our app will have and what tools we need to accomplish these. Listed below are the main goals and their tasks organized by importance:
+
 User base:
 -the simple task of finding a user base to create a solution for is actually a key part of finding a solution for the main reason that different user groups can face different problems, therefore requiring a different solution.
 -the tasks required for this are:
