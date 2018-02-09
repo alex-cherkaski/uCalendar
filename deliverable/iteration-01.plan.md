@@ -24,21 +24,21 @@ Problem:
 	-what current apps this user base is using to work around the problem.
 
 Solution:
--after finding out what the potential problem the user base is having, the next most important thing is to find a solution to this problem.
--the tasks required for this are:
-	-understanding the problem the user base has
-	-knowing the features of the apps the users are using right now
-	-is there any features these apps are missing and what can we do to improve them
+-after finding out what the potential problem the user base is having, the next most important thing is to find a solution to this problem.  
+-the tasks required for this are:  
+	-understanding the problem the user base has  
+	-knowing the features of the apps the users are using right now  
+	-is there any features these apps are missing and what can we do to improve them  
 	-can we even repurpose a preexisting app?
 
 App implementation:
--then finally is the goal of how to implement the desired solution. This is an important goal but is ranked less as this goal can’t be completed without the prior being finished.
--the tasks required for this are:
-	-from a possible solution, which possible features are required
-	-from a set of features that we wish to add, how do we actually implement them
-	-figure out the GUI of the app and the backend explaining how it functions
-	-we need to figure out if we are using a pre existing API or creating a new one
-	-whether we will be working local (for one user) or using a server (multiple users)
+-then finally is the goal of how to implement the desired solution. This is an important goal but is ranked less as this goal can’t be completed without the prior being finished.  
+-the tasks required for this are:  
+	-from a possible solution, which possible features are required  
+	-from a set of features that we wish to add, how do we actually implement them  
+	-figure out the GUI of the app and the backend explaining how it functions  
+	-we need to figure out if we are using a pre existing API or creating a new one  
+	-whether we will be working local (for one user) or using a server (multiple users)  
 	-the platform we will be designing our app on, either mobile or desktop
 
 #### Artifacts
