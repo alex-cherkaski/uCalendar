@@ -1,4 +1,4 @@
-# Product Name: TBA
+# PRODUCT NAME: TBA
 
 #### Q1: What are you planning to build?
 We are planning to build a productivity and organization desktop application for University of Toronto students. The problem we are trying to solve is as follows: as University of Toronto students, we need an easy and efficient way to connect with classmates and have access to their help and resources. In our application, students are able to organize notes for specific classes, exchange notes, and plan meeting times, as well as make additional plans on the in app calendar interface.
