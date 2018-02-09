@@ -13,33 +13,33 @@ The main purpose that we have this iteration is to figure out exactly what our p
 User base:  
 -the simple task of finding a user base to create a solution for is actually a key part of finding a solution for the main reason that different user groups can face different problems, therefore requiring a different solution.  
 -the tasks required for this are:  
-	-identifying the user group that we want to focus on  
-	-possibly a user group that we associate with in order to feel more inclined to actually proceed with an app
+	+ -identifying the user group that we want to focus on  
+	+ -possibly a user group that we associate with in order to feel more inclined to actually proceed with an app
 
 Problem:  
 -One of the most important things to consider is what problem are we solving, without this we can run into problems such as implementation without a purpose and the number of users that may actually use the app.  
 -the tasks required for this are:  
-	-identifying a user base  
-	-figuring out what problems these user have, possibly through  interviews or questionnaires
-	-what current apps this user base is using to work around the problem.
+	+ -identifying a user base  
+	+ -figuring out what problems these user have, possibly through  interviews or questionnaires
+	+ -what current apps this user base is using to work around the problem.
 
 Solution:  
 -after finding out what the potential problem the user base is having, the next most important thing is to find a solution to this problem.  
 -the tasks required for this are:  
-	-understanding the problem the user base has  
-	-knowing the features of the apps the users are using right now  
-	-is there any features these apps are missing and what can we do to improve them  
-	-can we even repurpose a preexisting app?
+	+ -understanding the problem the user base has  
+	+ -knowing the features of the apps the users are using right now  
+	+ -is there any features these apps are missing and what can we do to improve them  
+	+ -can we even repurpose a preexisting app?
 
 App implementation:  
 -then finally is the goal of how to implement the desired solution. This is an important goal but is ranked less as this goal can’t be completed without the prior being finished.  
 -the tasks required for this are:  
-	-from a possible solution, which possible features are required  
-	-from a set of features that we wish to add, how do we actually implement them  
-	-figure out the GUI of the app and the backend explaining how it functions  
-	-we need to figure out if we are using a pre existing API or creating a new one  
-	-whether we will be working local (for one user) or using a server (multiple users)  
-	-the platform we will be designing our app on, either mobile or desktop
+	+ -from a possible solution, which possible features are required  
+	+ -from a set of features that we wish to add, how do we actually implement them  
+	+ -figure out the GUI of the app and the backend explaining how it functions  
+	+ -we need to figure out if we are using a pre existing API or creating a new one  
+	+ -whether we will be working local (for one user) or using a server (multiple users)  
+	+ -the platform we will be designing our app on, either mobile or desktop
 
 #### Artifacts
 
