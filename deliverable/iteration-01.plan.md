@@ -1,4 +1,4 @@
-# YOUR PRODUCT/TEAM NAME: TBA
+# YOUR PRODUCT NAME: TBA
 
 ## Iteration 1
 
