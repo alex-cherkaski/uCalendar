@@ -2,8 +2,8 @@
 
 ## Iteration 1 - Review & Retrospect
 
- * When: February 8, 2018
- * Where: Lash Miller 155
+ * When: February 6, 2018
+ * Where: BA 3200
 
 ## Product - Review
 
