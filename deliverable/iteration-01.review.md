@@ -19,5 +19,11 @@ Our last goal was all about app implementation. Although we were able to tackle 
 
 #### Goals and/or tasks that were planned but not met/completed:
 
+As documented earlier, we did not complete the entire goal that had to do with discussing app implementation. A large aspect of the goal that we were not able to tackle was the backend configuration. We did not manage to think about how we are going to link/connect the user interface with the backend features that we want to implement. We also have not thought too much about the algorithms that we need create. We have decided to use the Google Drive api to store and retrieve information (i.e. class notes). It allows for custom structure, so our data can be managed in any way that we want. However we have also not delved too much into the semantics of google drive and how to use it as efficiently as possible. Even though this goal was not completed we will ensure that it will be by the next iteration.
 
-## Meeting Highlights
+## Meeting Highlights:
+
+One of the main aspects that we are going to focus on next iteration is the priority of the tasks that need to be completed. When making a project of this scale and magnitude it is really important for us to allocate the right of amount of resources to a particular task and also in a timely manner. There are many parts of the project that we can tackle but if we manage to prioritize the copletion of certains tasks over others that might save us a lot of time and effort going forward. The point applies heavily to code and design. We should try to identify which classes and/or feature to complete first based on factors like dependency and testability.
+
+Another aspect that we should focus on going into the next iteration is the Google Drive api. One of the main functions of our application is being able to store information in the cloud in a custom structure that will be most useful and efficient for our product. We do not really have to much experience programming with a tool like this, so it is really important for us to get familiar with it as soon as possible. The quicker that we get familiar with the api the faster we can starting designing things and implementing features that rely on this API.
+
