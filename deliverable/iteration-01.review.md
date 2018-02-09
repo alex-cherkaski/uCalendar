@@ -1,4 +1,4 @@
-# YOUR PRODUCT NAME: TBA
+# PRODUCT NAME: TBA
 
 ## Iteration 1 - Review & Retrospect
 
