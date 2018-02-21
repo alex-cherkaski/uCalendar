@@ -6,74 +6,73 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import schedule.Course;
-
 public class Parser {
 	public Parser() {}
 	
-	public ArrayList<Course> constructSchedule(String fileName) {
-		ArrayList<Course> courseList = new ArrayList<Course>();
-		if (fileName == null) {
+	public ArrayList<CalendarBlock> constructSchedule(String filePath) {
+		ArrayList<CalendarBlock> blockList = new ArrayList<CalendarBlock>();
+		String line = null;
+		
+		if (filePath == null) {
 			throw new IllegalArgumentException();
 		}
-		String line = null;
-		String courseName = null;
-		String lecSection = null;
-		String courseStartDate = null;
-		String courseDescription = null;
-		String courseLocation = null;
-		String courseEndDate = null;
-		String courseStartTime = null;
-		String courseEndTime = null;
+		
+		String name = null;
+		String type = null;
+		String section = null;
+		String startDate = null;
+		String startTime = null;
+		String endDate = null;
+		String endTime = null;
+		String description = null;
+		String location = null;
         try {
-            FileReader fileReader = new FileReader(fileName);
+            FileReader fileReader = new FileReader(filePath);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             line = bufferedReader.readLine();
             while (line != null) {
             	if (line.contains("SUMMARY") && line.contains("LEC")) {
-            		courseName = line.split(":")[1].split(" ")[0];
-            		lecSection = line.split(":")[1].split(" ")[1];
+            		name = line.split(":")[1].split(" ")[0];
+            		section = line.split(":")[1].split(" ")[1];
+            		type = section.substring(0, 3);
             	}
             	if (line.contains("DTSTART")) {
-            		courseStartDate = line.split(":")[1].split("T")[0];
-            		courseStartTime = line.split(":")[1].split("T")[1];
+            		startDate = line.split(":")[1].split("T")[0];
+            		startTime = line.split(":")[1].split("T")[1];
+            	}
+            	if (line.contains("DTEND")) {
+            		endDate = line.split(":")[1].split("T")[0];
+            		endTime = line.split(":")[1].split("T")[1];
             	}
             	if (line.contains("DESCRIPTION")) {
-            		courseDescription = line.split("\n")[0].split(":")[1];
+            		description = line.split("\n")[0].split(":")[1];
             	}
             	if (line.contains("Location")) {
-            		courseLocation = line.split(":")[1];
+            		location = line.split(":")[1];
             	}
-            	if (line.contains("RRULE:FREQ=WEEKLY;WKST=MO;UNTIL")) {
-            		courseEndDate = line.split("=")[1].split("T")[0];
-            		courseEndTime = line.split("=")[1].split("T")[1];
+            	if (line.contains("END:VEVENT")) {
             		// If we are here then we have all the necessary information.
-            		Course course = new Course(
-            				courseName, 
-            				lecSection, 
-            				courseStartDate, 
-            				courseDescription, 
-            				courseLocation, 
-            				courseEndDate, 
-            				courseStartTime, 
-            				courseEndTime);
-            		// We found a tutorial.
-            		if (courseList.contains(course)) {
-            			
-            		}
-            		else {
-            			courseList.add(course);
-            		}
+            		 CalendarBlock block = new CalendarBlock(
+            				name, 
+            				type,
+            				section, 
+            				startDate, 
+            				description, 
+            				location, 
+            				endDate, 
+            				startTime, 
+            				endTime);
+            		 blockList.add(block);
             	}
             }
             bufferedReader.close();         
         }
         catch(FileNotFoundException ex) {
-            System.out.println("Unable to open file '" + fileName + "'");                
+            System.out.println("Unable to open file '" + filePath + "'");                
         }
         catch(IOException ex) {
-            System.out.println("Error reading file '" + fileName + "'");                  
+            System.out.println("Error reading file '" + filePath + "'");                  
         }
-		return courseList;
+		return blockList;
 	}
 }
