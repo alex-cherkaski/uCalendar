@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Parser {
 	public Parser() {}
 	
-	public ArrayList<CalendarBlock> constructSchedule(String filePath) {
+	public ArrayList<CalendarBlock> getCalendarBlocks(String filePath) {
 		ArrayList<CalendarBlock> blockList = new ArrayList<CalendarBlock>();
 		String line = null;
 		
@@ -31,7 +31,7 @@ public class Parser {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             line = bufferedReader.readLine();
             while (line != null) {
-            	if (line.contains("SUMMARY") && line.contains("LEC")) {
+            	if (line.contains("SUMMARY")) {
             		name = line.split(":")[1].split(" ")[0];
             		section = line.split(":")[1].split(" ")[1];
             		type = section.substring(0, 3);
@@ -64,6 +64,7 @@ public class Parser {
             				endTime);
             		 blockList.add(block);
             	}
+            	line = bufferedReader.readLine();
             }
             bufferedReader.close();         
         }
