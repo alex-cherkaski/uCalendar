@@ -22,9 +22,8 @@ public class Test {
 			System.out.println("End Date: " + block.getEndDate());
 			System.out.println("End Time: " + block.getEndTime());
 			System.out.println("Location: " + block.getLocation());
-			System.out.println("Name: " + block.getName());
+			System.out.println("Code: " + block.getCode());
 			System.out.println("Number: " + block.getNumber());
-			System.out.println("Description: " + block.getDescription());
 			System.out.println("Type: " + block.getType());
 			System.out.println();
 		}

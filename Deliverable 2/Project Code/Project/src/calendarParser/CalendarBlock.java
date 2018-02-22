@@ -1,7 +1,7 @@
 package calendarParser;
 
 public class CalendarBlock {
-	private String name;
+	private String code;
 	private String type;
 	private String number;
 	private String startDate;
@@ -12,7 +12,7 @@ public class CalendarBlock {
 	private String endTime;
 	
 	public CalendarBlock(            				
-			String name, 
+			String code, 
 			String type,
 			String number, 
 			String startDate, 
@@ -22,7 +22,7 @@ public class CalendarBlock {
 			String endDate, 
 			String endTime){
 		
-		this.name = name;
+		this.code = code;
 		this.type = type;
 		this.number = number;
 		this.startDate = startDate;
@@ -36,11 +36,11 @@ public class CalendarBlock {
 	
 	@Override
 	public String toString() {
-		return "CalendarBlock [name=" + name + ", type=" + this.type + "]";
+		return "CalendarBlock [name=" + code + ", type=" + this.type + "]";
 	}
 
-	public String getName() {
-		return name;
+	public String getCode() {
+		return code;
 	}
 
 	public String getType() {
