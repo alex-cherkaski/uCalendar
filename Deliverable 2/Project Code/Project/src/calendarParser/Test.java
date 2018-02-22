@@ -1,6 +1,6 @@
 package calendarParser;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Test {
 	
@@ -12,12 +12,21 @@ public class Test {
 	// e.g. start time, end time, name, description, etc...
 
 	public static void main(String[] args) {
-		// For testing the parser.
-		Parser parser = new Parser();
 		String filePath = "C:\\Users\\user\\Desktop\\coursesCalendar.ics";
-		ArrayList<CalendarBlock> blockList = parser.getCalendarBlocks(filePath);
+		List<CalendarBlock> blockList = Parser.getCalendarBlocks(filePath);
 		for (CalendarBlock block : blockList) {
 			System.out.println(block.toString());
+			System.out.println("Description: " + block.getDescription());
+			System.out.println("Start Date: " + block.getStartDate());
+			System.out.println("Start Time: " + block.getStartTime());
+			System.out.println("End Date: " + block.getEndDate());
+			System.out.println("End Time: " + block.getEndTime());
+			System.out.println("Location: " + block.getLocation());
+			System.out.println("Name: " + block.getName());
+			System.out.println("Number: " + block.getNumber());
+			System.out.println("Description: " + block.getDescription());
+			System.out.println("Type: " + block.getType());
+			System.out.println();
 		}
 	}
 }

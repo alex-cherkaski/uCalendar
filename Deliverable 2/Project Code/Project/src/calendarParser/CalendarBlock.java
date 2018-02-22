@@ -5,10 +5,10 @@ public class CalendarBlock {
 	private String type;
 	private String number;
 	private String startDate;
+	private String startTime;
 	private String description;
 	private String location;
 	private String endDate;
-	private String startTime;
 	private String endTime;
 	
 	public CalendarBlock(            				
@@ -16,16 +16,17 @@ public class CalendarBlock {
 			String type,
 			String number, 
 			String startDate, 
+			String startTime,
 			String description, 
 			String location, 
 			String endDate, 
-			String startTime, 
 			String endTime){
 		
 		this.name = name;
 		this.type = type;
 		this.number = number;
 		this.startDate = startDate;
+		this.startTime = startTime;
 		this.description = description;
 		this.location = location;
 		this.endDate = endDate;
@@ -53,6 +54,10 @@ public class CalendarBlock {
 	public String getStartDate() {
 		return startDate;
 	}
+	
+	public String getStartTime() {
+		return startTime;
+	}
 
 	public String getDescription() {
 		return description;
@@ -64,10 +69,6 @@ public class CalendarBlock {
 
 	public String getEndDate() {
 		return endDate;
-	}
-
-	public String getStartTime() {
-		return startTime;
 	}
 
 	public String getEndTime() {

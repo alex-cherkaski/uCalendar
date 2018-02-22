@@ -5,12 +5,18 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Parser {
-	public Parser() {}
 	
-	public ArrayList<CalendarBlock> getCalendarBlocks(String filePath) {
-		ArrayList<CalendarBlock> blockList = new ArrayList<CalendarBlock>();
+	/*
+	 * Parses an ACORN .ics file to produce a list of course blocks with
+	 * relevant information.
+	 * @param filePath the path to the .ics file.
+	 * @return A list of CalendarBlock objects.
+	 */
+	public static List<CalendarBlock> getCalendarBlocks(String filePath) {
+		List<CalendarBlock> blockList = new ArrayList<CalendarBlock>();
 		String line = null;
 		
 		if (filePath == null) {
@@ -26,6 +32,7 @@ public class Parser {
 		String endTime = null;
 		String description = null;
 		String location = null;
+		
         try {
             FileReader fileReader = new FileReader(filePath);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -37,6 +44,7 @@ public class Parser {
             		type = section.substring(0, 3);
             	}
             	if (line.contains("DTSTART")) {
+            		//System.out.println(line.split(":")[1].split("T")[1]);
             		startDate = line.split(":")[1].split("T")[0];
             		startTime = line.split(":")[1].split("T")[1];
             	}
@@ -47,7 +55,7 @@ public class Parser {
             	if (line.contains("DESCRIPTION")) {
             		description = line.split("\n")[0].split(":")[1];
             	}
-            	if (line.contains("Location")) {
+            	if (line.contains("LOCATION")) {
             		location = line.split(":")[1];
             	}
             	if (line.contains("END:VEVENT")) {
@@ -56,11 +64,11 @@ public class Parser {
             				name, 
             				type,
             				section, 
-            				startDate, 
+            				startDate,
+            				startTime,
             				description, 
             				location, 
-            				endDate, 
-            				startTime, 
+            				endDate,  
             				endTime);
             		 blockList.add(block);
             	}
