@@ -1,4 +1,4 @@
-package calendarParser;
+package parser;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package calendarParser;
+package parser;
 
 public class CalendarBlock {
 	private String code;
