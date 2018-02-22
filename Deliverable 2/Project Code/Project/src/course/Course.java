@@ -18,7 +18,7 @@ public class Course {
 	}
 	
 	/*
-	 * Adds a string that represents course notes to the the course.
+	 * Adds a string that is a string of notes to the the course.
 	 * Notes are separated by date of the class that they were taken on.
 	 * @param date the date is a string that is used as a key to map to a list
 	 *             of notes belonging to the date that they were taken on.
