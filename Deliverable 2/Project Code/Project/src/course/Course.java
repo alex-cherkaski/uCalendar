@@ -6,15 +6,60 @@ import java.util.List;
 import java.util.Map;
 
 import parser.CalendarBlock;
+import tuple.Tuple;
 
 public class Course {
 	private String courseCode;
+	private String startDate;
+	private String endDate;
+	private String courseDescription;
+	private List<Tuple<String>> intervalList;
 	private List<CalendarBlock> blockList;
 	private Map<String, List<String>> notesMap = new HashMap<String, List<String>>();
 	
 	public Course(List<CalendarBlock> blockList) {
+		if (blockList == null) {
+			throw new NullPointerException();
+		}
+		if (blockList.isEmpty()) {
+			throw new IllegalArgumentException();
+		}
 		this.blockList = blockList;
 		this.courseCode = this.blockList.get(0).getCode();
+		this.startDate = this.formatDate(this.blockList.get(this.blockList.size() - 1).getStartDate());
+		this.endDate = this.formatDate(this.blockList.get(this.blockList.size() - 1).getEndDate());
+		this.intervalList = this.constructIntervals(blockList);
+		this.courseDescription = this.blockList.get(0).getDescription();
+	}
+	
+	private String formatDate(String date) {
+		// "20180404" -> "04-04-2018"
+		StringBuilder strBuilder = new StringBuilder();
+		strBuilder.append(date.substring(4, 6));
+		strBuilder.append("-");
+		strBuilder.append(date.substring(2, 4));
+		strBuilder.append("-");
+		strBuilder.append(date.substring(0, 2));
+		return strBuilder.toString();
+	}
+	
+	private String formatTime(String time) {
+		// "160000" -> "16:00"
+		StringBuilder strBuilder = new StringBuilder();
+		strBuilder.append(time.substring(0, 2));
+		strBuilder.append(":");
+		strBuilder.append(time.substring(2, 4));
+		return strBuilder.toString();
+	}
+	
+	private List<Tuple<String>> constructIntervals(List<CalendarBlock> blockList) {
+		List<Tuple<String>> result = new ArrayList<Tuple<String>>();
+		for (CalendarBlock block : blockList) {
+			String startTime = this.formatTime(block.getStartTime());
+			String endTime = this.formatTime(block.getEndTime());
+			result.add(new Tuple<String>(startTime, endTime));
+		}
+		return result;
 	}
 	
 	/*
@@ -59,15 +104,27 @@ public class Course {
 
 	@Override
 	public String toString() {
-		return "Course [courseCode=" + courseCode + "]";
+		return this.courseCode;
 	}
 	
-	public String getCourseCode() {
-		return courseCode;
+	public String getStartDate() {
+		return startDate;
 	}
 
-	public List<CalendarBlock> getBlockList() {
-		return blockList;
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public String getCourseDescription() {
+		return courseDescription;
+	}
+
+	public List<Tuple<String>> getIntervalList() {
+		return intervalList;
+	}
+
+	public String getCourseCode() {
+		return courseCode;
 	}
 
 	public Map<String, List<String>> getNotesMap() {
