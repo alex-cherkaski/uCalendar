@@ -8,9 +8,9 @@ import parser.CalendarBlock;
 public class CourseBuilder {
 	
 	/*
-	 * Constructs a HashMap where every key is a course code and every value is a course object.
+	 * Constructs a list of courses based on the block list constructed by the parser.
 	 * @param blockList a list of CalendarBlock objects constructed by Parser.
-	 * @return a Map that maps course names to course objects.
+	 * @return a list of Course objects.
 	 */
 	public static List<Course> getCourseMap(List<CalendarBlock> blockList) {
 		List<Course> courseList = new ArrayList<Course>();
