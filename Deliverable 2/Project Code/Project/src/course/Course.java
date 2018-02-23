@@ -15,7 +15,7 @@ public class Course {
 	private String courseDescription;
 	private List<Tuple<String>> intervalList;
 	private List<CalendarBlock> blockList;
-	private Map<String, List<String>> notesMap = new HashMap<String, List<String>>();
+	private Map<String, List<Note>> notesMap = new HashMap<String, List<Note>>();
 	
 	public Course(List<CalendarBlock> blockList) {
 		if (blockList == null) {
@@ -32,6 +32,11 @@ public class Course {
 		this.courseDescription = this.blockList.get(0).getDescription();
 	}
 	
+	/*
+	 * Reformats a string in the form of YYYYMMDD to DD-MM-YYYY.
+	 * @param date a string object representing a date in the format YYYYMMDD.
+	 * @return a string object in the format representing date in the format DD-MM-YYYY. 
+	 */
 	private String formatDate(String date) {
 		// "20180404" -> "04-04-2018"
 		StringBuilder strBuilder = new StringBuilder();
@@ -43,6 +48,11 @@ public class Course {
 		return strBuilder.toString();
 	}
 	
+	/*
+	 * Reformats a string in the form of HHMMSS to HH:MM.
+	 * @param time a string object representing time in the format HHMMSS.
+	 * @return a string object in the format representing time in the format HH:MM. 
+	 */
 	private String formatTime(String time) {
 		// "160000" -> "16:00"
 		StringBuilder strBuilder = new StringBuilder();
@@ -52,6 +62,12 @@ public class Course {
 		return strBuilder.toString();
 	}
 	
+	/*
+	 * Constructs a list of Tuple objects where every Tuple contains the start 
+	 * and end times of a particular calendar block belonging to the course.
+	 * @param blockList a list of CalendarBlock objects belonging to this course.
+	 * @return a list of Tuple objects containing start and end times of a particular block.
+	 */
 	private List<Tuple<String>> constructIntervals(List<CalendarBlock> blockList) {
 		List<Tuple<String>> result = new ArrayList<Tuple<String>>();
 		for (CalendarBlock block : blockList) {
@@ -63,41 +79,61 @@ public class Course {
 	}
 	
 	/*
-	 * Adds a string that is a string of notes to the the course.
+	 * Adds a Note object to the current collection of notes.
 	 * Notes are separated by date of the class that they were taken on.
-	 * @param date the date is a string that is used as a key to map to a list
+	 * @param date a String object that is used as a key to map to a list
 	 *             of notes belonging to the date that they were taken on.
-	 * @param notes the notes to be recorded for the specified lecture, tutorial, or practical.
+	 * @param note Note object to be recorded for the specified lecture, tutorial, or practical.
 	 * @return void
 	 */
-	public void addNotes(String date, String notes) {
-		if (date == null || notes == null) {
+	public void addNote(String date, Note note) {
+		if (date == null || note == null) {
 			throw new NullPointerException();
 		}
-		if (!this.notesMap.containsKey(date)) {
-			throw new IllegalArgumentException();
-		}
 		if (this.notesMap.containsKey(date)) {
-			notesMap.get(date).add(notes);
+			notesMap.get(date).add(note);
 		}
 		else {
-			List<String> noteList = new ArrayList<String>();
-			noteList.add(notes);
+			List<Note> noteList = new ArrayList<Note>();
+			noteList.add(note);
 			notesMap.put(date, noteList);
 		}
 	}
 	
 	/*
-	 * Returns the set of notes corresponding to the date.
-	 * @param date the date for which we want to retrieve the notes.
-	 * @return a list of strings where every string is a seperate note.
+	 * Deletes the selected note from the set of notes taken on a specific date, if possible.
+	 * @param date A String object representing the date the note was taken.
+	 * @param note The Note object to be deleted.
+	 * @return void
 	 */
-	public List<String> getNotes(String date) {
-		if (date == null) {
+	public void deleteNote(String date, Note note) {
+		if (date == null || note == null) {
 			throw new NullPointerException();
 		}
 		if (!this.notesMap.containsKey(date)) {
 			throw new IllegalArgumentException();
+		}
+		if (!this.notesMap.get(date).contains(note)) {
+			throw new IllegalArgumentException();
+		}
+		this.notesMap.get(date).remove(note);
+		if (notesMap.get(date).isEmpty()) {
+			this.notesMap.remove(date);
+		}
+	}
+	
+	/*
+	 * Returns the list of Note objects corresponding to the date.
+	 * @param date String object representing the date for which we want 
+	 * 		  to retrieve the notes.
+	 * @return a list of Note objects.
+	 */
+	public List<Note> getNotes(String date) {
+		if (date == null) {
+			throw new NullPointerException();
+		}
+		if (!this.notesMap.containsKey(date)) {
+			return new ArrayList<Note>();
 		}
 		return this.notesMap.get(date);
 	}
@@ -127,7 +163,7 @@ public class Course {
 		return courseCode;
 	}
 
-	public Map<String, List<String>> getNotesMap() {
+	public Map<String, List<Note>> getNotesMap() {
 		return notesMap;
 	}
 }
