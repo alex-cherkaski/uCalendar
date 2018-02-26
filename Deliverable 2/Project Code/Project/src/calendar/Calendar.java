@@ -58,7 +58,7 @@ public class Calendar {
 		this.eventList.remove(event);
 	}
 	
-	public void reoveAllCourses() {
+	public void removeAllCourses() {
 		this.courseList.clear();
 	}
 	
@@ -67,6 +67,7 @@ public class Calendar {
 	}
 	
 	public void removeEverything() {
+		this.courseList.clear();
 		this.eventList.clear();
 	}
 	
