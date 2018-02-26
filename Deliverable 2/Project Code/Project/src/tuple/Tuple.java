@@ -1,9 +1,13 @@
 package tuple;
 
+/*
+ * Used to store intervals of the form (start time, end time, day).
+ */
+
 public class Tuple<T> {
-	private T item1 = null;
-	private T item2 = null;
-	private T item3 = null;
+	private T item1;
+	private T item2;
+	private T item3;
 	
 	public Tuple(T item1, T item2, T item3) {
 		if (item1 == null || item2 == null || item3 == null) {
