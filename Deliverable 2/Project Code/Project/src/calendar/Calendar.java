@@ -1,32 +1,80 @@
 package calendar;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
+
+import course.Course;
+import event.Event;
 
 public class Calendar {
+	private List<Course> courseList;
+	private List<Event> eventList;
 	
-	public Calendar () {
+	public Calendar(List<Course> courseList, List<Event> eventList) {
+		if (courseList == null || eventList == null) {
+			throw new NullPointerException();
+		}
+		this.courseList = courseList;
+		this.eventList = eventList;
 	}
 	
-	public String getDate() {
-		Date date = new Date();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-		return dateFormat.format(date);
+	// TODO: Method to identify conflicts inside this Calendar object.
+	// TODO: Method to identify conflicts and free slots with another Calendar object.
+	
+	public void addCourse(Course course) {
+		if (course == null) {
+			throw new NullPointerException();
+		}
+		if (!this.courseList.contains(course)) {
+			this.courseList.add(course);
+		}
 	}
 	
-	public String getYear() {
-		String [] parts = getDate().split("/");
-		return parts[0];
+	public void removeCourse(Course course) {
+		if (course == null) {
+			throw new NullPointerException();
+		}
+		if (!this.courseList.contains(course)) {
+			throw new IllegalArgumentException();
+		}
+		this.courseList.remove(course);
 	}
 	
-	public String getMonth() {
-		String [] parts = getDate().split("/");
-		return parts[1];
+	public void addEvent(Event event) {
+		if (event == null) {
+			throw new NullPointerException();
+		}
+		if (!this.eventList.contains(event)) {
+			this.eventList.add(event);
+		}
 	}
 	
-	public String getDay() {
-		String [] parts = getDate().split("/");
-		return parts[2];
+	public void removeEvent(Event event) {
+		if (event == null) {
+			throw new NullPointerException();
+		}
+		if (!this.eventList.contains(event)) {
+			throw new IllegalArgumentException();
+		}
+		this.eventList.remove(event);
+	}
+	
+	public void reoveAllCourses() {
+		this.courseList.clear();
+	}
+	
+	public void removeAllEvents() {
+		this.eventList.clear();
+	}
+	
+	public void removeEverything() {
+		this.eventList.clear();
+	}
+	
+	public List<Course> getCourseList() {
+		return this.courseList;
+	}
+	
+	public List<Event> getEventList() {
+		return this.eventList;
 	}
 }

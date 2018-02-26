@@ -13,6 +13,7 @@ public class Event {
 	private String startDate;
 	private String endDate;
 	private List<Tuple<String>> intervalList;
+	// How to repeat the event when the Calendar is rendered.
 	private enum Repeat{NEVER, DAILY, WEEKLY, MONTHLY}
 	private Repeat toRepeat;
 	private NotesCollection notesCollection;
