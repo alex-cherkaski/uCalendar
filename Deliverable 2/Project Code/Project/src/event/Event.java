@@ -23,7 +23,7 @@ public class Event {
 		this.notesCollection = new NotesCollection();
 	}
 
-	public static int getEventID() {
+	public int getEventID() {
 		return eventID;
 	}
 
