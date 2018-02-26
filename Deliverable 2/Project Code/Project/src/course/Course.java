@@ -113,7 +113,7 @@ public class Course {
 	
 	/*
 	 * Constructs a list of Tuple objects where every Tuple contains the start 
-	 * and end times of a particular calendar block belonging to the course.
+	 * and end times of a calendar block as well as the day of the week the block is on.
 	 * @param blockList a list of CalendarBlock objects belonging to this course.
 	 * @return a list of Tuple objects containing start and end times of a particular block.
 	 */
