@@ -13,6 +13,7 @@ public class Event {
 	private String startDate;
 	private String endDate;
 	private List<Tuple<String>> intervalList;
+	private List<String> membersList;
 	// How to repeat the event when the Calendar is rendered.
 	private enum Repeat{NEVER, DAILY, WEEKLY, MONTHLY}
 	private Repeat toRepeat;
@@ -82,6 +83,18 @@ public class Event {
 	
 	public void removeInterval(Tuple<String> interval) {
 		this.intervalList.remove(interval);
+	}
+	
+	public void setMembers(List<String> membersList) {
+		this.membersList = membersList;
+	}
+	
+	public void addMember(String member) {
+		this.membersList.add(member);
+	}
+	
+	public void removeMember(String member) {
+		this.membersList.remove(member);
 	}
 	
 	public void addNote(String date, Note note) {
