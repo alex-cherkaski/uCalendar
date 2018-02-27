@@ -5,6 +5,7 @@ public class Note {
 	private static int noteID = 0;
 	private int thisNoteID;
 	private String note;
+	private String date;
 	
 	public Note(String note) {
 		noteID += 1;
@@ -27,5 +28,13 @@ public class Note {
 	@Override
 	public String toString() {
 		return "Note #" + this.thisNoteID;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 }
