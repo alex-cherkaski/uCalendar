@@ -45,9 +45,8 @@ public class FrontendStartup {
 		content.add(cards);
 		
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-        frame.setSize(1000, 1000);
-        frame.setLocationRelativeTo(null);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		frame.pack();
 		frame.setVisible(true);
 	}
 
