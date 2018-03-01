@@ -11,7 +11,6 @@ public class PreviousButton extends JButton {
 		this.setText("<");
 		this.setBackground(null);
 		this.setBorder(null);
-		this.setBounds(0, 0, 60, 70);
 		this.setFont(new Font("Serif", Font.PLAIN, 30));
 		this.setFocusable(false);
 	}

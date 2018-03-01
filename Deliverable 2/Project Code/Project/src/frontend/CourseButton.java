@@ -10,7 +10,7 @@ import course.Course;
 public class CourseButton extends JButton {
 	
 	private Course course;
-	private static Color[] colors = {Color.cyan, Color.green, Color.magenta, Color.red, Color.yellow, Color.orange};
+	private static Color[] colors = {Color.cyan, Color.green, Color.magenta, Color.pink, Color.yellow, Color.lightGray, Color.orange, Color.red};
 	private int cCode;
 	
 	public CourseButton(Course course, int cCode) {
