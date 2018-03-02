@@ -24,4 +24,14 @@ public class EventsCollection {
 			this.eventList.add(event);
 		}
 	}
+	
+	public void removeEvent(Event event) {
+		if (event == null) {
+			throw new NullPointerException();
+		}
+		if (!this.eventList.contains(event)) {
+			throw new IllegalArgumentException();
+		}
+		this.eventList.remove(event);
+	}
 }
