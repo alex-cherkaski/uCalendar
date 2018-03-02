@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import event.Event;
 
+// Add formal documentation??
+
 public class EventsCollection {
 	private List<Event> eventList;
 	
@@ -15,6 +17,10 @@ public class EventsCollection {
 	public EventsCollection(List<Event> eventList) {
 		this.eventList = eventList;
 	}
+	
+	// TODO: Method to sort through eventList
+	// TODO: Method to search for and return an instance of Event 
+	// 		(given to function as string) in eventList
 	
 	public void addEvent(Event event) {
 		if (event == null) {
