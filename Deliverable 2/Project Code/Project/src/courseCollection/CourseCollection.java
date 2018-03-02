@@ -19,6 +19,9 @@ public class CourseCollection {
 		this.courseList = courseList;
 	}
 	
+	//TODO: Write Sort Function
+	//TODO: Search Function for finding Course
+	
 	public void addCourse(Course course) {
 		if (course == null) {
 			throw new NullPointerException();
@@ -40,5 +43,9 @@ public class CourseCollection {
 	
 	public void removeAllCourses() {
 		this.courseList.clear();
+	}
+	
+	public List<Course> getCourseList() {
+		return this.courseList;
 	}
 }
