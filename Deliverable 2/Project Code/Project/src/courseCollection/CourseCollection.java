@@ -27,4 +27,18 @@ public class CourseCollection {
 			this.courseList.add(course);
 		}
 	}
+	
+	public void removeCourse(Course course) {
+		if (course == null) {
+			throw new NullPointerException();
+		}
+		if (!this.courseList.contains(course)) {
+			throw new IllegalArgumentException();
+		}
+		this.courseList.remove(course);
+	}
+	
+	public void removeAllCourses() {
+		this.courseList.clear();
+	}
 }
