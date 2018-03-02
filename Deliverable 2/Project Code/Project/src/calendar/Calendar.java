@@ -23,7 +23,6 @@ public class Calendar {
 	// TODO: Method to identify conflicts and free slots with another Calendar object.
 	
 	// TODO: Method to find free time slots inside this Calendar object.
-	// TODO: Method to find mutually free time slots with another Calendar.
 	
 	public void removeEverything() {
 		this.courses.removeAllCourses();
