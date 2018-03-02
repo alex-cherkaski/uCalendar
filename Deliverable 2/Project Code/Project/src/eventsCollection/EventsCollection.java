@@ -38,4 +38,8 @@ public class EventsCollection {
 	public void removeAllEvents() {
 		this.eventList.clear();
 	}
+	
+	public List<Event> getEventList() {
+		return this.eventList;
+	}
 }
