@@ -29,11 +29,11 @@ public class Calendar {
 		this.events.removeAllEvents();
 	}
 	
-	public CourseCollection getCourseList() {
+	public CourseCollection getCourses() {
 		return this.courses;
 	}
 	
-	public EventsCollection getEventList() {
+	public EventsCollection getEvents() {
 		return this.events;
 	}
 }
