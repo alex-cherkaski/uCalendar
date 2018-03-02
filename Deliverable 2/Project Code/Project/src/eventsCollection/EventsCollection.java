@@ -11,4 +11,17 @@ public class EventsCollection {
 	public EventsCollection() {
 		this.eventList = new ArrayList<Event>();
 	}
+	
+	public EventsCollection(List<Event> eventList) {
+		this.eventList = eventList;
+	}
+	
+	public void addEvent(Event event) {
+		if (event == null) {
+			throw new NullPointerException();
+		}
+		if (!this.eventList.contains(event)) {
+			this.eventList.add(event);
+		}
+	}
 }
