@@ -34,4 +34,8 @@ public class EventsCollection {
 		}
 		this.eventList.remove(event);
 	}
+	
+	public void removeAllEvents() {
+		this.eventList.clear();
+	}
 }
