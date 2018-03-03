@@ -1,5 +1,6 @@
 package calendar;
 
+import java.util.Collections;
 import java.util.List;
 
 import course.Course;
@@ -78,5 +79,73 @@ public class Calendar {
 	
 	public List<Event> getEventList() {
 		return this.eventList;
+	}
+	
+	/*
+	 * Dates are in the form of YYYYMMDD and will return a list of all courses between
+	 * the 2 given dates. 
+	 */
+	public List<Course> getCourseFromAToB(String start, String end) {
+		List<Course> result = Collections.emptyList();
+		int startMonth = Integer.parseInt(start.substring(4, 6));
+		int endMonth = Integer.parseInt(end.substring(4, 6));
+		int startDate = Integer.parseInt(start.substring(6));
+		int endDate = Integer.parseInt(end.substring(6));
+		int courseDate;
+		int courseMonth;
+		for(Course x: this.courseList) {
+			courseDate = Integer.parseInt(x.getStartDate().substring(6));
+			courseMonth = Integer.parseInt(x.getStartDate().substring(4, 6));
+			if(startMonth == endMonth) {
+				if((courseMonth == startMonth) && (courseDate > startDate - 1) &&  (courseDate < endDate + 1)) {
+					result.add(x);
+				}
+			} else {
+				if(courseMonth == startMonth) {
+					if(courseDate > startDate - 1) {
+						result.add(x);
+					}
+				} else if(courseMonth == endMonth) {
+					if(courseDate < endDate + 1) {
+						result.add(x);
+					}
+				}	
+			}
+		}
+		return result;
+	}
+	
+	/*
+	 * Dates are in the form of YYYYMMDD and will return a list of all events between
+	 * the 2 given dates. 
+	 */
+	public List<Event> getEventFromAToB(String start, String end) {
+		List<Event> result = Collections.emptyList();
+		int startMonth = Integer.parseInt(start.substring(4, 6));
+		int endMonth = Integer.parseInt(end.substring(4, 6));
+		int startDate = Integer.parseInt(start.substring(6));
+		int endDate = Integer.parseInt(end.substring(6));
+		int courseDate;
+		int courseMonth;
+		for(Event x: this.eventList) {
+			courseDate = Integer.parseInt(x.getStartDate().substring(6));
+			courseMonth = Integer.parseInt(x.getStartDate().substring(4, 6));
+			if(startMonth == endMonth) {
+				if((courseMonth == startMonth) && (courseDate > startDate - 1) &&  (courseDate < endDate + 1)) {
+					result.add(x);
+				}
+			} else {
+				if(courseMonth == startMonth) {
+					if(courseDate > startDate - 1) {
+						result.add(x);
+					}
+				} else if(courseMonth == endMonth) {
+					if(courseDate < endDate + 1) {
+						result.add(x);
+					}
+				}	
+			}
+		}
+		return result;
 	}
 }
