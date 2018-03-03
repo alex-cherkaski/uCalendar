@@ -47,10 +47,12 @@ public class Parser {
             		startDate = line.split(":")[1].split("T")[0];
             		startTime = line.split(":")[1].split("T")[1];
             	}
+            	if (line.contains("DTEND")) {
+            		endTime = line.split(":")[1].split("T")[1];
+            	}
             	if (line.contains("RRULE:FREQ=WEEKLY;WKST=MO;UNTIL=")) {
             		String dateAndTime = line.replaceAll("[^0-9]", "");
             		endDate = dateAndTime.substring(0, 8);
-            		endTime = dateAndTime.substring(8, dateAndTime.length());
             	}
             	if (line.contains("DESCRIPTION")) {
             		description = line.split("\n")[0].split(":")[1];
