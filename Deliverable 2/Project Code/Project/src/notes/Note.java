@@ -1,7 +1,5 @@
-package course;
+package notes;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Note {
@@ -10,22 +8,41 @@ public class Note {
 	private int thisNoteID;
 	private String note;
 	// Date used to fingerprint when the note was created. 
-	private DateFormat dateFormat;
 	private Date date;
+	private String noteDate;
 	
 	public Note(String note) {
 		noteID += 1;
 		this.thisNoteID = noteID;
 		this.note = note;
-		this.dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		this.date = new Date();
+		this.noteDate = this.extractDate();
 	}
 	
-	public Note() {
-		noteID += 1;
-		this.thisNoteID = noteID;
-		this.dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		this.date = new Date();
+	// dow mon dd hh:mm:ss zzz yyyy -> dd-mm-yyyy.
+	public String extractDate() {
+		String[] splitString = date.toString().split("\\s+");
+		String day = splitString[2];
+		if (day.length() == 1) {
+			day = new String("0" + day);
+		}
+		String month = null;
+		switch (splitString[1]) {
+		case "Jan": month = "01"; break;
+		case "Feb": month = "02"; break;
+		case "Mar": month = "03"; break;
+		case "Apr": month = "04"; break;
+		case "May": month = "05"; break;
+		case "Jun": month = "06"; break;
+		case "Jul": month = "07"; break;
+		case "Aug": month = "08"; break;
+		case "Sep": month = "09"; break;
+		case "Oct": month = "10"; break;
+		case "Nov": month = "11"; break;
+		case "Dec": month = "12"; break;
+		}
+		String year = splitString[5];
+		return day + "-" + month + "-" + year;
 	}
 
 	public String getNote() {
@@ -40,17 +57,12 @@ public class Note {
 		return noteID;
 	}
 
-	public DateFormat getDateFormat() {
-		return dateFormat;
-	}
-
-	public Date getDate() {
-		return date;
+	public String getNoteDate() {
+		return this.noteDate;
 	}
 	
 	@Override
 	public String toString() {
 		return "Note #" + this.thisNoteID;
 	}
-	
 }

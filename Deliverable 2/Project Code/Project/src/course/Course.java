@@ -2,6 +2,8 @@ package course;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import notes.Note;
 import notes.NotesCollection;
 import parser.CalendarBlock;
 import tuple.Tuple;
