@@ -1,6 +1,6 @@
 package calendar;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import course.Course;
@@ -85,8 +85,8 @@ public class Calendar {
 	 * Dates are in the form of YYYYMMDD and will return a list of all courses between
 	 * the 2 given dates. 
 	 */
-	public List<Course> getCourseFromAToB(String start, String end) {
-		List<Course> result = Collections.emptyList();
+	public ArrayList<Course> getCourseFromAToB(String start, String end) {
+		ArrayList<Course> result = new ArrayList<Course>();
 		int startMonth = Integer.parseInt(start.substring(4, 6));
 		int endMonth = Integer.parseInt(end.substring(4, 6));
 		int startDate = Integer.parseInt(start.substring(6));
@@ -119,8 +119,8 @@ public class Calendar {
 	 * Dates are in the form of YYYYMMDD and will return a list of all events between
 	 * the 2 given dates. 
 	 */
-	public List<Event> getEventFromAToB(String start, String end) {
-		List<Event> result = Collections.emptyList();
+	public ArrayList<Event> getEventFromAToB(String start, String end) {
+		ArrayList<Event> result = new ArrayList<Event>();
 		int startMonth = Integer.parseInt(start.substring(4, 6));
 		int endMonth = Integer.parseInt(end.substring(4, 6));
 		int startDate = Integer.parseInt(start.substring(6));
