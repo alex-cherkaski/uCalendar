@@ -32,6 +32,7 @@ public class Parser {
 		String endTime = null;
 		String description = null;
 		String location = null;
+		String day = null;
 		
         try {
             FileReader fileReader = new FileReader(filePath);
@@ -71,7 +72,8 @@ public class Parser {
             				description, 
             				location, 
             				endDate,  
-            				endTime);
+            				endTime,
+            				day);
             		 blockList.add(block);
             	}
             	line = bufferedReader.readLine();
