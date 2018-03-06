@@ -7,7 +7,8 @@ import java.util.List;
 import course.Course;
 import event.Event;
 
-public class Calendar {
+public class Calendar implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private List<Course> courseList;
 	private List<Event> eventList;
 	
