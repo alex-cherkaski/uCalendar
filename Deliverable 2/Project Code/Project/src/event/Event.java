@@ -18,11 +18,11 @@ public class Event {
 	private List<Tuple<String>> intervalList;
 	private List<String> membersList;
 	// How to repeat the event when the Calendar is rendered.
-	private enum Repeat{NEVER, DAILY, WEEKLY, MONTHLY}
-	private Repeat toRepeat;
+//  {"NEVER", "DAILY", "WEEKLY", "MONTHLY"};
+	private String toRepeat;
 	private NotesCollection notesCollection;
 	
-	public Event(Repeat toRepeat, String startDate, String endDate) {
+	public Event(String toRepeat, String startDate, String endDate) {
 		eventID += 1;
 		this.thisEventID = eventID;
 		this.startDate = startDate;
@@ -35,11 +35,11 @@ public class Event {
 		return this.thisEventID;
 	}
 
-	public Repeat getToRepeat() {
+	public String getToRepeat() {
 		return toRepeat;
 	}
 
-	public void setToRepeat(Repeat toRepeat) {
+	public void setToRepeat(String toRepeat) {
 		this.toRepeat = toRepeat;
 	}
 
