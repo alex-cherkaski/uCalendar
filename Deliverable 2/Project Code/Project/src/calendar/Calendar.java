@@ -1,6 +1,7 @@
 package calendar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import course.Course;
@@ -147,5 +148,17 @@ public class Calendar {
 			}
 		}
 		return result;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("Calendar:" + "\n");
+		stringBuilder.append("Courses: ");
+		stringBuilder.append(Arrays.toString(this.courseList.toArray()));
+		stringBuilder.append("\n");
+		stringBuilder.append("Events: ");
+		stringBuilder.append(Arrays.toString(this.eventList.toArray()));
+		return stringBuilder.toString();
 	}
 }
