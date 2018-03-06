@@ -2,6 +2,8 @@ package course;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import notes.Note;
 import notes.NotesCollection;
 import parser.CalendarBlock;
 import tuple.Tuple;
@@ -48,55 +50,6 @@ public class Course {
 	}
 	
 	/*
-	 * Reformats a string in the form of YYYYMMDD to a specific day of the week.
-	 * Using Zeller's rule to calculate day of the week.
-	 * @param date a string object representing a date in the format YYYYMMDD.
-	 * @return a string that represents the day of the week.
-	 */
-	private String formatDay(String date) {
-		String year = date.substring(0, 4);
-		String month = date.substring(4, 6);
-		String day = date.substring(6);
-		
-		int k = Integer.parseInt(day);
-		int m = Integer.parseInt(month) - 2;
-		if(m < 1) {
-			m = 12 + m;
-		}
-		if(m == 11 || m == 12) {
-			year = Integer.toString(Integer.parseInt(year) - 1);
-		}
-		int d = Integer.parseInt(year.substring(2));
-		int c = Integer.parseInt(year.substring(0, 2));
-		int f = (k + ((13 * m - 1)/5) + d + (d/4) + (c/4) - (2 * c)) % 7;
-		String result = "";
-		switch(f) {
-		case 1:
-			result = "Monday";
-			break;
-		case 2:
-			result = "Tuesday";
-			break;
-		case 3:
-			result = "Wednesday";
-			break;
-		case 4:
-			result = "Thursday";
-			break;
-		case 5:
-			result = "Friday";
-			break;
-		case 6:
-			result = "Saturday";
-			break;
-		case 0:
-			result = "Sunday";
-			break;
-		}
-		return result;
-	}
-	
-	/*
 	 * Reformats a string in the form of HHMMSS to HH:MM.
 	 * @param time a string object representing time in the format HHMMSS.
 	 * @return a string object in the format representing time in the format HH:MM. 
@@ -121,7 +74,7 @@ public class Course {
 		for (CalendarBlock block : blockList) {
 			String startTime = this.formatTime(block.getStartTime());
 			String endTime = this.formatTime(block.getEndTime());
-			String day = this.formatDay(block.getStartDate());
+			String day = block.getDayOfTheWeek();
 			result.add(new Tuple<String>(startTime, endTime, day));
 		}
 		return result;

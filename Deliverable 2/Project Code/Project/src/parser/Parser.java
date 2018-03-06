@@ -32,6 +32,7 @@ public class Parser {
 		String endTime = null;
 		String description = null;
 		String location = null;
+		String day = null;
 		
         try {
             FileReader fileReader = new FileReader(filePath);
@@ -44,13 +45,15 @@ public class Parser {
             		type = section.substring(0, 3);
             	}
             	if (line.contains("DTSTART")) {
-            		//System.out.println(line.split(":")[1].split("T")[1]);
             		startDate = line.split(":")[1].split("T")[0];
             		startTime = line.split(":")[1].split("T")[1];
             	}
             	if (line.contains("DTEND")) {
-            		endDate = line.split(":")[1].split("T")[0];
             		endTime = line.split(":")[1].split("T")[1];
+            	}
+            	if (line.contains("RRULE:FREQ=WEEKLY;WKST=MO;UNTIL=")) {
+            		String dateAndTime = line.replaceAll("[^0-9]", "");
+            		endDate = dateAndTime.substring(0, 8);
             	}
             	if (line.contains("DESCRIPTION")) {
             		description = line.split("\n")[0].split(":")[1];
@@ -69,7 +72,8 @@ public class Parser {
             				description, 
             				location, 
             				endDate,  
-            				endTime);
+            				endTime,
+            				day);
             		 blockList.add(block);
             	}
             	line = bufferedReader.readLine();
