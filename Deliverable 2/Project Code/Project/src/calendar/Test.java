@@ -6,7 +6,6 @@ import java.util.List;
 import course.Course;
 import course.CourseBuilder;
 import event.Event;
-import event.Event.Repeat;
 import parser.CalendarBlock;
 import parser.Parser;
 
@@ -22,7 +21,7 @@ public class Test {
 		List<CalendarBlock> blockList2 = Parser.getCalendarBlocks(filePath2);
 		List<Course> courseList2 = CourseBuilder.getCourseMap(blockList2);
 
-		Event eventGen = new Event(Repeat.NEVER); //needs to relfect new event
+		Event eventGen = new Event("NEVER", "06-03-2018", "06-03-2018"); //needs to relfect new event
 		List<Event> eventList = new ArrayList<Event>();
 		eventList.add(eventGen);
 		
