@@ -139,6 +139,6 @@ public class Event {
 
 	@Override
 	public String toString() {
-		return "Event [thisEventID=" + thisEventID + "]";
+		return "EventID: " + thisEventID;
 	}
 }

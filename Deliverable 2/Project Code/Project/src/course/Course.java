@@ -80,12 +80,6 @@ public class Course {
 		return result;
 	}
 	
-	
-	@Override
-	public String toString() {
-		return this.courseCode;
-	}
-	
 	public String getStartDate() {
 		return startDate;
 	}
@@ -116,5 +110,10 @@ public class Course {
 	
 	public List<Note> getNotes(String date) {
 		return this.notesCollection.getNotes(date);
+	}
+	
+	@Override
+	public String toString() {
+		return "Course code:" + this.courseCode;
 	}
 }
