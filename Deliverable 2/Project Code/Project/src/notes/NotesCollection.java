@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import course.Note;
-
 public class NotesCollection {
 	private Map<String, List<Note>> notesMap = new HashMap<String, List<Note>>();
 	
