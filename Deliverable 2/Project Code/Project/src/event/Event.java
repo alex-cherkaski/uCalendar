@@ -1,5 +1,6 @@
 package event;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import notes.Note;
@@ -29,6 +30,8 @@ public class Event {
 		this.endDate = endDate;
 		this.toRepeat = toRepeat;
 		this.notesCollection = new NotesCollection();
+		intervalList = new ArrayList<Tuple<String>>();
+		membersList = new ArrayList<String>();
 	}
 
 	public int getThisEventID() {

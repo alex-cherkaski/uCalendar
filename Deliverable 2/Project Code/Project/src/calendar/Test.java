@@ -8,6 +8,8 @@ import course.CourseBuilder;
 import event.Event;
 import parser.CalendarBlock;
 import parser.Parser;
+import tuple.Tuple;
+import utilities.CalendarFunctions;
 
 public class Test {
 
@@ -23,16 +25,18 @@ public class Test {
 
 		Event eventGen = new Event("NEVER", "06-03-2018", "06-03-2018"); //needs to relfect new event
 		List<Event> eventList = new ArrayList<Event>();
+		Tuple<String> test = CalendarFunctions.stringToTuple("(11:00, 15:00, Monday)");
+		eventGen.addInterval(test);
 		eventList.add(eventGen);
 		
 		Calendar testObject = new Calendar(courseList, eventList);
 		Calendar testObject2 = new Calendar(courseList2, eventList);
 
-		//List<Course> courses = testObject.getCourseList();
-		//List<Course> courses2 = testObject2.getCourseList();
 
-		List<String> result = testObject.calendarConflict();
-		List<String> result2 = testObject.otherConflict(testObject2);
+		List<Tuple<String>> result = CalendarFunctions.calendarConflict(testObject);
+		List<Tuple<String>> result2 = CalendarFunctions.otherConflict(testObject, testObject2);
+		
+		System.out.println("one calendars");
 		
 		if (result == null) {
 			System.out.println("No Conflicts");
@@ -42,6 +46,8 @@ public class Test {
 			}
 		}
 		
+		System.out.println("two calendars");
+		
 		if (result2 == null) {
 			System.out.println("No Conflicts");
 		} else {
@@ -49,8 +55,5 @@ public class Test {
 				System.out.println(result2.get(i));
 			}
 		}
-		
-		
-
 	}
 }
