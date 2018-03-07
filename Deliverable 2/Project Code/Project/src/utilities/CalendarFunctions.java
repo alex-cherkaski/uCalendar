@@ -12,6 +12,7 @@ import tuple.Tuple;
 
 public class CalendarFunctions {
 	/*
+	 * String splice, similar to Python splicing
 	 * slice_range taken from:
 	 * https://stackoverflow.com/questions/17307761/is-there-a-java-equivalent-to-pythons-easy-string-splicing
 	 */
@@ -31,6 +32,9 @@ public class CalendarFunctions {
 	    return s.substring(startIndex, endIndex);
 	}
 	
+	/*
+	 * Converts a representation of a day of the week (first three letters) to a number
+	 */
 	public static int day(String day) {
 		switch(day){
 	    case "Sun":
@@ -51,8 +55,10 @@ public class CalendarFunctions {
 		return -1;
 	}
 	
-	//may need to be retested with newer versions
-	
+		/*
+		 * Given a Calendar object, will return of list of Tuples (start time, end time, day) that are conflicting
+		 * with each other
+		 */
 		public static List<Tuple<String>> calendarConflict(Calendar obj){
 			List<String> intervals = collectCourse(obj.getCourseList());
 			intervals.addAll(collectEvent(obj.getEventList())); //this will work (in theory(, removed for testing
@@ -67,6 +73,10 @@ public class CalendarFunctions {
 			return resultTuple;
 		}
 
+		/*
+		 * Given two Calendar objects, will return of list of Tuples (start time, end time, day) that are conflicting
+		 * between the two
+		 */
 		public static List<Tuple<String>> otherConflict(Calendar obj1, Calendar obj2){ //can i do this? with same name?
 			List<String> intervals = collectCourse(obj1.getCourseList());
 			intervals.addAll(collectEvent(obj1.getEventList())); //this will work (in theory(, removed for testing
@@ -80,6 +90,9 @@ public class CalendarFunctions {
 			return resultTuple;
 		}
 		
+		/*
+		 * Helper function for conflict functions
+		 */
 		private static List<String> collectCourse(List<Course> list){
 			List<String> result = new ArrayList<String>();
 			for (Course course : list) {
@@ -95,6 +108,9 @@ public class CalendarFunctions {
 			return result;
 		}
 		
+		/*
+		 * Helper function for conflict functions
+		 */
 		private static List<String> collectEvent(List<Event> list){
 			List<String> result = new ArrayList<String>();
 			for (Event event : list) {
@@ -110,6 +126,9 @@ public class CalendarFunctions {
 			return result;
 		}
 		
+		/*
+		 * Helper function for conflict functions
+		 */
 		private static List<String> conflict(List<String> intervals){
 			List<String> conflicts = new ArrayList<String>();
 			Collections.sort(intervals, new Comparator<String>() {			
@@ -147,6 +166,11 @@ public class CalendarFunctions {
 			}
 			return conflicts;
 		}
+		
+		/*
+		 * Given a string in the form of: (13:00, 15:00, Monday), literally anything else
+		 * returns a new Tuple<String>, formatted as expected
+		 */
 		public static Tuple<String> stringToTuple(String event){			
 			String[] tuple = event.split(",");
 			Tuple<String> result = new Tuple<String>(slice_range(tuple[0],1,6),slice_range(tuple[1],1,6),slice_range(tuple[2],1,tuple[2].length()-1));
