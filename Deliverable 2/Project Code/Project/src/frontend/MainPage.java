@@ -3,28 +3,17 @@ package frontend;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
-import course.Course;
-import course.CourseBuilder;
-import parser.CalendarBlock;
-import parser.Parser;
-import tuple.Tuple;
 
 @SuppressWarnings("serial")
 public class MainPage extends JPanel{
 	
-	private List<CalendarBlock> blockList;
-	private List<Course> courseList;
 	private JLabel[] timesLabel = new JLabel[12];
 	private JLabel[] dayLabel = new JLabel[7];
 	private JButton next;
@@ -36,6 +25,8 @@ public class MainPage extends JPanel{
 
 	public MainPage() {
 		this.setLayout(new GridBagLayout());
+		JMenuBar menu = new MainJMenu(this);
+		this.add(menu);
 		
 		GridBagConstraints c1 = new GridBagConstraints();
 		
@@ -44,7 +35,7 @@ public class MainPage extends JPanel{
 		c1.weightx = 0.5;
 		c1.weighty = 0;
 		c1.gridx = 0;
-		c1.gridy = 0;
+		c1.gridy = 1;
 		this.add(this.previous, c1);
 		
 		this.next = new NextButton();
@@ -52,7 +43,7 @@ public class MainPage extends JPanel{
 		c1.weightx = 0.5;
 		c1.weighty = 0;
 		c1.gridx = 7;
-		c1.gridy = 0;
+		c1.gridy = 1;
 		this.add(this.next, c1);
 		
 		this.currentWeek = new JLabel("Place holder for current week", SwingConstants.CENTER);
@@ -61,7 +52,7 @@ public class MainPage extends JPanel{
 		c1.weighty = 0;
 		c1.gridwidth = 5;
 		c1.gridx = 1;
-		c1.gridy = 0;
+		c1.gridy = 1;
 		this.add(this.currentWeek, c1);
 		
 		GridBagConstraints c2 = new GridBagConstraints();
@@ -104,47 +95,6 @@ public class MainPage extends JPanel{
 			this.add(dayLabel[i], c3);
 		}
 		
-		GridBagConstraints c4 = new GridBagConstraints();
-		JButton fileChooser = new JButton("file chooser");
-		c4.fill = GridBagConstraints.BOTH;
-		c4.weightx = 1;
-		c4.weighty = 0;
-		c4.gridwidth = 8;
-		c4.gridx = 0;
-		c4.gridy = 1;
-		fileChooser.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-				fileChooser.showOpenDialog(null);
-				if(fileChooser.getSelectedFile() != null){
-					String filePath = fileChooser.getSelectedFile().getPath();
-					blockList = Parser.getCalendarBlocks(filePath);
-					courseList = CourseBuilder.getCourseMap(blockList);
-					GridBagConstraints c5 = new GridBagConstraints();
-					
-					int i = 0;
-					for (Course course : courseList) {
-						for(Tuple<String> block: course.getIntervalList()) {
-							JButton button = new CourseButton(course, i);
-							c5.fill = GridBagConstraints.BOTH;
-							c5.weightx = 0;
-							c5.weighty = 0;
-							c5.gridheight = timeY.get(block.getItem2()) - timeY.get(block.getItem1());
-							c5.gridx = dayX.get(block.getItem3());
-							c5.gridy = timeY.get(block.getItem1());
-							MainPage.this.add(button, c5);
-						}
-						i++;
-					}
-				}
-				MainPage.this.revalidate();
-				MainPage.this.repaint();
-			}
-		});
-		this.add(fileChooser, c4);
 	}
 	
 	
@@ -157,4 +107,12 @@ public class MainPage extends JPanel{
         
         g.drawLine(this.timesLabel[0].getWidth(), this.timesLabel[0].getY(), this.timesLabel[0].getWidth(), this.getHeight());
     }
+	
+	public HashMap<String, Integer> getTimeY(){
+		return this.timeY;
+	}
+	
+	public HashMap<String, Integer> getDayX(){
+		return this.dayX;
+	}
 }

@@ -1,14 +1,13 @@
 package notes;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import course.Note;
-
 public class NotesCollection {
-	private Map<String, List<Note>> notesMap = new HashMap<String, List<Note>>();
+	private Map<String, List<Note>> notesMap = new LinkedHashMap<String, List<Note>>();
 	
 	public NotesCollection() {}
 	
@@ -71,5 +70,72 @@ public class NotesCollection {
 		}
 		return this.notesMap.get(date);
 	}
-
+	
+	/*
+	 * Returns a list of all notes in the collection in increasing order of date.
+	 * @return a List object containing Note objects.
+	 */
+	public List<Note> getAllNotesIncreasing() {
+		List<Note> result = new ArrayList<Note>(); 
+		for (String key : this.notesMap.keySet()) {
+			for (Note note : this.notesMap.get(key)) {
+				result.add(note);
+			}
+		}
+		return result;
+	}
+	
+	/*
+	 * Returns a list of all notes in the collection in decreasing order of date.
+	 * @return a List object containing Note objects.
+	 */
+	public List<Note> getAllNotesDecreasing() {
+		List<Note> result = this.getAllNotesIncreasing();
+		Collections.reverse(result);
+		return result;
+	}
+	
+	/*
+	 * Returns a list of all notes in the collection between start and end (inclusive)
+	 * dates in increasing order.
+	 * @param startDate a string in the format dd-mm-yyyy representing the start date.
+	 * @param startDate a string in the format dd-mm-yyyy representing the end date.
+	 * @return a List object containing Note objects.
+	 */
+	public List<Note> getNotesBetweenIncreasing(String startDate, String endDate) {
+		List<Note> result = new ArrayList<Note>();
+		boolean startFlag = false;
+		boolean endFlag = false;
+		for (String key : this.notesMap.keySet()) {
+			if (key.equals(startDate)) {
+				startFlag = true;
+			}
+			if (startFlag && !endFlag) {
+				for (Note note : this.notesMap.get(key)) {
+					result.add(note);
+				}
+			}
+			if (key.equals(endDate)) {
+				endFlag = true;
+			}
+			// Have gone through all the dates between startDate and endDate.
+			if (startFlag && endFlag) {
+				break;
+			}
+		}
+		return result;
+	}
+	
+	/*
+	 * Returns a list of all notes in the collection between start and end (inclusive)
+	 * dates in decreasing order.
+	 * @param startDate a string in the format dd-mm-yyyy representing the start date.
+	 * @param startDate a string in the format dd-mm-yyyy representing the end date.
+	 * @return a List object containing Note objects.
+	 */
+	public List<Note> getNotesBetweenDecreasing(String startDate, String endDate) {
+		List<Note> result = this.getNotesBetweenIncreasing(startDate, endDate);
+		Collections.reverse(result);
+		return result;
+	}
 }
