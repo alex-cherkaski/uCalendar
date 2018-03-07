@@ -2,13 +2,10 @@ package calendar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import course.Course;
 import event.Event;
-import tuple.Tuple;
 
 public class Calendar implements java.io.Serializable {
 	
@@ -27,8 +24,8 @@ public class Calendar implements java.io.Serializable {
 	
 	
 	// TODO: Method to identify conflicts inside this Calendar object. DONE
-	// TODO: Method to identify conflicts and free slots with another Calendar object. DONE
-	// TODO: Method to find free time slots inside this Calendar object.
+	// TODO: Method to identify conflicts with another Calendar object. DONE
+	// TODO: Method to identify free slots between calendar objects.
 	
 	public void addCourse(Course course) {
 		if (course == null) {
