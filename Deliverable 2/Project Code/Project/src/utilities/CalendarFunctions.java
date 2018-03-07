@@ -55,6 +55,15 @@ public class CalendarFunctions {
 		return -1;
 	}
 	
+	public static List<Tuple<String>> getFreePeriods(Calendar obj1, Calendar obj2) {
+	  List<Tuple<String>> conflicts = otherConflict(obj1, obj2);
+	  List<Tuple<String>> freePeriods = new ArrayList<>();
+	  
+	  for (Tuple<String> conflict : conflicts) {
+	    
+	  }
+	  return null;
+	}
 		/*
 		 * Given a Calendar object, will return of list of Tuples (start time, end time, day) that are conflicting
 		 * with each other
@@ -175,5 +184,47 @@ public class CalendarFunctions {
 			String[] tuple = event.split(",");
 			Tuple<String> result = new Tuple<String>(slice_range(tuple[0],1,6),slice_range(tuple[1],1,6),slice_range(tuple[2],1,tuple[2].length()-1));
 			return result;
+		}
+		
+		/*
+		 * Returns the given time as a float. E.g. "16:30" -> 16.5.
+		 */
+		public static float timeStringToFloat(String time) {
+		  String[] parts = time.split(":");
+		  float result = Float.parseFloat(parts[0]) + (Float.parseFloat(parts[1]) / 60);
+		  return result;
+		}
+		
+		/*
+		 * Returns the given time as a string. E.g. 16.5 -> "16:30".
+		 */
+		public static String timeFloatToString(float time) {
+		  int hours = (int) time;
+		  int minutes = (int) ((time - hours) * 60);
+		  
+		  return new String(hours + ":" + minutes);
+		}
+		
+		/**
+		 * Splits the given interval, removing the period between start and end.
+		 */
+		public static List<Tuple<String>> splitInterval(Tuple<String> interval, String start, String end) {
+		  float intervalStart = timeStringToFloat(interval.getItem1());
+		  float intervalEnd = timeStringToFloat(interval.getItem2());
+		  
+		  float splitStart = timeStringToFloat(start);
+		  float splitEnd = timeStringToFloat(end);
+		  
+		  List<Tuple<String>> result = new ArrayList<>();
+		  
+		  if (intervalStart != splitStart) {
+		    result.add(new Tuple<String>(interval.getItem1(), start, interval.getItem3()));
+		  }
+		  
+		  if (intervalEnd != splitEnd) {
+		    result.add(new Tuple<String>(end, interval.getItem2(), interval.getItem3()));
+		  }
+		  
+		  return result;
 		}
 }
