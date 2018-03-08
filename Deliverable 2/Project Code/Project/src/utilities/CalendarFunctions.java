@@ -16,16 +16,17 @@ public class CalendarFunctions {
 	 * slice_range taken from:
 	 * https://stackoverflow.com/questions/17307761/is-there-a-java-equivalent-to-pythons-easy-string-splicing
 	 */
+	//can be removed
 	public static String slice_start(String s, int startIndex) {
 	    if (startIndex < 0) startIndex = s.length() + startIndex;
 	    return s.substring(startIndex);
 	}
-
+	//can be removed
 	public static String slice_end(String s, int endIndex) {
 	    if (endIndex < 0) endIndex = s.length() + endIndex;
 	    return s.substring(0, endIndex);
 	}
-
+	//can be removed
 	public static String slice_range(String s, int startIndex, int endIndex) {
 	    if (startIndex < 0) startIndex = s.length() + startIndex;
 	    if (endIndex < 0) endIndex = s.length() + endIndex;
@@ -37,19 +38,19 @@ public class CalendarFunctions {
 	 */
 	public static int day(String day) {
 		switch(day){
-	    case "Sun":
+	    case "Sunday":
 	        return 0;
-	    case "Mon":
+	    case "Monday":
 	        return 1;
-	    case "Tue":
+	    case "Tuesday":
 	        return 2;
-	    case "Wed":
+	    case "Wednesday":
 	        return 3;
-	    case "Thu":
+	    case "Thursday":
 	        return 4;
-	    case "Fri":
+	    case "Friday":
 	        return 5;
-	    case "Sat":
+	    case "Saturday":
 	        return 6;
 	    }
 		return -1;
@@ -60,12 +61,14 @@ public class CalendarFunctions {
 	 */
 	public static List<Tuple<String>> getFreePeriods(Calendar obj) {
 		List<Tuple<String>> freeSlots = new ArrayList<Tuple<String>>();
-		List<String> intervals = collectCourse(obj.getCourseList());
+		List<Tuple<String>> intervals = collectCourse(obj.getCourseList());
 		intervals.addAll(collectEvent(obj.getEventList()));
+		
 		
 		sort(intervals);
 		
-		List<Tuple<String>> schedule = listOfStringToListOfTuple(intervals);
+		//List<Tuple<String>> schedule = listOfStringToListOfTuple(intervals);
+		List<Tuple<String>> schedule = intervals;
 		
 		addFreeSlots(freeSlots, schedule, "Sunday");
 		addFreeSlots(freeSlots, schedule, "Monday");
@@ -137,17 +140,20 @@ public class CalendarFunctions {
 	 * with each other
 	 */
 	public static List<Tuple<String>> calendarConflict(Calendar obj){
-		List<String> intervals = collectCourse(obj.getCourseList());
+		List<Tuple<String>> intervals = collectCourse(obj.getCourseList());
 		intervals.addAll(collectEvent(obj.getEventList())); //this will work (in theory(, removed for testing
-		List<String> result = conflict(intervals); 
+		List<Tuple<String>> result = conflict(intervals); 
 		if (result.size() == 0) {
 			return null;
 		}
+		/*
 		List<Tuple<String>> resultTuple = new ArrayList<Tuple<String>>();
 		for (int i = 0;i<result.size();i++) {
 			resultTuple.add(stringToTuple(result.get(i)));
 		}
 		return resultTuple;
+		*/
+		return result;
 	}
 
 	/*
@@ -155,28 +161,34 @@ public class CalendarFunctions {
 	 * between the two
 	 */
 	public static List<Tuple<String>> otherConflict(Calendar obj1, Calendar obj2){ //can i do this? with same name?
-		List<String> intervals = collectCourse(obj1.getCourseList());
+		List<Tuple<String>> intervals = collectCourse(obj1.getCourseList());
 		intervals.addAll(collectEvent(obj1.getEventList())); //this will work (in theory(, removed for testing
 		intervals.addAll(collectCourse(obj2.getCourseList()));
 		intervals.addAll(collectEvent(obj2.getEventList()));
-		List<String> result = conflict(intervals);
-		List<Tuple<String>> resultTuple = listOfStringToListOfTuple(result);
+		List<Tuple<String>> result = conflict(intervals);
+		/*
+		List<Tuple<String>> resultTuple = new ArrayList<Tuple<String>>();
+		for (int i = 0;i<result.size();i++) {
+			resultTuple.add(stringToTuple(result.get(i)));
+		}
 		return resultTuple;
+		*/
+		return result;
 	}
 
 	/*
 	 * Helper function for conflict functions
 	 */
-	private static List<String> collectCourse(List<Course> list){
-		List<String> result = new ArrayList<String>();
+	private static List<Tuple<String>> collectCourse(List<Course> list){
+		List<Tuple<String>> result = new ArrayList<Tuple<String>>();
 		for (Course course : list) {
-			String courseName = course.getCourseCode();
-			String temp = "";
+			//String courseName = course.getCourseCode();
+			//String temp = "";
 			List<Tuple<String>> interval = course.getIntervalList();
 			for (Tuple<String> intval : interval) {
-				temp += intval + ", " + courseName;
-				result.add(temp);
-				temp = "";
+				//temp += intval + ", " + courseName;
+				result.add(intval);
+				//temp = "";
 			}
 		}
 		return result;
@@ -185,16 +197,16 @@ public class CalendarFunctions {
 	/*
 	 * Helper function for conflict functions
 	 */
-	private static List<String> collectEvent(List<Event> list){
-		List<String> result = new ArrayList<String>();
+	private static List<Tuple<String>> collectEvent(List<Event> list){
+		List<Tuple<String>> result = new ArrayList<Tuple<String>>();
 		for (Event event : list) {
-			String eventName = Integer.toString(event.getThisEventID());
-			String temp = "";
+			//String eventName = Integer.toString(event.getThisEventID());
+			//String temp = "";
 			List<Tuple<String>> interval = event.getIntervalList();
 			for (Tuple<String> intval : interval) {
-				temp += intval + ", " + eventName;
-				result.add(temp);
-				temp = "";
+				//temp += intval + ", " + eventName;
+				result.add(intval);
+				//temp = "";
 			}
 		}
 		return result;
@@ -203,14 +215,14 @@ public class CalendarFunctions {
 	/*
 	 * Helper function for conflict functions
 	 */
-	private static List<String> conflict(List<String> intervals){
-		List<String> conflicts = new ArrayList<String>();
-		sort(intervals);
+	private static List<Tuple<String>> conflict(List<Tuple<String>> intervals){
+		List<Tuple<String>> conflicts = new ArrayList<Tuple<String>>();
+		sort(intervals);		
 		for (int i = 0;i<(intervals.size()-1);i++) {
-			String end = slice_range(intervals.get(i), 8, 13);
-			String start = slice_range(intervals.get(i+1), 1, 6);
-			String endDay = Integer.toString(day(slice_range(intervals.get(i), 15, 18)));
-			String startDay = Integer.toString(day(slice_range(intervals.get(i+1), 15, 18)));
+			String end = intervals.get(i).getItem2();
+			String start = intervals.get(i+1).getItem1();
+			String endDay = Integer.toString(day(intervals.get(i).getItem3()));
+			String startDay = Integer.toString(day(intervals.get(i+1).getItem3()));
 			int ends = start.compareTo(end); //if this item finish after next start
 			int days = endDay.compareTo(startDay);
 			if (ends < 0 && days == 0) {
@@ -219,7 +231,7 @@ public class CalendarFunctions {
 				}
 				if (!conflicts.contains(intervals.get(i+1))) {
 					conflicts.add(intervals.get(i+1));
-				}
+					}
 			}
 		}
 		return conflicts;
@@ -285,6 +297,7 @@ public class CalendarFunctions {
 	/*
 	 * Given a List<String>, will convert it to a List<Tuple<String>>
 	 */
+	//can remove????
 	private static List<Tuple<String>> listOfStringToListOfTuple(List<String> listOfString) {
 		List<Tuple<String>> resultTuple = new ArrayList<Tuple<String>>();
 		for (int i = 0; i < listOfString.size(); i++) {
@@ -297,18 +310,18 @@ public class CalendarFunctions {
 	/*
 	 * Sorts a given a list of strings (representing intervals)
 	 */
-	private static void sort(List<String> intervals) {
-		Collections.sort(intervals, new Comparator<String>() {			
+	private static void sort(List<Tuple<String>> intervals) {
+		Collections.sort(intervals, new Comparator<Tuple<String>>() {			
 			@Override
-			public int compare(String arg0, String arg1) {
+			public int compare(Tuple<String> arg0, Tuple<String> arg1) {
 				// TODO Auto-generated method stub
-				String day0 = Integer.toString(day(slice_range(arg0, 15, 18)));
-				String day1 = Integer.toString(day(slice_range(arg1, 15, 18)));
+				String day0 = Integer.toString(day(arg0.getItem3()));
+				String day1 = Integer.toString(day(arg1.getItem3()));
 				int day = day0.compareTo(day1);
 				if (day == 0) {
-					String start0 = slice_range(arg0, 1, 6);
+					String start0 = arg0.getItem1();
 					//System.out.println("start0 day " + start0);
-					String start1 = slice_range(arg1, 1, 6);
+					String start1 = arg1.getItem1();
 					//System.out.println("start1 day " + start1);
 					return start0.compareTo(start1);	
 				}
