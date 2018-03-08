@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import course.Course;
+import event.Event;
+import tuple.Tuple;
 
 public class FrontendStartup {
 	
@@ -18,10 +20,26 @@ public class FrontendStartup {
 	private static JPanel cards;
 	private static MainPage main;
 	private static CoursePage course;
+	private static EventPage event;
 	
-	public static void switchCoursePage(Course c) {
+	public static void switchCoursePage(Course c, CourseButton courseButton, Tuple<String> block) {
 		layout.show(cards, "course panel");
-		course.setCourse(c);
+		course.setCourse(c, courseButton, block);
+	}
+	
+	public static void deleteCourseAndSwitch(CourseButton button) {
+		main.deleteCourse(button);
+		switchMainPage();
+	}
+	
+	public static void switchEventPage(Event c, EventButton eventButton, Tuple<String> block) {
+		layout.show(cards, "event panel");
+		event.setEvent(c, eventButton, block);
+	}
+	
+	public static void deleteEventAndSwitch(EventButton button) {
+		main.deleteEvent(button);
+		switchMainPage();
 	}
 	
 	public static void switchMainPage() {
@@ -41,6 +59,11 @@ public class FrontendStartup {
 		course.setBackground(Color.white);
 		course.setVisible(false);
 		cards.add(course, "course panel");
+		
+		event = new EventPage();
+		event.setBackground(Color.white);
+		event.setVisible(false);
+		cards.add(event, "event panel");
 		
 		content.add(cards);
 		

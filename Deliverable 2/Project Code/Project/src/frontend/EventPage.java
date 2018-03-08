@@ -10,20 +10,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import course.Course;
+import event.Event;
 import tuple.Tuple;
 
 @SuppressWarnings("serial")
-public class CoursePage extends JPanel {
+public class EventPage extends JPanel{
 
-	private Course course;
-	private JButton deleteCourse;
+	private Event event;
+	private JButton deleteEvent;
 	private JButton previous;
 	private JLabel description;
-	private CourseButton currentButton;
+	private EventButton currentButton;
 	private Tuple<String> block;
 	
-	public CoursePage() {
+	public EventPage() {
 		this.setLayout(new GridBagLayout());
 		
 		GridBagConstraints c1 = new GridBagConstraints();
@@ -33,10 +33,10 @@ public class CoursePage extends JPanel {
 		setGridBag(c1, 0.1, 0, 1, 1, 0, 0);
 		this.add(this.previous, c1);
 		
-		this.deleteCourse = new JButton("Delete");
+		this.deleteEvent = new JButton("Delete");
 		c1.fill = GridBagConstraints.BOTH;
 		setGridBag(c1, 0.1, 0, 1, 1, 2, 0);
-		this.add(this.deleteCourse, c1);
+		this.add(this.deleteEvent, c1);
 		
 		this.description = new JLabel("", SwingConstants.CENTER);
 		c1.fill = GridBagConstraints.BOTH;
@@ -57,12 +57,12 @@ public class CoursePage extends JPanel {
 			
 		});
 		
-		this.deleteCourse.addActionListener(new ActionListener() {
+		this.deleteEvent.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				FrontendStartup.deleteCourseAndSwitch(currentButton);
+				FrontendStartup.deleteEventAndSwitch(currentButton);
 			}
 			
 		});
@@ -77,10 +77,11 @@ public class CoursePage extends JPanel {
 		c.gridy = gridy;
 	}
 	
-	public void setCourse(Course course, CourseButton courseButton, Tuple<String> block) {
-		this.course = course;
-		this.description.setText(this.course.getCourseCode());
-		this.currentButton = courseButton;
+	public void setEvent(Event event, EventButton eventButton, Tuple<String> block) {
+		this.event = event;
+		this.description.setText(this.event.getName());
+		this.currentButton = eventButton;
 		this.block = block;
 	}
+
 }
