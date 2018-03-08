@@ -265,12 +265,17 @@ public class CalendarFunctions {
 		float splitEnd = timeStringToFloat(end);
 
 		List<Tuple<String>> result = new ArrayList<>();
+		
+		if (splitEnd <= intervalStart || splitStart >= intervalEnd) {
+		  result.add(interval);
+		  return result;
+		}
 
-		if (intervalStart != splitStart) {
+		if (intervalStart < splitStart) {
 			result.add(new Tuple<String>(interval.getItem1(), start, interval.getItem3()));
 		}
 
-		if (intervalEnd != splitEnd) {
+		if (intervalEnd > splitEnd) {
 			result.add(new Tuple<String>(end, interval.getItem2(), interval.getItem3()));
 		}
 

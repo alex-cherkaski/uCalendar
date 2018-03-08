@@ -8,7 +8,7 @@ public class Test {
     System.out.println((int) 6.5);
     System.out.println(CalendarFunctions.timeFloatToString((float) 6.5));
     
-    Tuple<String> time = new Tuple<>("00:00", "23:30", "Mon");
-    System.out.println(CalendarFunctions.splitInterval(time, "01:00", "5:30"));
+    Tuple<String> time = new Tuple<>("03:00", "12:30", "Mon");
+    System.out.println(CalendarFunctions.splitInterval(time, "04:00", "12:30"));
   }
 }
