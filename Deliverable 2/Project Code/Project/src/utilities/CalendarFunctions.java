@@ -55,6 +55,9 @@ public class CalendarFunctions {
 		return -1;
 	}
 	
+	/*
+	 * Given a Calendar object, will find all free slots within that calendar in sorted order in a list of tuples.
+	 */
 	public static List<Tuple<String>> getFreePeriods(Calendar obj) {
 		List<Tuple<String>> freeSlots = new ArrayList<Tuple<String>>();
 		List<String> intervals = collectCourse(obj.getCourseList());
@@ -75,6 +78,10 @@ public class CalendarFunctions {
 		return freeSlots;
 	}
 	
+	/*
+	 * Helper function for getFreePeriods(Calendar obj)
+	 * Note: schedule arg is in sorted order (important for the working of this algorithm)
+	 */
 	private static void addFreeSlots(List<Tuple<String>> freeSlots, List<Tuple<String>> schedule, String day) {
 		String startTime = "00:00";
 		String endTime = "00:00";
@@ -82,12 +89,15 @@ public class CalendarFunctions {
 		Tuple<String> prevSlot = null;
 		
 		if (schedule.size() == 0 || !schedule.get(0).getItem3().equals(day)) {
+			// if there are no time slots taken up on day, the whole day is free
 			freeSlot = new Tuple<String>(startTime, "23:59", day);
 			freeSlots.add(freeSlot);
 		} else {
 			while (schedule.size() > 0 && schedule.get(0).getItem3().equals(day)) {
+				// iterate through all the booked time slots on the given day
 				endTime = schedule.get(0).getItem1();
 				if (prevSlot != null && (timeStringToFloat(prevSlot.getItem2()) >= timeStringToFloat(startTime))) {
+					// this condition ensures that there will be no conflicts between free slots reported and booked time slots
 					startTime = prevSlot.getItem2();
 				}
 				prevSlot = schedule.remove(0);
@@ -100,6 +110,8 @@ public class CalendarFunctions {
 		}
 		
 		if (prevSlot != null) {
+			// handles and adds the last free time slot (if it exists), 
+			// i.e. from the end time of the last booked time slot to 11:59 pm
 			endTime = prevSlot.getItem2();
 			if (timeStringToFloat(endTime) < timeStringToFloat("23:59")) {
 				startTime = endTime;
@@ -119,6 +131,7 @@ public class CalendarFunctions {
 	  }
 	  return null;
 	}
+	
 	/*
 	 * Given a Calendar object, will return of list of Tuples (start time, end time, day) that are conflicting
 	 * with each other

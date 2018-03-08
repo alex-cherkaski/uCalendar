@@ -32,7 +32,7 @@ public class Test {
 		Calendar testObject = new Calendar(courseList, eventList);
 		Calendar testObject2 = new Calendar(courseList2, eventList);
 		
-		/* Line below is for testing getFreePeriods on a single calendar */
+		/* The two lines below are for testing getFreePeriods on a single calendar */
 		System.out.println("Free periods in the calendar:");
 		System.out.println(CalendarFunctions.getFreePeriods(testObject));
 		
