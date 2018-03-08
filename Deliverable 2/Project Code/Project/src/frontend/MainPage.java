@@ -1,15 +1,21 @@
 package frontend;
 
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import course.Course;
+import event.Event;
+import tuple.Tuple;
 
 @SuppressWarnings("serial")
 public class MainPage extends JPanel{
@@ -26,33 +32,32 @@ public class MainPage extends JPanel{
 	public MainPage() {
 		this.setLayout(new GridBagLayout());
 		JMenuBar menu = new MainJMenu(this);
-		this.add(menu);
+		JPanel menuPanel = new JPanel();
+		FlowLayout flow = new FlowLayout();
+		flow.setAlignment(FlowLayout.LEFT );
+		menuPanel.setLayout(flow);
+		menuPanel.add(menu);
+		
+		GridBagConstraints c0 = new GridBagConstraints();
+		c0.fill = GridBagConstraints.BOTH;
+		setGridBag(c0, 0.5, 0, 8, 1, 0, 0);
+		this.add(menuPanel, c0);
 		
 		GridBagConstraints c1 = new GridBagConstraints();
 		
 		this.previous = new PreviousButton();
 		c1.fill = GridBagConstraints.BOTH;
-		c1.weightx = 0.5;
-		c1.weighty = 0;
-		c1.gridx = 0;
-		c1.gridy = 1;
+		setGridBag(c1, 0.5, 0, 1, 1, 0, 1);
 		this.add(this.previous, c1);
 		
 		this.next = new NextButton();
 		c1.fill = GridBagConstraints.BOTH;
-		c1.weightx = 0.5;
-		c1.weighty = 0;
-		c1.gridx = 7;
-		c1.gridy = 1;
+		setGridBag(c1, 0.5, 0, 1, 1, 7, 1);
 		this.add(this.next, c1);
 		
 		this.currentWeek = new JLabel("Place holder for current week", SwingConstants.CENTER);
 		c1.fill = GridBagConstraints.BOTH;
-		c1.weightx = 1;
-		c1.weighty = 0;
-		c1.gridwidth = 5;
-		c1.gridx = 1;
-		c1.gridy = 1;
+		setGridBag(c1, 1, 0, 5, 1, 1, 1);
 		this.add(this.currentWeek, c1);
 		
 		GridBagConstraints c2 = new GridBagConstraints();
@@ -72,10 +77,7 @@ public class MainPage extends JPanel{
 		
 			this.timesLabel[i] = new JLabel(s, SwingConstants.CENTER);
 			c2.fill = GridBagConstraints.BOTH;
-			c2.weightx = 1;
-			c2.weighty = 1;
-			c2.gridx = 0;
-			c2.gridy = 3 + i;
+			setGridBag(c2, 0.5, 0.5, 1, 1, 0, 3 + i);
 			s = String.format("%d:00", x);
 			this.timeY.put(s, 3 + i);
 			this.add(this.timesLabel[i], c2);
@@ -87,14 +89,70 @@ public class MainPage extends JPanel{
 		for(int i = 0; i < 7; i++) {
 			this.dayLabel[i] = new JLabel(days[i], SwingConstants.CENTER);
 			c3.fill = GridBagConstraints.BOTH;
-			c3.weightx = 1;
-			c3.weighty = 1;
-			c3.gridx = i + 1;
-			c3.gridy = 2;
+			setGridBag(c3, 1, 1, 1, 1, i + 1, 2);
 			this.dayX.put(days[i], i + 1);
 			this.add(dayLabel[i], c3);
 		}
 		
+	}
+	
+	private void setGridBag(GridBagConstraints c, double weightx, double weighty, int width, int height, int gridx, int gridy) {
+		c.weightx = weightx;
+		c.weighty = weighty;
+		c.gridwidth = width;
+		c.gridheight = height;
+		c.gridx = gridx;
+		c.gridy = gridy;
+	}
+	
+	public void addClasses(List<Course> courses) {
+		GridBagConstraints c5 = new GridBagConstraints();
+		int i = 0;
+		for (Course course : courses) {
+			for(Tuple<String> block: course.getIntervalList()) {
+				JButton button = new CourseButton(course, i, block);
+				c5.fill = GridBagConstraints.BOTH;
+				c5.weightx = 0;
+				c5.weighty = 0;
+				c5.gridheight = this.getTimeY().get(block.getItem2()) - this.getTimeY().get(block.getItem1());
+				c5.gridx = this.getDayX().get(block.getItem3());
+				c5.gridy = this.getTimeY().get(block.getItem1());
+				this.add(button, c5);
+			}
+			i++;
+		}
+		this.revalidate();
+		this.repaint();
+	}
+	
+	public void addEvent(Event event) {
+		GridBagConstraints c5 = new GridBagConstraints();
+
+		for(Tuple<String> block: event.getIntervalList()) {
+			JButton button = new EventButton(event);
+			c5.fill = GridBagConstraints.BOTH;
+			c5.weightx = 0;
+			c5.weighty = 0;
+			c5.gridheight = this.getTimeY().get(block.getItem2()) - this.getTimeY().get(block.getItem1());
+			c5.gridx = this.getDayX().get(block.getItem3());
+			c5.gridy = this.getTimeY().get(block.getItem1());
+			this.add(button, c5);
+		}
+
+		this.revalidate();
+		this.repaint();
+	}
+	
+	public void deleteCourse(CourseButton button) {
+		this.remove(button);
+		this.revalidate();
+		this.repaint();
+	}
+	
+	public void deleteEvent(EventButton button) {
+		this.remove(button);
+		this.revalidate();
+		this.repaint();
 	}
 	
 	
