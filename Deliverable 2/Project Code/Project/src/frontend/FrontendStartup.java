@@ -32,9 +32,9 @@ public class FrontendStartup {
 		switchMainPage();
 	}
 	
-	public static void switchEventPage(Event c) {
-		layout.show(cards, "course panel");
-		event.setEvent(c);
+	public static void switchEventPage(Event c, EventButton eventButton, Tuple<String> block) {
+		layout.show(cards, "event panel");
+		event.setEvent(c, eventButton, block);
 	}
 	
 	public static void deleteEventAndSwitch(EventButton button) {
@@ -59,6 +59,11 @@ public class FrontendStartup {
 		course.setBackground(Color.white);
 		course.setVisible(false);
 		cards.add(course, "course panel");
+		
+		event = new EventPage();
+		event.setBackground(Color.white);
+		event.setVisible(false);
+		cards.add(event, "event panel");
 		
 		content.add(cards);
 		

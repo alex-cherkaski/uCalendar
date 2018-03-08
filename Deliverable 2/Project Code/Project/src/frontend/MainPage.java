@@ -129,7 +129,7 @@ public class MainPage extends JPanel{
 		GridBagConstraints c5 = new GridBagConstraints();
 
 		for(Tuple<String> block: event.getIntervalList()) {
-			JButton button = new EventButton(event);
+			JButton button = new EventButton(event, block);
 			c5.fill = GridBagConstraints.BOTH;
 			c5.weightx = 0;
 			c5.weighty = 0;

@@ -1,6 +1,5 @@
 package frontend;
 
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -8,58 +7,62 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import event.Event;
+import tuple.Tuple;
 
 @SuppressWarnings("serial")
 public class EventPage extends JPanel{
 
 	private Event event;
-	private JLabel eventLabel;
-	private JButton next;
+	private JButton deleteEvent;
 	private JButton previous;
-	private JLabel currentWeek;
+	private JLabel description;
+	private EventButton currentButton;
+	private Tuple<String> block;
 	
 	public EventPage() {
 		this.setLayout(new GridBagLayout());
-		JMenuBar menu = new JMenuBar();
-		JPanel menuPanel = new JPanel();
-		FlowLayout flow = new FlowLayout();
-		flow.setAlignment(FlowLayout.LEFT );
-		menuPanel.setLayout(flow);
-		menuPanel.add(menu);
-		
-		GridBagConstraints c0 = new GridBagConstraints();
-		c0.fill = GridBagConstraints.BOTH;
-		setGridBag(c0, 0.5, 0, 8, 1, 0, 0);
-		this.add(menuPanel, c0);
 		
 		GridBagConstraints c1 = new GridBagConstraints();
 		
 		this.previous = new PreviousButton();
 		c1.fill = GridBagConstraints.BOTH;
-		setGridBag(c1, 0.5, 0, 1, 1, 0, 1);
+		setGridBag(c1, 0.1, 0, 1, 1, 0, 0);
 		this.add(this.previous, c1);
 		
-		this.next = new NextButton();
+		this.deleteEvent = new JButton("Delete");
 		c1.fill = GridBagConstraints.BOTH;
-		setGridBag(c1, 0.5, 0, 1, 1, 7, 1);
-		this.add(this.next, c1);
+		setGridBag(c1, 0.1, 0, 1, 1, 2, 0);
+		this.add(this.deleteEvent, c1);
 		
-		this.currentWeek = new JLabel("", SwingConstants.CENTER);
+		this.description = new JLabel("", SwingConstants.CENTER);
 		c1.fill = GridBagConstraints.BOTH;
-		setGridBag(c1, 1, 0, 5, 1, 1, 1);
-		this.add(this.currentWeek, c1);
+		setGridBag(c1, 1, 0, 1, 1, 1, 0);
+		this.add(this.description, c1);
 		
+		JPanel displayPanel = new JPanel();
+		c1.fill = GridBagConstraints.BOTH;
+		setGridBag(c1, 1, 1, 3, 1, 0, 1);
+		this.add(displayPanel, c1);
 		
 		this.previous.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				FrontendStartup.switchMainPage();
+			}
+			
+		});
+		
+		this.deleteEvent.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				FrontendStartup.deleteEventAndSwitch(currentButton);
 			}
 			
 		});
@@ -74,10 +77,11 @@ public class EventPage extends JPanel{
 		c.gridy = gridy;
 	}
 	
-	public void setEvent(Event event) {
+	public void setEvent(Event event, EventButton eventButton, Tuple<String> block) {
 		this.event = event;
-		this.eventLabel.setText(this.event.getDescription());
-		
+		this.description.setText(this.event.getName());
+		this.currentButton = eventButton;
+		this.block = block;
 	}
 
 }

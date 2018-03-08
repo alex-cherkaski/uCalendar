@@ -24,52 +24,81 @@ public class EventWindowPanel extends JPanel{
 		introLabel.setBounds(200, 50, 100, 30);
 		this.add(introLabel);
 		
-		JLabel startLabel = new JLabel("Start Time:");
-		startLabel.setBounds(100,100,100,30);
+		JLabel nameLabel = new JLabel("Name:");
+		nameLabel.setBounds(50,150,100,30);
+		this.add(nameLabel);
+		
+		JTextField nameTextBox = new JTextField();
+		nameTextBox.setBounds(200,150,250,30);
+		this.add(nameTextBox);
+		
+		String[] time = new String[13];
+		int x = 9;
+		for(int i = 0; i < 13; i++) {
+			time[i] = String.format("%d:00", x);
+			x++;
+		}
+		
+		JLabel startLabel = new JLabel("Time:");
+		startLabel.setBounds(50,200,100,30);
 		this.add(startLabel);
 		
-		JTextField startTextBox = new JTextField();
-		startTextBox.setBounds(250,100,150,30);
-		this.add(startTextBox);
+		JComboBox<String> timeStartFromBox = new JComboBox<String>(time);
+		timeStartFromBox.setBounds(200,200,100,30);
+		this.add(timeStartFromBox);
 		
-		JLabel endLabel = new JLabel("End Time:");
-		endLabel.setBounds(100,150,100,30);
-		this.add(endLabel);
+		JLabel toLabel1 = new JLabel("To:");
+		toLabel1.setBounds(320,200,30,30);
+		this.add(toLabel1);
 		
-		JTextField endTextBox = new JTextField();
-		endTextBox.setBounds(250,150,150,30);
-		this.add(endTextBox);
+		JComboBox<String> timeEndBox = new JComboBox<String>(time);
+		timeEndBox.setBounds(350,200,100,30);
+		this.add(timeEndBox);
 		
-		JLabel dayLabel = new JLabel("Day:");
-		dayLabel.setBounds(100,200,100,30);
+		
+		JLabel dayLabel = new JLabel("Date:");
+		dayLabel.setBounds(50,250,100,30);
 		this.add(dayLabel);
 		
-		JTextField dayTextBox = new JTextField();
-		dayTextBox.setBounds(250,200,150,30);
-		this.add(dayTextBox);
+		 String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+		
+		JComboBox<String> dateStartFromBox = new JComboBox<String>(days);
+		dateStartFromBox.setBounds(200,250,100,30);
+		this.add(dateStartFromBox);
+		
+		JLabel toLabel2 = new JLabel("To:");
+		toLabel2.setBounds(320,250,30,30);
+		this.add(toLabel2);
+		
+		JComboBox<String> dateEndBox = new JComboBox<String>(days);
+		dateEndBox.setBounds(350,250,100,30);
+		this.add(dateEndBox);
 		
 		String[] repeatList = {"NEVER", "DAILY", "WEEKLY", "MONTHLY"};
 		
 		JLabel repeatLabel = new JLabel("Repeat options:");
-		repeatLabel.setBounds(100,250,100,30);
+		repeatLabel.setBounds(50,300,100,30);
 		this.add(repeatLabel);
 		
 		JComboBox<String> repeatBox = new JComboBox<String>(repeatList);
 		repeatBox.setSelectedIndex(0);
-		repeatBox.setBounds(250,250,150,30);
+		repeatBox.setBounds(200,300,250,30);
 		this.add(repeatBox);
 		
 		JButton confirmButton = new JButton("Confirm");
-		confirmButton.setBounds(200, 350, 100, 30);
+		confirmButton.setBounds(200, 400, 100, 30);
 		confirmButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
-				Event event = new Event(repeatBox.getSelectedItem().toString(), dayTextBox.getText(), dayTextBox.getText());
-				event.addInterval(new Tuple<String>(startTextBox.getText(), endTextBox.getText(), dayTextBox.getText()));
+				if(timeStartFromBox.getSelectedIndex() < timeEndBox.getSelectedIndex()) {
+					
+				Event event = new Event(repeatBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString(), dateEndBox.getSelectedItem().toString());
+				event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
+				event.setName(nameTextBox.getText());
 				mainPage.addEvent(event);
 				eventFrame.dispose();
+				}
 			}
 		});
 		this.add(confirmButton);
