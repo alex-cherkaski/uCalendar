@@ -15,15 +15,15 @@ public class Test {
 
 	public static void main(String[] args) {
 		//String filePath = "C:\\Users\\user\\Desktop\\coursesCalendar.ics";
-		String filePath = "C:\\Users\\Christopher\\Desktop\\coursesCalendar.ics";
+		String filePath = "D:\\Documents\\coursesCalendar.ics";
 		List<CalendarBlock> blockList = Parser.getCalendarBlocks(filePath);
 		List<Course> courseList = CourseBuilder.getCourseMap(blockList);
 		
-		String filePath2 = "C:\\Users\\Christopher\\Desktop\\alexcoursesCalendar.ics";
+		String filePath2 = "D:\\Documents\\coursesCalendar2.ics";
 		List<CalendarBlock> blockList2 = Parser.getCalendarBlocks(filePath2);
 		List<Course> courseList2 = CourseBuilder.getCourseMap(blockList2);
 
-		Event eventGen = new Event("NEVER", "06-03-2018", "06-03-2018"); //needs to relfect new event
+		Event eventGen = new Event("NEVER", "06-03-2018", "06-03-2018"); //needs to reflect new event
 		List<Event> eventList = new ArrayList<Event>();
 		Tuple<String> test = CalendarFunctions.stringToTuple("(11:00, 15:00, Monday)");
 		eventGen.addInterval(test);
@@ -31,8 +31,11 @@ public class Test {
 		
 		Calendar testObject = new Calendar(courseList, eventList);
 		Calendar testObject2 = new Calendar(courseList2, eventList);
-
-
+		
+		/* Line below is for testing getFreePeriods on a single calendar */
+		System.out.println("Free periods in the calendar:");
+		System.out.println(CalendarFunctions.getFreePeriods(testObject));
+		
 		List<Tuple<String>> result = CalendarFunctions.calendarConflict(testObject);
 		List<Tuple<String>> result2 = CalendarFunctions.otherConflict(testObject, testObject2);
 		
