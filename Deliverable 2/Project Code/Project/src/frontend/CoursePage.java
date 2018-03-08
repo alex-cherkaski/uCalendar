@@ -1,5 +1,6 @@
 package frontend;
 
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -7,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -25,27 +27,38 @@ public class CoursePage extends JPanel {
 	
 	public CoursePage() {
 		this.setLayout(new GridBagLayout());
+		CourseJMenu menu = new CourseJMenu(this);
+		JPanel menuPanel = new JPanel();
+		FlowLayout flow = new FlowLayout();
+		flow.setAlignment(FlowLayout.LEFT );
+		menuPanel.setLayout(flow);
+		menuPanel.add(menu);
+		
+		GridBagConstraints c0 = new GridBagConstraints();
+		c0.fill = GridBagConstraints.BOTH;
+		setGridBag(c0, 0.5, 0, 8, 1, 0, 0);
+		this.add(menuPanel, c0);
 		
 		GridBagConstraints c1 = new GridBagConstraints();
 		
 		this.previous = new PreviousButton();
 		c1.fill = GridBagConstraints.BOTH;
-		setGridBag(c1, 0.1, 0, 1, 1, 0, 0);
+		setGridBag(c1, 0.1, 0, 1, 1, 0, 1);
 		this.add(this.previous, c1);
 		
 		this.deleteCourse = new JButton("Delete");
 		c1.fill = GridBagConstraints.BOTH;
-		setGridBag(c1, 0.1, 0, 1, 1, 2, 0);
+		setGridBag(c1, 0.1, 0, 1, 1, 2, 1);
 		this.add(this.deleteCourse, c1);
 		
 		this.description = new JLabel("", SwingConstants.CENTER);
 		c1.fill = GridBagConstraints.BOTH;
-		setGridBag(c1, 1, 0, 1, 1, 1, 0);
+		setGridBag(c1, 1, 0, 1, 1, 1, 1);
 		this.add(this.description, c1);
 		
 		JPanel displayPanel = new JPanel();
 		c1.fill = GridBagConstraints.BOTH;
-		setGridBag(c1, 1, 1, 3, 1, 0, 1);
+		setGridBag(c1, 1, 1, 3, 1, 0, 2);
 		this.add(displayPanel, c1);
 		
 		this.previous.addActionListener(new ActionListener() {
