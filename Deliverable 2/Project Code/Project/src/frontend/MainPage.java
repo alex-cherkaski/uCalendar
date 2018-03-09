@@ -200,6 +200,15 @@ public class MainPage extends JPanel{
 	private void updateDisplayCourseAndEventButton() {
 		GridBagConstraints c5 = new GridBagConstraints();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		
+		for(CourseButton button: this.courseButtons) {
+			this.remove(button);
+		}
+		
+		for(EventButton button: this.eventButtons) {
+			this.remove(button);
+		}
+		
 		this.courseButtons.clear();
 		this.eventButtons.clear();
 
