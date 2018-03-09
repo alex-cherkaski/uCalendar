@@ -86,43 +86,16 @@ public class Calendar implements java.io.Serializable {
 		return this.eventList;
 	}
 	
-	/*
-	 * Dates are in the form of DD-MM-YYYY and will return a list of all courses between
-	 * the 2 given dates. 
-	 */
-	public ArrayList<Course> getCourseFromAToB(String start, String end) {
-		ArrayList<Course> result = new ArrayList<Course>();
-		int startMonth = Integer.parseInt(start.substring(3, 5));
-		int endMonth = Integer.parseInt(end.substring(3, 5));
-		int startDate = Integer.parseInt(start.substring(0, 2));
-		int endDate = Integer.parseInt(end.substring(0, 2));
-		int year = Integer.parseInt(start.substring(6));
-		int courseDate;
-		int courseMonth;
-		int courseYear;
-		for(Course x: this.courseList) {
-			courseDate = Integer.parseInt(x.getStartDate().substring(0, 2));
-			courseMonth = Integer.parseInt(x.getStartDate().substring(3, 5));
-			courseYear = Integer.parseInt(x.getStartDate().substring(6));
-			if(courseYear == year) {
-				if(startMonth == endMonth) {
-					if((courseMonth == startMonth) && (courseDate > startDate - 1) &&  (courseDate < endDate + 1)) {
-						result.add(x);
-					}
-				} else {
-					if(courseMonth == startMonth) {
-						if(courseDate > startDate - 1) {
-							result.add(x);
-						}
-					} else if(courseMonth == endMonth) {
-						if(courseDate < endDate + 1) {
-							result.add(x);
-						}
-					}	
-				}
-			}
-		}
-		return result;
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("Calendar:" + "\n");
+		stringBuilder.append("Courses: ");
+		stringBuilder.append(Arrays.toString(this.courseList.toArray()));
+		stringBuilder.append("\n");
+		stringBuilder.append("Events: ");
+		stringBuilder.append(Arrays.toString(this.eventList.toArray()));
+		return stringBuilder.toString();
 	}
 	
 	/*
@@ -162,17 +135,5 @@ public class Calendar implements java.io.Serializable {
 			}
 		}
 		return result;
-	}
-	
-	@Override
-	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("Calendar:" + "\n");
-		stringBuilder.append("Courses: ");
-		stringBuilder.append(Arrays.toString(this.courseList.toArray()));
-		stringBuilder.append("\n");
-		stringBuilder.append("Events: ");
-		stringBuilder.append(Arrays.toString(this.eventList.toArray()));
-		return stringBuilder.toString();
 	}
 }

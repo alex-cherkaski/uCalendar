@@ -116,4 +116,43 @@ public class Course {
 	public String toString() {
 		return "Course code:" + this.courseCode;
 	}
+	
+	/*
+	 * Dates are in the form of DD-MM-YYYY and will return a list of all courses between
+	 * the 2 given dates. 
+	 */
+	public ArrayList<CalendarBlock> getCourseFromAToB(String start, String end) {
+		ArrayList<CalendarBlock> result = new ArrayList<CalendarBlock>();
+		int startMonth = Integer.parseInt(start.substring(3, 5));
+		int endMonth = Integer.parseInt(end.substring(3, 5));
+		int startDate = Integer.parseInt(start.substring(0, 2));
+		int endDate = Integer.parseInt(end.substring(0, 2));
+		int year = Integer.parseInt(start.substring(6));
+		int courseDate;
+		int courseMonth;
+		int courseYear;
+		for(CalendarBlock x: this.blockList) {
+			courseDate = Integer.parseInt(x.getStartDate().substring(0, 2));
+			courseMonth = Integer.parseInt(x.getStartDate().substring(3, 5));
+			courseYear = Integer.parseInt(x.getStartDate().substring(6));
+			if(courseYear == year) {
+				if(startMonth == endMonth) {
+					if((courseMonth == startMonth) && (courseDate > startDate - 1) &&  (courseDate < endDate + 1)) {
+						result.add(x);
+					}
+				} else {
+					if(courseMonth == startMonth) {
+						if(courseDate > startDate - 1) {
+							result.add(x);
+						}
+					} else if(courseMonth == endMonth) {
+						if(courseDate < endDate + 1) {
+							result.add(x);
+						}
+					}	
+				}
+			}
+		}
+		return result;
+	}
 }
