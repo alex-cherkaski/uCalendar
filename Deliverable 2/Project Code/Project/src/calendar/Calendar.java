@@ -6,6 +6,7 @@ import java.util.List;
 
 import course.Course;
 import event.Event;
+import parser.CalendarBlock;
 import tuple.Tuple;
 
 public class Calendar implements java.io.Serializable {
@@ -97,6 +98,45 @@ public class Calendar implements java.io.Serializable {
 		stringBuilder.append("Events: ");
 		stringBuilder.append(Arrays.toString(this.eventList.toArray()));
 		return stringBuilder.toString();
+	}
+	
+	/*
+	 * Dates are in the form of DD-MM-YYYY and will return a list of all courses between
+	 * the 2 given dates. 
+	 */
+	public List<Tuple<String>> getCourseFromAToB(String start, String end) {	
+		List<Tuple<String>> result = new ArrayList<Tuple<String>>();
+		int startMonth = Integer.parseInt(start.substring(3, 5));
+		int endMonth = Integer.parseInt(end.substring(3, 5));
+		int startDate = Integer.parseInt(start.substring(0, 2));
+		int endDate = Integer.parseInt(end.substring(0, 2));
+		int year = Integer.parseInt(start.substring(6));
+		int courseDate;
+		int courseMonth;
+		int courseYear;
+		for(CalendarBlock x: this.courseList.get(0).getBlockList()) {
+			courseDate = Integer.parseInt(x.getStartDate().substring(6));
+			courseMonth = Integer.parseInt(x.getStartDate().substring(4, 6));
+			courseYear = Integer.parseInt(x.getStartDate().substring(0,4));
+			if(courseYear == year) {
+				if(startMonth == endMonth) {
+					if((courseMonth == startMonth) && (courseDate > startDate - 1) &&  (courseDate < endDate + 1)) {
+						result.add(new Tuple<String>(x.getStartTime(), x.getEndTime(), x.getDayOfTheWeek()));
+					}
+				} else {
+					if(courseMonth == startMonth) {
+						if(courseDate > startDate - 1) {
+							result.add(new Tuple<String>(x.getStartTime(), x.getEndTime(), x.getDayOfTheWeek()));
+						}
+					} else if(courseMonth == endMonth) {
+						if(courseDate < endDate + 1) {
+							result.add(new Tuple<String>(x.getStartTime(), x.getEndTime(), x.getDayOfTheWeek()));
+						}
+					}	
+				}
+			}
+		}
+		return result;
 	}
 	
 	/*
