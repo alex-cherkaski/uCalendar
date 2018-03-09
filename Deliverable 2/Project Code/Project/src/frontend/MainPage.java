@@ -6,10 +6,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -38,8 +38,12 @@ public class MainPage extends JPanel{
 	private HashMap<String, Integer> timeY = new HashMap<String, Integer>();
 	private HashMap<String, Integer> dayX = new HashMap<String, Integer>();
 	private final String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+	private ArrayList<CourseButton> courseButtons;
+	private ArrayList<EventButton> eventButtons;
 
 	public MainPage() {
+		this.courseButtons = new ArrayList<CourseButton>();
+		this.eventButtons = new ArrayList<EventButton>();
 		this.setLayout(new GridBagLayout());
 		JMenuBar menu = new MainJMenu(this);
 		JPanel menuPanel = new JPanel();
@@ -93,6 +97,10 @@ public class MainPage extends JPanel{
 				endDay = endDay.plusWeeks(1);
 				
 				updateWeek();
+				if(!courseButtons.isEmpty()) {
+					updateDisplayCourseAndEventButton();
+				}
+				
 			}
 			
 		});
@@ -106,6 +114,9 @@ public class MainPage extends JPanel{
 				endDay = endDay.minusWeeks(1);
 				
 				updateWeek();
+				if(!courseButtons.isEmpty()) {
+					updateDisplayCourseAndEventButton();
+				}
 			}
 			
 		});
@@ -177,13 +188,25 @@ public class MainPage extends JPanel{
 	
 	public void addClasses(Calendar calendar2) {
 		this.calendar = calendar2;
+		updateDisplayCourseAndEventButton();
+		
+	}
+	
+	public void addEvent(Event event) {
+		this.calendar.addEvent(event);
+		updateDisplayCourseAndEventButton();
+	}
+	
+	private void updateDisplayCourseAndEventButton() {
 		GridBagConstraints c5 = new GridBagConstraints();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		System.out.println(this.startDay.format(formatter));
+		this.courseButtons.clear();
+		this.eventButtons.clear();
+
 		int i = 0;
-		for (Course course : this.calendar.getCourseFromAToB(this.startDay.format(formatter), this.endDay.format(formatter))) {
-			for(Tuple<String> block: course.getIntervalList()) {
-				JButton button = new CourseButton(course, i, block);
+		for (Course course : this.calendar.getCourseList()) {
+			for(Tuple<String> block: course.getCourseFromAToB(this.startDay.format(formatter), this.endDay.format(formatter))) {
+				CourseButton button = new CourseButton(course, i, block);
 				c5.fill = GridBagConstraints.BOTH;
 				c5.weightx = 0;
 				c5.weighty = 0;
@@ -191,27 +214,26 @@ public class MainPage extends JPanel{
 				c5.gridx = this.getDayX().get(block.getItem3());
 				c5.gridy = this.getTimeY().get(block.getItem1());
 				this.add(button, c5);
+				this.courseButtons.add(button);
 			}
 			i++;
 		}
-		this.revalidate();
-		this.repaint();
-	}
-	
-	public void addEvent(Event event) {
-		GridBagConstraints c5 = new GridBagConstraints();
-
-		for(Tuple<String> block: event.getIntervalList()) {
-			JButton button = new EventButton(event, block);
-			c5.fill = GridBagConstraints.BOTH;
-			c5.weightx = 0;
-			c5.weighty = 0;
-			c5.gridheight = this.getTimeY().get(block.getItem2()) - this.getTimeY().get(block.getItem1());
-			c5.gridx = this.getDayX().get(block.getItem3());
-			c5.gridy = this.getTimeY().get(block.getItem1());
-			this.add(button, c5);
+		
+		for (Event event : this.calendar.getEventList()) {
+			for(Tuple<String> block: event.getIntervalList()) {
+				EventButton button = new EventButton(event, block);
+				c5.fill = GridBagConstraints.BOTH;
+				c5.weightx = 0;
+				c5.weighty = 0;
+				c5.gridheight = this.getTimeY().get(block.getItem2()) - this.getTimeY().get(block.getItem1());
+				c5.gridx = this.getDayX().get(block.getItem3());
+				c5.gridy = this.getTimeY().get(block.getItem1());
+				this.add(button, c5);
+				this.eventButtons.add(button);
+			}
 		}
-
+		
+		
 		this.revalidate();
 		this.repaint();
 	}
@@ -245,5 +267,17 @@ public class MainPage extends JPanel{
 	
 	public HashMap<String, Integer> getDayX(){
 		return this.dayX;
+	}
+	
+	public LocalDate getStartDate() {
+		return this.startDay;
+	}
+	
+	public LocalDate getEndDate() {
+		return this.endDay;
+	}
+	
+	public LocalDate getCurrentDate() {
+		return this.currDay;
 	}
 }
