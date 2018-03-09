@@ -114,25 +114,27 @@ public class Calendar implements java.io.Serializable {
 		int courseDate;
 		int courseMonth;
 		int courseYear;
-		for(CalendarBlock x: this.courseList.get(0).getBlockList()) {
-			courseDate = Integer.parseInt(x.getStartDate().substring(6));
-			courseMonth = Integer.parseInt(x.getStartDate().substring(4, 6));
-			courseYear = Integer.parseInt(x.getStartDate().substring(0,4));
-			if(courseYear == year) {
-				if(startMonth == endMonth) {
-					if((courseMonth == startMonth) && (courseDate > startDate - 1) &&  (courseDate < endDate + 1)) {
-						result.add(new Tuple<String>(x.getStartTime(), x.getEndTime(), x.getDayOfTheWeek()));
+		for(Course course : this.courseList) {
+			for(CalendarBlock block : course.getBlockList()) {
+				courseDate = Integer.parseInt(block.getStartDate().substring(6));
+				courseMonth = Integer.parseInt(block.getStartDate().substring(4, 6));
+				courseYear = Integer.parseInt(block.getStartDate().substring(0,4));
+				if(courseYear == year) {
+					if(startMonth == endMonth) {
+						if((courseMonth == startMonth) && (courseDate > startDate - 1) &&  (courseDate < endDate + 1)) {
+							result.add(new Tuple<String>(block.getStartTime(), block.getEndTime(), block.getDayOfTheWeek()));
+						}
+					} else {
+						if(courseMonth == startMonth) {
+							if(courseDate > startDate - 1) {
+								result.add(new Tuple<String>(block.getStartTime(), block.getEndTime(), block.getDayOfTheWeek()));
+							}
+						} else if(courseMonth == endMonth) {
+							if(courseDate < endDate + 1) {
+								result.add(new Tuple<String>(block.getStartTime(), block.getEndTime(), block.getDayOfTheWeek()));
+							}
+						}	
 					}
-				} else {
-					if(courseMonth == startMonth) {
-						if(courseDate > startDate - 1) {
-							result.add(new Tuple<String>(x.getStartTime(), x.getEndTime(), x.getDayOfTheWeek()));
-						}
-					} else if(courseMonth == endMonth) {
-						if(courseDate < endDate + 1) {
-							result.add(new Tuple<String>(x.getStartTime(), x.getEndTime(), x.getDayOfTheWeek()));
-						}
-					}	
 				}
 			}
 		}
@@ -153,7 +155,7 @@ public class Calendar implements java.io.Serializable {
 		int eventDate;
 		int eventMonth;
 		int eventYear;
-		for(Event x: this.eventList) {
+		for(Event x : this.eventList) {
 			eventDate = Integer.parseInt(x.getStartDate().substring(0, 2));
 			eventMonth = Integer.parseInt(x.getStartDate().substring(3, 5));
 			eventYear = Integer.parseInt(x.getStartDate().substring(6));
