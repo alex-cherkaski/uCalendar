@@ -132,9 +132,9 @@ public class Course {
 		int courseMonth;
 		int courseYear;
 		for(CalendarBlock x: this.blockList) {
-			courseDate = Integer.parseInt(x.getStartDate().substring(0, 2));
-			courseMonth = Integer.parseInt(x.getStartDate().substring(3, 5));
-			courseYear = Integer.parseInt(x.getStartDate().substring(6));
+			courseDate = Integer.parseInt(x.getStartDate().substring(6));
+			courseMonth = Integer.parseInt(x.getStartDate().substring(4, 6));
+			courseYear = Integer.parseInt(x.getStartDate().substring(0,4));
 			if(courseYear == year) {
 				if(startMonth == endMonth) {
 					if((courseMonth == startMonth) && (courseDate > startDate - 1) &&  (courseDate < endDate + 1)) {
