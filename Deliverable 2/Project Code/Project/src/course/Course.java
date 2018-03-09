@@ -123,5 +123,6 @@ public class Course {
 	
 	public void addNewBlock(CalendarBlock block) {
 		this.blockList.add(block);
+		this.intervalList = this.constructIntervals(this.blockList);
 	}
 }
