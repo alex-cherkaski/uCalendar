@@ -7,17 +7,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import event.Event;
-import tuple.Tuple;
 
 @SuppressWarnings("serial")
 public class EventButton extends JButton {
 		
 	private Event event;
-	private Tuple<String> block;
 	
-	public EventButton(Event event, Tuple<String> block) {
+	public EventButton(Event event) {
 		this.event = event;
-		this.block = block;
 		this.setText(this.event.getName());
 		this.setFocusable(false);
 		this.setBackground(Color.orange);
@@ -25,7 +22,7 @@ public class EventButton extends JButton {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				FrontendStartup.switchEventPage(event, EventButton.this, block);
+				FrontendStartup.switchEventPage(event, EventButton.this);
 			}
 			
 		});

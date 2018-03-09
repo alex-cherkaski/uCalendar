@@ -13,14 +13,12 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import course.Course;
 import notes.Note;
-import tuple.Tuple;
 
 @SuppressWarnings("serial")
 public class CoursePage extends JPanel {
@@ -31,7 +29,6 @@ public class CoursePage extends JPanel {
 	private JLabel description;
 	private JPanel displayPanel;
 	private CourseButton currentButton;
-	private Tuple<String> block;
 	private DefaultListModel<Note> listModel;
 	private JList<Note> list;
 	private JScrollPane scrollPanel;
@@ -107,11 +104,10 @@ public class CoursePage extends JPanel {
 		c.gridy = gridy;
 	}
 	
-	public void setCourse(Course course, CourseButton courseButton, Tuple<String> block) {
+	public void setCourse(Course course, CourseButton courseButton) {
 		this.course = course;
 		this.description.setText(this.course.getCourseCode());
 		this.currentButton = courseButton;
-		this.block = block;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		updateListModel(LocalDate.now().format(formatter));
 	}

@@ -2,22 +2,15 @@ package frontend;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import calendar.Calendar;
-import course.CourseBuilder;
-import event.Event;
 import notes.Note;
-import parser.Parser;
 
 @SuppressWarnings("serial")
 public class CourseJMenu extends JMenuBar{

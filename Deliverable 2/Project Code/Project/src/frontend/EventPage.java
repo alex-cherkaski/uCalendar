@@ -19,7 +19,6 @@ import javax.swing.SwingConstants;
 
 import event.Event;
 import notes.Note;
-import tuple.Tuple;
 
 @SuppressWarnings("serial")
 public class EventPage extends JPanel{
@@ -33,7 +32,6 @@ public class EventPage extends JPanel{
 	private JButton previous;
 	private JLabel description;
 	private EventButton currentButton;
-	private Tuple<String> block;
 	
 	public EventPage() {
 		this.setLayout(new GridBagLayout());
@@ -106,11 +104,10 @@ public class EventPage extends JPanel{
 		c.gridy = gridy;
 	}
 	
-	public void setEvent(Event event, EventButton eventButton, Tuple<String> block) {
+	public void setEvent(Event event, EventButton eventButton) {
 		this.event = event;
 		this.description.setText(this.event.getName());
 		this.currentButton = eventButton;
-		this.block = block;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		updateListModel(LocalDate.now().format(formatter));
 	}

@@ -206,7 +206,7 @@ public class MainPage extends JPanel{
 		int i = 0;
 		for (Course course : this.calendar.getCourseList()) {
 			for(Tuple<String> block: course.getCourseFromAToB(this.startDay.format(formatter), this.endDay.format(formatter))) {
-				CourseButton button = new CourseButton(course, i, block);
+				CourseButton button = new CourseButton(course, i);
 				c5.fill = GridBagConstraints.BOTH;
 				c5.weightx = 0;
 				c5.weighty = 0;
@@ -221,7 +221,7 @@ public class MainPage extends JPanel{
 		
 		for (Event event : this.calendar.getEventList()) {
 			for(Tuple<String> block: event.getIntervalList()) {
-				EventButton button = new EventButton(event, block);
+				EventButton button = new EventButton(event);
 				c5.fill = GridBagConstraints.BOTH;
 				c5.weightx = 0;
 				c5.weighty = 0;
