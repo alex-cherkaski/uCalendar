@@ -2,6 +2,9 @@ package frontend;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +16,10 @@ import javax.swing.JMenuItem;
 import calendar.Calendar;
 import course.CourseBuilder;
 import event.Event;
+import notes.Note;
 import parser.Parser;
 
+@SuppressWarnings("serial")
 public class CourseJMenu extends JMenuBar{
 
 	public CourseJMenu(CoursePage coursePage) {
@@ -38,8 +43,9 @@ public class CourseJMenu extends JMenuBar{
 		fileChooser.showOpenDialog(null);
 		
 		if(fileChooser.getSelectedFile() != null){
-			String filePath = fileChooser.getSelectedFile().getPath();
-			
+			Note note = new Note(fileChooser.getSelectedFile().getName());
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			access.addNote(LocalDate.now().format(formatter), note);
 		}
 	}
 

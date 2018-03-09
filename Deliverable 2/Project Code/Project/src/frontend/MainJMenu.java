@@ -63,7 +63,7 @@ public class MainJMenu extends JMenuBar{
 			courseList = CourseBuilder.getCourseMap(blockList);
 			List<Event> events = new ArrayList<Event>();
 			Calendar calendar = new Calendar(courseList, events);
-			access.addClasses(calendar.getCourseList());
+			access.addClasses(calendar);
 		}
 	}
 	
