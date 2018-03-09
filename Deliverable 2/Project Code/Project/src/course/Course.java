@@ -112,6 +112,14 @@ public class Course {
 		return this.notesCollection.getNotes(date);
 	}
 	
+	public List<Note> getNotesIncreasing(){
+		return this.notesCollection.getAllNotesIncreasing();
+	}
+	
+	public List<Note> getNotesDecreasing(){
+		return this.notesCollection.getAllNotesDecreasing();
+	}
+	
 	@Override
 	public String toString() {
 		return "Course code:" + this.courseCode;

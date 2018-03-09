@@ -101,9 +101,7 @@ public class MainPage extends JPanel{
 				endDay = endDay.plusWeeks(1);
 				
 				updateWeek();
-				if(!courseButtons.isEmpty()) {
-					updateDisplayEventButton();
-				}
+				updateDisplayEventButton();
 				
 			}
 			
@@ -118,9 +116,8 @@ public class MainPage extends JPanel{
 				endDay = endDay.minusWeeks(1);
 				
 				updateWeek();
-				if(!courseButtons.isEmpty()) {
-					updateDisplayEventButton();
-				}
+				updateDisplayEventButton();
+				
 			}
 			
 		});
@@ -243,22 +240,24 @@ public class MainPage extends JPanel{
 		
 		List<Tuple<String>> conflicts = CalendarFunctions.calendarConflict(this.calendar);
 		
-		for(Event event: this.calendar.getEventList()){
-		for(Tuple<String> block: this.calendar.getCourseFromAToB(this.startDay.format(formatter), this.endDay.format(formatter))) {
-			EventButton button = new EventButton(event);
-			if(conflicts != null && conflicts.contains(block)) {
-				button.setBackground(Color.red);
+		
+		for(Event event: this.calendar.getEventFromAToB(this.startDay.format(formatter), this.endDay.format(formatter))) {
+			for(Tuple<String> block: event.getIntervalList()){
+				EventButton button = new EventButton(event);
+				if(conflicts != null && conflicts.contains(block)) {
+					button.setBackground(Color.red);
+				}
+				c5.fill = GridBagConstraints.BOTH;
+				c5.weightx = 0;
+				c5.weighty = 0;
+				c5.gridheight = this.getTimeY().get(block.getItem2()) - this.getTimeY().get(block.getItem1());
+				c5.gridx = this.getDayX().get(block.getItem3());
+				c5.gridy = this.getTimeY().get(block.getItem1());
+				this.add(button, c5);
+				this.eventButtons.add(button);
 			}
-			c5.fill = GridBagConstraints.BOTH;
-			c5.weightx = 0;
-			c5.weighty = 0;
-			c5.gridheight = this.getTimeY().get(block.getItem2()) - this.getTimeY().get(block.getItem1());
-			c5.gridx = this.getDayX().get(block.getItem3());
-			c5.gridy = this.getTimeY().get(block.getItem1());
-			this.add(button, c5);
-			this.eventButtons.add(button);
 		}
-		}
+
 		
 		for(CourseButton button: this.courseButtons) {
 			if(conflicts != null && conflicts.contains(button.getBlock())) {

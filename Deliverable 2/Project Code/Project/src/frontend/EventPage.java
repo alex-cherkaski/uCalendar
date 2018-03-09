@@ -8,14 +8,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import event.Event;
 import notes.Note;
@@ -24,22 +28,23 @@ import notes.Note;
 public class EventPage extends JPanel{
 
 	private Event event;
+	private EventJMenu jMenu;
 	private JPanel displayPanel;
 	private JScrollPane scrollPane;
 	private JList<Note> list;
 	private DefaultListModel<Note> listModel;
-	private JButton deleteEvent;
 	private JButton previous;
 	private JLabel description;
+	private String sortOperation;
 	
 	public EventPage() {
 		this.setLayout(new GridBagLayout());
-		EventJMenu menu = new EventJMenu(this);
+		this.jMenu = new EventJMenu(this);
 		JPanel menuPanel = new JPanel();
 		FlowLayout flow = new FlowLayout();
 		flow.setAlignment(FlowLayout.LEFT );
 		menuPanel.setLayout(flow);
-		menuPanel.add(menu);
+		menuPanel.add(jMenu);
 		
 		GridBagConstraints c0 = new GridBagConstraints();
 		c0.fill = GridBagConstraints.BOTH;
@@ -53,10 +58,14 @@ public class EventPage extends JPanel{
 		setGridBag(c1, 0.1, 0, 1, 1, 0, 1);
 		this.add(this.previous, c1);
 		
-		this.deleteEvent = new JButton("Delete");
+		String[] sortOptions = {"Oldest", "Newest"};
+		
+		JComboBox<String> sortBox = new JComboBox<String>(sortOptions);
+		sortBox.setSelectedIndex(0);
+		this.sortOperation = sortBox.getSelectedItem().toString();
 		c1.fill = GridBagConstraints.BOTH;
 		setGridBag(c1, 0.1, 0, 1, 1, 2, 1);
-		this.add(this.deleteEvent, c1);
+		this.add(sortBox, c1);
 		
 		this.description = new JLabel("", SwingConstants.CENTER);
 		c1.fill = GridBagConstraints.BOTH;
@@ -83,14 +92,11 @@ public class EventPage extends JPanel{
 			
 		});
 		
-		this.deleteEvent.addActionListener(new ActionListener() {
-
+		this.list.addListSelectionListener(new ListSelectionListener(){
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				FrontendStartup.deleteEventAndSwitch(event);
+			public void valueChanged(ListSelectionEvent e) {
+				sortOperation = sortBox.getSelectedItem().toString();
 			}
-			
 		});
 	}
 	
@@ -108,6 +114,7 @@ public class EventPage extends JPanel{
 		this.description.setText(this.event.getName());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		updateListModel(LocalDate.now().format(formatter));
+		this.jMenu.setEvent(event);
 	}
 
 	public void addNote(String date, Note note) {
@@ -117,7 +124,16 @@ public class EventPage extends JPanel{
 	
 	private void updateListModel(String date) {
 		this.listModel.clear();
-		for(Note no: this.event.getNotes(date)) {
+		List<Note> notes;
+		if(this.sortOperation.equals("Oldest")){
+			notes = this.event.getNotesIncreasing();
+		}else if(this.sortOperation.equals("Newest")){
+			notes = this.event.getNotesIncreasing();
+		}else{
+			notes = this.event.getNotes(date);
+		}
+		
+		for(Note no: notes) {
 			this.listModel.addElement(no);
 		}
 	}

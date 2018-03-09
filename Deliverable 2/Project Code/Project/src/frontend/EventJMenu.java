@@ -10,11 +10,14 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import event.Event;
 import notes.Note;
 
 @SuppressWarnings("serial")
 public class EventJMenu extends JMenuBar{
 
+	private Event event;
+	
 	public EventJMenu(EventPage eventPage) {
 		JMenu fileMenu = new JMenu("File");
 		
@@ -27,6 +30,16 @@ public class EventJMenu extends JMenuBar{
 			}
 		});
 		fileMenu.add(fileChooser);
+		
+		JMenuItem deleteEvent = new JMenuItem("Delete this event");
+		deleteEvent.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				FrontendStartup.deleteEventAndSwitch(event);
+			}
+		});
+		fileMenu.add(deleteEvent);
 		this.add(fileMenu);
 	}
 	
@@ -41,6 +54,10 @@ public class EventJMenu extends JMenuBar{
 			access.addNote(LocalDate.now().format(formatter), note);
 			
 		}
+	}
+	
+	public void setEvent(Event event){
+		this.event = event;
 	}
 
 }

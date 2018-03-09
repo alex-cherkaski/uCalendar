@@ -2,8 +2,6 @@ package frontend;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
@@ -16,6 +14,7 @@ import javax.swing.JTextField;
 
 import event.Event;
 import tuple.Tuple;
+import utilities.CalendarFunctions;
 
 
 @SuppressWarnings("serial")
@@ -100,14 +99,12 @@ public class EventWindowPanel extends JPanel{
 					
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 					int start = Arrays.asList(days2).indexOf((mainPage.getStartDay().getDayOfWeek().toString()));
-					int start2 = Arrays.asList(days).indexOf((dateStartFromBox.getSelectedItem()));
+					int start2 = CalendarFunctions.day(dateStartFromBox.getSelectedItem().toString());
 					int end = Arrays.asList(days2).indexOf((mainPage.getEndDay().getDayOfWeek().toString()));
-					int end2 = Arrays.asList(days).indexOf((dateEndBox.getSelectedItem()));
+					int end2 = CalendarFunctions.day(dateEndBox.getSelectedItem().toString());
 					
 					String startDate = mainPage.getStartDay().plusDays(start2 - start).format(formatter);
 					String endDate = mainPage.getEndDay().minusDays(end - end2).format(formatter);
-					
-					System.out.println(startDate + endDate);
 					
 					Event event = new Event(repeatBox.getSelectedItem().toString(), startDate, endDate);
 					event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));

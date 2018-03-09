@@ -10,11 +10,14 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import course.Course;
 import notes.Note;
 
 @SuppressWarnings("serial")
 public class CourseJMenu extends JMenuBar{
-
+	
+	private Course course;
+	
 	public CourseJMenu(CoursePage coursePage) {
 		JMenu fileMenu = new JMenu("File");
 		
@@ -27,6 +30,16 @@ public class CourseJMenu extends JMenuBar{
 			}
 		});
 		fileMenu.add(fileChooser);
+		
+		JMenuItem deleteCourse = new JMenuItem("Delete this event");
+		deleteCourse.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				FrontendStartup.deleteCourseAndSwitch(course);
+			}
+		});
+		fileMenu.add(deleteCourse);
 		this.add(fileMenu);
 	}
 	
@@ -40,6 +53,10 @@ public class CourseJMenu extends JMenuBar{
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			access.addNote(LocalDate.now().format(formatter), note);
 		}
+	}
+	
+	public void setCourse(Course course){
+		this.course = course;
 	}
 
 }

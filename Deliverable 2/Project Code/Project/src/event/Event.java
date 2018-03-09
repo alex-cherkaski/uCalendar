@@ -117,6 +117,14 @@ public class Event {
 	public List<Note> getNotes(String date) {
 		return this.notesCollection.getNotes(date);
 	}
+	
+	public List<Note> getNotesIncreasing(){
+		return this.notesCollection.getAllNotesIncreasing();
+	}
+	
+	public List<Note> getNotesDecreasing(){
+		return this.notesCollection.getAllNotesDecreasing();
+	}
 
 	@Override
 	public int hashCode() {
