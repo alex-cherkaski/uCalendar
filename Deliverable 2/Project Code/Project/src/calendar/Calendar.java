@@ -6,6 +6,7 @@ import java.util.List;
 
 import course.Course;
 import event.Event;
+import tuple.Tuple;
 
 public class Calendar implements java.io.Serializable {
 	
@@ -102,8 +103,8 @@ public class Calendar implements java.io.Serializable {
 	 * Dates are in the form of DD-MM-YYYY and will return a list of all events between
 	 * the 2 given dates. 
 	 */
-	public ArrayList<Event> getEventFromAToB(String start, String end) {
-		ArrayList<Event> result = new ArrayList<Event>();
+	public List<Tuple<String>> getEventFromAToB(String start, String end) {
+		List<Tuple<String>> result = new ArrayList<Tuple<String>>();
 		int startMonth = Integer.parseInt(start.substring(3, 5));
 		int endMonth = Integer.parseInt(end.substring(3, 5));
 		int startDate = Integer.parseInt(start.substring(0, 2));
@@ -119,16 +120,16 @@ public class Calendar implements java.io.Serializable {
 			if(eventYear == year) {
 				if(startMonth == endMonth) {
 					if((eventMonth == startMonth) && (eventDate > startDate - 1) &&  (eventDate < endDate + 1)) {
-						result.add(x);
+						result.add(x.getIntervalList().get(0));
 					}
 				} else {
 					if(eventMonth == startMonth) {
 						if(eventDate > startDate - 1) {
-							result.add(x);
+							result.add(x.getIntervalList().get(0));
 						}
 					} else if(eventMonth == endMonth) {
 						if(eventDate < endDate + 1) {
-							result.add(x);
+							result.add(x.getIntervalList().get(0));
 						}
 					}	
 				}
