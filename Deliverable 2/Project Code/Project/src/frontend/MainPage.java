@@ -4,8 +4,13 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -13,6 +18,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import calendar.Calendar;
 import course.Course;
 import event.Event;
 import tuple.Tuple;
@@ -20,6 +26,10 @@ import tuple.Tuple;
 @SuppressWarnings("serial")
 public class MainPage extends JPanel{
 	
+	private Calendar calendar;
+	private LocalDate startDay;
+	private LocalDate endDay;
+	private LocalDate currDay;
 	private JLabel[] timesLabel = new JLabel[12];
 	private JLabel[] dayLabel = new JLabel[7];
 	private JButton next;
@@ -55,10 +65,50 @@ public class MainPage extends JPanel{
 		setGridBag(c1, 0.5, 0, 1, 1, 7, 1);
 		this.add(this.next, c1);
 		
-		this.currentWeek = new JLabel("Place holder for current week", SwingConstants.CENTER);
+		this.currDay = LocalDate.now();
+
+	    // Go forward to get saturday
+	    this.endDay = this.currDay;
+	    while (endDay.getDayOfWeek() != DayOfWeek.SATURDAY) {
+	    	endDay = endDay.plusDays(1);
+	    }
+
+	    // Go backwards to get Sunday
+	    this.startDay = this.currDay;
+	    while (startDay.getDayOfWeek() != DayOfWeek.SUNDAY) {
+	    	startDay = startDay.minusDays(1);
+	    }
+		
+		this.currentWeek = new JLabel(this.currDay.toString(), SwingConstants.CENTER);
 		c1.fill = GridBagConstraints.BOTH;
 		setGridBag(c1, 1, 0, 5, 1, 1, 1);
 		this.add(this.currentWeek, c1);
+		
+		this.next.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				currDay = currDay.plusWeeks(1);
+				startDay = startDay.plusWeeks(1);
+				endDay = endDay.plusWeeks(1);
+				
+				updateWeek();
+			}
+			
+		});
+		
+		this.previous.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				currDay = currDay.minusWeeks(1);
+				startDay = startDay.minusWeeks(1);
+				endDay = endDay.minusWeeks(1);
+				
+				updateWeek();
+			}
+			
+		});
 		
 		GridBagConstraints c2 = new GridBagConstraints();
 		int x = 9;
@@ -86,14 +136,34 @@ public class MainPage extends JPanel{
 		this.timeY.put("21:00", 15);
 		
 		GridBagConstraints c3 = new GridBagConstraints();
+		int y = this.startDay.getDayOfMonth();
+		
 		for(int i = 0; i < 7; i++) {
-			this.dayLabel[i] = new JLabel(days[i], SwingConstants.CENTER);
+			this.dayLabel[i] = new JLabel(String.format("<html>" + days[i] + "<br>" + "<center>" + y + "</center>" + "</html>"), SwingConstants.CENTER);
+			y++;
 			c3.fill = GridBagConstraints.BOTH;
 			setGridBag(c3, 1, 1, 1, 1, i + 1, 2);
 			this.dayX.put(days[i], i + 1);
 			this.add(dayLabel[i], c3);
 		}
+	}
+	
+	private void updateWeek() {
+		GridBagConstraints c = new GridBagConstraints();
+		int y = this.startDay.getDayOfMonth();
+		for(int i = 0; i < 7; i++) {
+			this.dayLabel[i].setText(String.format("<html>" + days[i] + "<br>" + "<center>" + y + "</center>" + "</html>"));
+			y++;
+			c.fill = GridBagConstraints.BOTH;
+			setGridBag(c, 1, 1, 1, 1, i + 1, 2);
+			this.dayX.put(days[i], i + 1);
+			this.add(dayLabel[i], c);
+		}
 		
+		this.currentWeek.setText(this.currDay.toString());
+		
+		this.revalidate();
+		this.repaint();
 	}
 	
 	private void setGridBag(GridBagConstraints c, double weightx, double weighty, int width, int height, int gridx, int gridy) {
@@ -105,10 +175,13 @@ public class MainPage extends JPanel{
 		c.gridy = gridy;
 	}
 	
-	public void addClasses(List<Course> courses) {
+	public void addClasses(Calendar calendar2) {
+		this.calendar = calendar2;
 		GridBagConstraints c5 = new GridBagConstraints();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		System.out.println(this.startDay.format(formatter));
 		int i = 0;
-		for (Course course : courses) {
+		for (Course course : this.calendar.getCourseFromAToB(this.startDay.format(formatter), this.endDay.format(formatter))) {
 			for(Tuple<String> block: course.getIntervalList()) {
 				JButton button = new CourseButton(course, i, block);
 				c5.fill = GridBagConstraints.BOTH;
