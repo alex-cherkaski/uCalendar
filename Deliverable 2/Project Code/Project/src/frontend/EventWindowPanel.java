@@ -94,7 +94,7 @@ public class EventWindowPanel extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				if(timeStartFromBox.getSelectedIndex() < timeEndBox.getSelectedIndex()) {
 					
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 					String startDate = mainPage.getStartDay().format(formatter);
 					String endDate = mainPage.getEndDay().format(formatter);
 					

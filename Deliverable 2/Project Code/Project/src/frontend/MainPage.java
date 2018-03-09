@@ -1,5 +1,6 @@
 package frontend;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -22,6 +24,7 @@ import calendar.Calendar;
 import course.Course;
 import event.Event;
 import tuple.Tuple;
+import utilities.CalendarFunctions;
 
 @SuppressWarnings("serial")
 public class MainPage extends JPanel{
@@ -42,6 +45,7 @@ public class MainPage extends JPanel{
 	private ArrayList<EventButton> eventButtons;
 
 	public MainPage() {
+		this.calendar = new Calendar(new ArrayList<Course>(), new ArrayList<Event>());
 		this.courseButtons = new ArrayList<CourseButton>();
 		this.eventButtons = new ArrayList<EventButton>();
 		this.setLayout(new GridBagLayout());
@@ -98,7 +102,7 @@ public class MainPage extends JPanel{
 				
 				updateWeek();
 				if(!courseButtons.isEmpty()) {
-					updateDisplayCourseAndEventButton();
+					updateDisplayEventButton();
 				}
 				
 			}
@@ -115,7 +119,7 @@ public class MainPage extends JPanel{
 				
 				updateWeek();
 				if(!courseButtons.isEmpty()) {
-					updateDisplayCourseAndEventButton();
+					updateDisplayEventButton();
 				}
 			}
 			
@@ -147,11 +151,11 @@ public class MainPage extends JPanel{
 		this.timeY.put("21:00", 15);
 		
 		GridBagConstraints c3 = new GridBagConstraints();
-		int y = this.startDay.getDayOfMonth();
+		LocalDate y = this.startDay;
 		
 		for(int i = 0; i < 7; i++) {
-			this.dayLabel[i] = new JLabel(String.format("<html>" + days[i] + "<br>" + "<center>" + y + "</center>" + "</html>"), SwingConstants.CENTER);
-			y++;
+			this.dayLabel[i] = new JLabel(String.format("<html>" + days[i] + "<br>" + "<center>" + y.getDayOfMonth() + "</center>" + "</html>"), SwingConstants.CENTER);
+			y = y.plusDays(1);
 			c3.fill = GridBagConstraints.BOTH;
 			setGridBag(c3, 1, 1, 1, 1, i + 1, 2);
 			this.dayX.put(days[i], i + 1);
@@ -165,10 +169,11 @@ public class MainPage extends JPanel{
 	
 	private void updateWeek() {
 		GridBagConstraints c = new GridBagConstraints();
-		int y = this.startDay.getDayOfMonth();
+		LocalDate y = this.startDay;
 		for(int i = 0; i < 7; i++) {
-			this.dayLabel[i].setText(String.format("<html>" + days[i] + "<br>" + "<center>" + y + "</center>" + "</html>"));
-			y++;
+			this.dayLabel[i].setText(String.format("<html>" + days[i] + "<br>" + "<center>" + y.getDayOfMonth() + "</center>" + "</html>"));
+			y = y.plusDays(1);
+			System.out.println(this.startDay);
 			c.fill = GridBagConstraints.BOTH;
 			setGridBag(c, 1, 1, 1, 1, i + 1, 2);
 			this.dayX.put(days[i], i + 1);
@@ -191,35 +196,18 @@ public class MainPage extends JPanel{
 	}
 	
 	public void addClasses(Calendar calendar2) {
+		List<Event> eventList = this.calendar.getEventList();
 		this.calendar = calendar2;
-		updateDisplayCourseAndEventButton();
+		for(Event event: eventList) {
+			this.calendar.addEvent(event);
+		}
 		
-	}
-	
-	public void addEvent(Event event) {
-		this.calendar.addEvent(event);
-		updateDisplayCourseAndEventButton();
-	}
-	
-	private void updateDisplayCourseAndEventButton() {
 		GridBagConstraints c5 = new GridBagConstraints();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		
-		for(CourseButton button: this.courseButtons) {
-			this.remove(button);
-		}
-		
-		for(EventButton button: this.eventButtons) {
-			this.remove(button);
-		}
-		
-		this.courseButtons.clear();
-		this.eventButtons.clear();
-
 		int i = 0;
 		for (Course course : this.calendar.getCourseList()) {
-			for(Tuple<String> block: course.getCourseFromAToB(this.startDay.format(formatter), this.endDay.format(formatter))) {
-				CourseButton button = new CourseButton(course, i);
+			for(Tuple<String> block: course.getIntervalList()) {
+				CourseButton button = new CourseButton(course, i, block);
 				c5.fill = GridBagConstraints.BOTH;
 				c5.weightx = 0;
 				c5.weighty = 0;
@@ -232,33 +220,72 @@ public class MainPage extends JPanel{
 			i++;
 		}
 		
-		for (Event event : this.calendar.getEventList()) {
-			for(Tuple<String> block: event.getIntervalList()) {
-				EventButton button = new EventButton(event);
-				c5.fill = GridBagConstraints.BOTH;
-				c5.weightx = 0;
-				c5.weighty = 0;
-				c5.gridheight = this.getTimeY().get(block.getItem2()) - this.getTimeY().get(block.getItem1());
-				c5.gridx = this.getDayX().get(block.getItem3());
-				c5.gridy = this.getTimeY().get(block.getItem1());
-				this.add(button, c5);
-				this.eventButtons.add(button);
+		updateDisplayEventButton();
+		
+	}
+	
+	public void addEvent(Event event) {
+		this.calendar.addEvent(event);
+		
+		updateDisplayEventButton();
+
+	}
+	
+	private void updateDisplayEventButton() {
+		GridBagConstraints c5 = new GridBagConstraints();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		
+		for(EventButton button: this.eventButtons) {
+			this.remove(button);
+		}
+
+		this.eventButtons.clear();
+		
+		List<Tuple<String>> conflicts = CalendarFunctions.calendarConflict(this.calendar);
+		
+		for(Tuple<String> block: this.calendar.getCourseFromAToB(this.startDay.format(formatter), this.endDay.format(formatter))) {
+			EventButton button = new EventButton(event);
+			if(conflicts != null && conflicts.contains(block)) {
+				button.setBackground(Color.red);
+			}
+			c5.fill = GridBagConstraints.BOTH;
+			c5.weightx = 0;
+			c5.weighty = 0;
+			c5.gridheight = this.getTimeY().get(block.getItem2()) - this.getTimeY().get(block.getItem1());
+			c5.gridx = this.getDayX().get(block.getItem3());
+			c5.gridy = this.getTimeY().get(block.getItem1());
+			this.add(button, c5);
+			this.eventButtons.add(button);
+		}
+		
+		for(CourseButton button: this.courseButtons) {
+			if(conflicts != null && conflicts.contains(button.getBlock())) {
+				button.setBackground(Color.red);
 			}
 		}
 		
-		
 		this.revalidate();
 		this.repaint();
 	}
 	
-	public void deleteCourse(CourseButton button) {
-		this.remove(button);
+	public void deleteCourse(Course course) {
+		for(CourseButton button: this.courseButtons) {
+			if(button.getCourse().equals(course)) {
+				this.remove(button);
+			}
+		}
+		this.calendar.removeCourse(course);
 		this.revalidate();
 		this.repaint();
 	}
 	
-	public void deleteEvent(EventButton button) {
-		this.remove(button);
+	public void deleteEvent(Event event) {
+		for(EventButton button: this.eventButtons) {
+			if(button.getEvent().equals(event)) {
+				this.remove(button);
+			}
+		}
+		this.calendar.removeEvent(event);
 		this.revalidate();
 		this.repaint();
 	}

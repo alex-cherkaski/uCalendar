@@ -22,9 +22,13 @@ public class EventButton extends JButton {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				FrontendStartup.switchEventPage(event, EventButton.this);
+				FrontendStartup.switchEventPage(event);
 			}
 			
 		});
+	}
+	
+	public Event getEvent() {
+		return this.event;
 	}
 }

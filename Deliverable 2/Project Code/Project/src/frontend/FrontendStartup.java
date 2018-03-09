@@ -21,23 +21,23 @@ public class FrontendStartup {
 	private static CoursePage course;
 	private static EventPage event;
 	
-	public static void switchCoursePage(Course c, CourseButton courseButton) {
+	public static void switchCoursePage(Course c) {
 		layout.show(cards, "course panel");
-		course.setCourse(c, courseButton);
+		course.setCourse(c);
 	}
 	
-	public static void deleteCourseAndSwitch(CourseButton button) {
-		main.deleteCourse(button);
+	public static void deleteCourseAndSwitch(Course course) {
+		main.deleteCourse(course);
 		switchMainPage();
 	}
 	
-	public static void switchEventPage(Event c, EventButton eventButton) {
+	public static void switchEventPage(Event c) {
 		layout.show(cards, "event panel");
-		event.setEvent(c, eventButton);
+		event.setEvent(c);
 	}
 	
-	public static void deleteEventAndSwitch(EventButton button) {
-		main.deleteEvent(button);
+	public static void deleteEventAndSwitch(Event event) {
+		main.deleteEvent(event);
 		switchMainPage();
 	}
 	

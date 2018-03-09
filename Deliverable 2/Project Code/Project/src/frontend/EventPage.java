@@ -31,7 +31,6 @@ public class EventPage extends JPanel{
 	private JButton deleteEvent;
 	private JButton previous;
 	private JLabel description;
-	private EventButton currentButton;
 	
 	public EventPage() {
 		this.setLayout(new GridBagLayout());
@@ -89,7 +88,7 @@ public class EventPage extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				FrontendStartup.deleteEventAndSwitch(currentButton);
+				FrontendStartup.deleteEventAndSwitch(event);
 			}
 			
 		});
@@ -104,10 +103,9 @@ public class EventPage extends JPanel{
 		c.gridy = gridy;
 	}
 	
-	public void setEvent(Event event, EventButton eventButton) {
+	public void setEvent(Event event) {
 		this.event = event;
 		this.description.setText(this.event.getName());
-		this.currentButton = eventButton;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		updateListModel(LocalDate.now().format(formatter));
 	}

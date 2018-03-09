@@ -28,7 +28,6 @@ public class CoursePage extends JPanel {
 	private JButton previous;
 	private JLabel description;
 	private JPanel displayPanel;
-	private CourseButton currentButton;
 	private DefaultListModel<Note> listModel;
 	private JList<Note> list;
 	private JScrollPane scrollPanel;
@@ -89,7 +88,7 @@ public class CoursePage extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				FrontendStartup.deleteCourseAndSwitch(currentButton);
+				FrontendStartup.deleteCourseAndSwitch(course);
 			}
 			
 		});
@@ -104,10 +103,9 @@ public class CoursePage extends JPanel {
 		c.gridy = gridy;
 	}
 	
-	public void setCourse(Course course, CourseButton courseButton) {
+	public void setCourse(Course course) {
 		this.course = course;
 		this.description.setText(this.course.getCourseCode());
-		this.currentButton = courseButton;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		updateListModel(LocalDate.now().format(formatter));
 	}
