@@ -75,10 +75,12 @@ public class EventWindowPanel extends JPanel{
 		
 		JLabel toLabel2 = new JLabel("To:");
 		toLabel2.setBounds(320,250,30,30);
+		toLabel2.setVisible(false);
 		this.add(toLabel2);
 		
 		JComboBox<String> dateEndBox = new JComboBox<String>(days);
 		dateEndBox.setBounds(350,250,100,30);
+		dateEndBox.setVisible(false);
 		this.add(dateEndBox);
 		
 		String[] repeatList = {"NEVER", "DAILY", "WEEKLY", "MONTHLY"};
@@ -92,13 +94,34 @@ public class EventWindowPanel extends JPanel{
 		repeatBox.setBounds(200,300,250,30);
 		this.add(repeatBox);
 		
+		repeatBox.addItemListener(new ItemListener(){
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(repeatBox.getSelectedItem().toString().equals("NEVER")){
+					toLabel2.setVisible(false);
+					dateEndBox.setVisible(false);
+				}else if(repeatBox.getSelectedItem().toString().equals("DAILY")){
+					toLabel2.setVisible(true);
+					dateEndBox.setVisible(true);
+				}else if(repeatBox.getSelectedItem().toString().equals("WEEKLY")){
+					toLabel2.setVisible(false);
+					dateEndBox.setVisible(false);
+				}else if(repeatBox.getSelectedItem().toString().equals("MONTHLY")){
+					toLabel2.setVisible(false);
+					dateEndBox.setVisible(false);
+				}
+			}
+			
+		});
+		
 		JButton confirmButton = new JButton("Confirm");
 		confirmButton.setBounds(200, 400, 100, 30);
 		confirmButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(timeStartFromBox.getSelectedIndex() < timeEndBox.getSelectedIndex()) {
+				if(timeStartFromBox.getSelectedIndex() < timeEndBox.getSelectedIndex() && !nameTextBox.getText().equals("")) {
 					
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 					int start = Arrays.asList(days2).indexOf((mainPage.getStartDay().getDayOfWeek().toString()));
@@ -106,11 +129,14 @@ public class EventWindowPanel extends JPanel{
 					int end = Arrays.asList(days2).indexOf((mainPage.getEndDay().getDayOfWeek().toString()));
 					int end2 = CalendarFunctions.day(dateEndBox.getSelectedItem().toString());
 					
-					LocalDate startDate = mainPage.getStartDay();
-					LocalDate endDate = mainPage.getEndDay();
+					LocalDate weekStartDate = mainPage.getStartDay();
+					LocalDate weekEndDate = mainPage.getEndDay();
 					
-					String startDateString = startDate.plusDays(start2 - start).format(formatter);
-					String endDateString = endDate.minusDays(end - end2).format(formatter);
+					LocalDate startDate = weekStartDate.plusDays(start2 - start);
+					LocalDate endDate = weekEndDate.minusDays(end - end2);
+					
+					String startDateString = startDate.format(formatter);
+					String endDateString = endDate.format(formatter);
 					
 					if(repeatBox.getSelectedItem().toString().equals("DAILY")){
 						Event event = new Event(repeatBox.getSelectedItem().toString(), startDateString, endDateString);
@@ -120,9 +146,29 @@ public class EventWindowPanel extends JPanel{
 						}
 						mainPage.addEvent(event);
 					}else if(repeatBox.getSelectedItem().toString().equals("WEEKLY")){
-						
+						while(startDate.getDayOfYear() < 365){
+							Event event = new Event(repeatBox.getSelectedItem().toString(), startDate.format(formatter), endDate.format(formatter));
+							event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
+							event.setName(nameTextBox.getText());
+							mainPage.addEvent(event);
+							startDate = startDate.plusWeeks(1);
+							endDate = endDate.plusWeeks(1);
+							if(startDate.getDayOfYear() + 7 > 365){
+								break;
+							}
+						}
 					}else if(repeatBox.getSelectedItem().toString().equals("MONTHLY")){
-						
+						while(startDate.getMonthValue() < 13){
+							Event event = new Event(repeatBox.getSelectedItem().toString(), startDate.format(formatter), endDate.format(formatter));
+							event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
+							event.setName(nameTextBox.getText());
+							mainPage.addEvent(event);
+							startDate = startDate.plusMonths(1);
+							endDate = endDate.plusMonths(1);
+							if(startDate.getMonthValue() == 12){
+								break;
+							}
+						}
 					}else{
 						Event event = new Event(repeatBox.getSelectedItem().toString(), startDateString, endDateString);
 						event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
