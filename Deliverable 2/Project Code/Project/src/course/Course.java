@@ -121,8 +121,8 @@ public class Course {
 	 * Dates are in the form of DD-MM-YYYY and will return a list of all courses between
 	 * the 2 given dates. 
 	 */
-	public ArrayList<CalendarBlock> getCourseFromAToB(String start, String end) {
-		ArrayList<CalendarBlock> result = new ArrayList<CalendarBlock>();
+	public List<Tuple<String>> getCourseFromAToB(String start, String end) {	
+		List<CalendarBlock> selection = new ArrayList<CalendarBlock>();
 		int startMonth = Integer.parseInt(start.substring(3, 5));
 		int endMonth = Integer.parseInt(end.substring(3, 5));
 		int startDate = Integer.parseInt(start.substring(0, 2));
@@ -138,21 +138,21 @@ public class Course {
 			if(courseYear == year) {
 				if(startMonth == endMonth) {
 					if((courseMonth == startMonth) && (courseDate > startDate - 1) &&  (courseDate < endDate + 1)) {
-						result.add(x);
+						selection.add(x);
 					}
 				} else {
 					if(courseMonth == startMonth) {
 						if(courseDate > startDate - 1) {
-							result.add(x);
+							selection.add(x);
 						}
 					} else if(courseMonth == endMonth) {
 						if(courseDate < endDate + 1) {
-							result.add(x);
+							selection.add(x);
 						}
 					}	
 				}
 			}
 		}
-		return result;
+		return this.constructIntervals(selection);
 	}
 }
