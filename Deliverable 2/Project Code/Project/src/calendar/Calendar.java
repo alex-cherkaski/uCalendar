@@ -115,7 +115,9 @@ public class Calendar implements java.io.Serializable {
 		int courseMonth;
 		int courseYear;
 		for(Course course : this.courseList) {
+			System.out.println(course.getCourseCode());
 			for(CalendarBlock block : course.getBlockList()) {
+				System.out.println(block.getStartDate());
 				courseDate = Integer.parseInt(block.getStartDate().substring(6));
 				courseMonth = Integer.parseInt(block.getStartDate().substring(4, 6));
 				courseYear = Integer.parseInt(block.getStartDate().substring(0,4));

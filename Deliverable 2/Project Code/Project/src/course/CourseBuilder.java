@@ -14,21 +14,28 @@ public class CourseBuilder {
 	 */
 	public static List<Course> getCourseMap(List<CalendarBlock> blockList) {
 		List<Course> courseList = new ArrayList<Course>();
-		List<CalendarBlock> courseBlocks = new ArrayList<CalendarBlock>();
-		CalendarBlock previousBlock = blockList.get(0);
-		for (CalendarBlock block : blockList) {
-			if (block.getCode().equals(previousBlock.getCode())) {
+		for(CalendarBlock block : blockList) {
+			if(courseList.isEmpty()) {
+				List<CalendarBlock> courseBlocks = new ArrayList<CalendarBlock>();
 				courseBlocks.add(block);
-			}
-			else {
 				courseList.add(new Course(courseBlocks));
-				courseBlocks.clear();
-				courseBlocks.add(block);
-			}
-			previousBlock = block;
+			} else {
+				int found = 0;
+				for(Course curr : courseList) {
+
+					if(curr.getBlockList().get(0).getCode().equals(block.getCode())) {
+						found = 1;
+						curr.addNewBlock(block);
+					}
+				}
+				
+				if(found != 1) {
+					List<CalendarBlock> courseBlocks = new ArrayList<CalendarBlock>();
+					courseBlocks.add(block);
+					courseList.add(new Course(courseBlocks));
+				}
+ 			}
 		}
-		// Last set of calendar blocks never gets added.
-		courseList.add(new Course(courseBlocks));
 		return courseList;
 	}
 }

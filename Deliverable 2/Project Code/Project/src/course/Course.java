@@ -120,4 +120,8 @@ public class Course {
 	public List<CalendarBlock> getBlockList() {
 		return this.blockList;
 	}
+	
+	public void addNewBlock(CalendarBlock block) {
+		this.blockList.add(block);
+	}
 }

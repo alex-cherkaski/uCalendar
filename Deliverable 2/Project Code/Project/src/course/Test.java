@@ -9,13 +9,16 @@ import tuple.Tuple;
 public class Test {
 
 	public static void main(String[] args) {
-		String filePath = "C:\\Users\\user\\Desktop\\coursesCalendar.ics";
+		String filePath = "/home/dicky/Downloads/coursesCalendar.ics";
 		List<CalendarBlock> blockList = Parser.getCalendarBlocks(filePath);
 		List<Course> courseList = CourseBuilder.getCourseMap(blockList);
 		for (Course course : courseList) {
 			System.out.println(course.toString());
 			for (Tuple<String> tuple : course.getIntervalList()) {
 				System.out.println(tuple.toString());
+			}
+			for(CalendarBlock block : course.getBlockList()) {
+				System.out.println(block.getStartDate());
 			}
 		}
 	}
