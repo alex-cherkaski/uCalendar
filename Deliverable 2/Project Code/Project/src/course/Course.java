@@ -54,7 +54,7 @@ public class Course {
 	 * @param time a string object representing time in the format HHMMSS.
 	 * @return a string object in the format representing time in the format HH:MM. 
 	 */
-	private String formatTime(String time) {
+	public String formatTime(String time) {
 		// "160000" -> "16:00"
 		StringBuilder strBuilder = new StringBuilder();
 		strBuilder.append(time.substring(0, 2));
