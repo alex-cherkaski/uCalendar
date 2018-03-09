@@ -87,68 +87,78 @@ public class Calendar implements java.io.Serializable {
 	}
 	
 	/*
-	 * Dates are in the form of YYYYMMDD and will return a list of all courses between
+	 * Dates are in the form of DD-MM-YYYY and will return a list of all courses between
 	 * the 2 given dates. 
 	 */
 	public ArrayList<Course> getCourseFromAToB(String start, String end) {
 		ArrayList<Course> result = new ArrayList<Course>();
-		int startMonth = Integer.parseInt(start.substring(4, 6));
-		int endMonth = Integer.parseInt(end.substring(4, 6));
-		int startDate = Integer.parseInt(start.substring(6));
-		int endDate = Integer.parseInt(end.substring(6));
+		int startMonth = Integer.parseInt(start.substring(3, 5));
+		int endMonth = Integer.parseInt(end.substring(3, 5));
+		int startDate = Integer.parseInt(start.substring(0, 2));
+		int endDate = Integer.parseInt(end.substring(0, 2));
+		int year = Integer.parseInt(start.substring(6));
 		int courseDate;
 		int courseMonth;
+		int courseYear;
 		for(Course x: this.courseList) {
-			courseDate = Integer.parseInt(x.getStartDate().substring(6));
-			courseMonth = Integer.parseInt(x.getStartDate().substring(4, 6));
-			if(startMonth == endMonth) {
-				if((courseMonth == startMonth) && (courseDate > startDate - 1) &&  (courseDate < endDate + 1)) {
-					result.add(x);
+			courseDate = Integer.parseInt(x.getStartDate().substring(0, 2));
+			courseMonth = Integer.parseInt(x.getStartDate().substring(3, 5));
+			courseYear = Integer.parseInt(x.getStartDate().substring(6));
+			if(courseYear == year) {
+				if(startMonth == endMonth) {
+					if((courseMonth == startMonth) && (courseDate > startDate - 1) &&  (courseDate < endDate + 1)) {
+						result.add(x);
+					}
+				} else {
+					if(courseMonth == startMonth) {
+						if(courseDate > startDate - 1) {
+							result.add(x);
+						}
+					} else if(courseMonth == endMonth) {
+						if(courseDate < endDate + 1) {
+							result.add(x);
+						}
+					}	
 				}
-			} else {
-				if(courseMonth == startMonth) {
-					if(courseDate > startDate - 1) {
-						result.add(x);
-					}
-				} else if(courseMonth == endMonth) {
-					if(courseDate < endDate + 1) {
-						result.add(x);
-					}
-				}	
 			}
 		}
 		return result;
 	}
 	
 	/*
-	 * Dates are in the form of YYYYMMDD and will return a list of all events between
+	 * Dates are in the form of DD-MM-YYYY and will return a list of all events between
 	 * the 2 given dates. 
 	 */
 	public ArrayList<Event> getEventFromAToB(String start, String end) {
 		ArrayList<Event> result = new ArrayList<Event>();
-		int startMonth = Integer.parseInt(start.substring(4, 6));
-		int endMonth = Integer.parseInt(end.substring(4, 6));
-		int startDate = Integer.parseInt(start.substring(6));
-		int endDate = Integer.parseInt(end.substring(6));
-		int courseDate;
-		int courseMonth;
+		int startMonth = Integer.parseInt(start.substring(3, 5));
+		int endMonth = Integer.parseInt(end.substring(3, 5));
+		int startDate = Integer.parseInt(start.substring(0, 2));
+		int endDate = Integer.parseInt(end.substring(0, 2));
+		int year = Integer.parseInt(start.substring(6));
+		int eventDate;
+		int eventMonth;
+		int eventYear;
 		for(Event x: this.eventList) {
-			courseDate = Integer.parseInt(x.getStartDate().substring(6));
-			courseMonth = Integer.parseInt(x.getStartDate().substring(4, 6));
-			if(startMonth == endMonth) {
-				if((courseMonth == startMonth) && (courseDate > startDate - 1) &&  (courseDate < endDate + 1)) {
-					result.add(x);
+			eventDate = Integer.parseInt(x.getStartDate().substring(0, 2));
+			eventMonth = Integer.parseInt(x.getStartDate().substring(3, 5));
+			eventYear = Integer.parseInt(x.getStartDate().substring(6));
+			if(eventYear == year) {
+				if(startMonth == endMonth) {
+					if((eventMonth == startMonth) && (eventDate > startDate - 1) &&  (eventDate < endDate + 1)) {
+						result.add(x);
+					}
+				} else {
+					if(eventMonth == startMonth) {
+						if(eventDate > startDate - 1) {
+							result.add(x);
+						}
+					} else if(eventMonth == endMonth) {
+						if(eventDate < endDate + 1) {
+							result.add(x);
+						}
+					}	
 				}
-			} else {
-				if(courseMonth == startMonth) {
-					if(courseDate > startDate - 1) {
-						result.add(x);
-					}
-				} else if(courseMonth == endMonth) {
-					if(courseDate < endDate + 1) {
-						result.add(x);
-					}
-				}	
 			}
 		}
 		return result;
