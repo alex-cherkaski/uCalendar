@@ -159,6 +159,10 @@ public class MainPage extends JPanel{
 		}
 	}
 	
+	public void updateCurrentTime(){
+		this.currDay = LocalDate.now();
+	}
+	
 	private void updateWeek() {
 		GridBagConstraints c = new GridBagConstraints();
 		int y = this.startDay.getDayOfMonth();
