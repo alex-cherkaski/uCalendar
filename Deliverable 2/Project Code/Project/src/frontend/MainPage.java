@@ -269,11 +269,11 @@ public class MainPage extends JPanel{
 		return this.dayX;
 	}
 	
-	public LocalDate getStartDate() {
+	public LocalDate getStartDay() {
 		return this.startDay;
 	}
 	
-	public LocalDate getEndDate() {
+	public LocalDate getEndDay() {
 		return this.endDay;
 	}
 	
