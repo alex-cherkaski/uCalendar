@@ -2,6 +2,9 @@ package frontend;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
@@ -103,13 +106,29 @@ public class EventWindowPanel extends JPanel{
 					int end = Arrays.asList(days2).indexOf((mainPage.getEndDay().getDayOfWeek().toString()));
 					int end2 = CalendarFunctions.day(dateEndBox.getSelectedItem().toString());
 					
-					String startDate = mainPage.getStartDay().plusDays(start2 - start).format(formatter);
-					String endDate = mainPage.getEndDay().minusDays(end - end2).format(formatter);
+					LocalDate startDate = mainPage.getStartDay();
+					LocalDate endDate = mainPage.getEndDay();
 					
-					Event event = new Event(repeatBox.getSelectedItem().toString(), startDate, endDate);
-					event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
-					event.setName(nameTextBox.getText());
-					mainPage.addEvent(event);
+					String startDateString = startDate.plusDays(start2 - start).format(formatter);
+					String endDateString = endDate.minusDays(end - end2).format(formatter);
+					
+					if(repeatBox.getSelectedItem().toString().equals("DAILY")){
+						Event event = new Event(repeatBox.getSelectedItem().toString(), startDateString, endDateString);
+						for(int i = start2; i <= end2; i++){
+							event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), days[i]));
+							event.setName(nameTextBox.getText());
+						}
+						mainPage.addEvent(event);
+					}else if(repeatBox.getSelectedItem().toString().equals("WEEKLY")){
+						
+					}else if(repeatBox.getSelectedItem().toString().equals("MONTHLY")){
+						
+					}else{
+						Event event = new Event(repeatBox.getSelectedItem().toString(), startDateString, endDateString);
+						event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
+						event.setName(nameTextBox.getText());
+						mainPage.addEvent(event);
+					}
 					eventFrame.dispose();
 				}
 			}
