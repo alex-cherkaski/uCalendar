@@ -243,6 +243,7 @@ public class MainPage extends JPanel{
 		
 		List<Tuple<String>> conflicts = CalendarFunctions.calendarConflict(this.calendar);
 		
+		for(Event event: this.calendar.getEventList()){
 		for(Tuple<String> block: this.calendar.getCourseFromAToB(this.startDay.format(formatter), this.endDay.format(formatter))) {
 			EventButton button = new EventButton(event);
 			if(conflicts != null && conflicts.contains(block)) {
@@ -256,6 +257,7 @@ public class MainPage extends JPanel{
 			c5.gridy = this.getTimeY().get(block.getItem1());
 			this.add(button, c5);
 			this.eventButtons.add(button);
+		}
 		}
 		
 		for(CourseButton button: this.courseButtons) {

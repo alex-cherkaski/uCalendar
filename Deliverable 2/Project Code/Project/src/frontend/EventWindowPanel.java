@@ -2,7 +2,10 @@ package frontend;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,7 +20,10 @@ import tuple.Tuple;
 
 @SuppressWarnings("serial")
 public class EventWindowPanel extends JPanel{
-
+	
+	private String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+	private String[] days2 = {"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
+	
 	public EventWindowPanel(MainPage mainPage, JFrame eventFrame) {
 		this.setLayout(null);
 		
@@ -61,8 +67,6 @@ public class EventWindowPanel extends JPanel{
 		dayLabel.setBounds(50,250,100,30);
 		this.add(dayLabel);
 		
-		 String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-		
 		JComboBox<String> dateStartFromBox = new JComboBox<String>(days);
 		dateStartFromBox.setBounds(200,250,100,30);
 		this.add(dateStartFromBox);
@@ -95,8 +99,15 @@ public class EventWindowPanel extends JPanel{
 				if(timeStartFromBox.getSelectedIndex() < timeEndBox.getSelectedIndex()) {
 					
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-					String startDate = mainPage.getStartDay().format(formatter);
-					String endDate = mainPage.getEndDay().format(formatter);
+					int start = Arrays.asList(days2).indexOf((mainPage.getStartDay().getDayOfWeek().toString()));
+					int start2 = Arrays.asList(days).indexOf((dateStartFromBox.getSelectedItem()));
+					int end = Arrays.asList(days2).indexOf((mainPage.getEndDay().getDayOfWeek().toString()));
+					int end2 = Arrays.asList(days).indexOf((dateEndBox.getSelectedItem()));
+					
+					String startDate = mainPage.getStartDay().plusDays(start2 - start).format(formatter);
+					String endDate = mainPage.getEndDay().minusDays(end - end2).format(formatter);
+					
+					System.out.println(startDate + endDate);
 					
 					Event event = new Event(repeatBox.getSelectedItem().toString(), startDate, endDate);
 					event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
