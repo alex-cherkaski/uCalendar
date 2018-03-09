@@ -147,8 +147,8 @@ public class Calendar implements java.io.Serializable {
 	 * Dates are in the form of DD-MM-YYYY and will return a list of all events between
 	 * the 2 given dates. 
 	 */
-	public List<Tuple<String>> getEventFromAToB(String start, String end) {
-		List<Tuple<String>> result = new ArrayList<Tuple<String>>();
+	public List<Event> getEventFromAToB(String start, String end) {
+		List<Event> result = new ArrayList<Event>();
 		int startMonth = Integer.parseInt(start.substring(3, 5));
 		int endMonth = Integer.parseInt(end.substring(3, 5));
 		int startDate = Integer.parseInt(start.substring(0, 2));
@@ -157,23 +157,23 @@ public class Calendar implements java.io.Serializable {
 		int eventDate;
 		int eventMonth;
 		int eventYear;
-		for(Event x : this.eventList) {
-			eventDate = Integer.parseInt(x.getStartDate().substring(0, 2));
-			eventMonth = Integer.parseInt(x.getStartDate().substring(3, 5));
-			eventYear = Integer.parseInt(x.getStartDate().substring(6));
+		for(Event event : this.eventList) {
+			eventDate = Integer.parseInt(event.getStartDate().substring(0, 2));
+			eventMonth = Integer.parseInt(event.getStartDate().substring(3, 5));
+			eventYear = Integer.parseInt(event.getStartDate().substring(6));
 			if(eventYear == year) {
 				if(startMonth == endMonth) {
 					if((eventMonth == startMonth) && (eventDate > startDate - 1) &&  (eventDate < endDate + 1)) {
-						result.add(x.getIntervalList().get(0));
+						result.add(event);
 					}
 				} else {
 					if(eventMonth == startMonth) {
 						if(eventDate > startDate - 1) {
-							result.add(x.getIntervalList().get(0));
+							result.add(event);
 						}
 					} else if(eventMonth == endMonth) {
 						if(eventDate < endDate + 1) {
-							result.add(x.getIntervalList().get(0));
+							result.add(event);
 						}
 					}	
 				}
