@@ -2,6 +2,7 @@ package frontend;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -93,11 +94,15 @@ public class EventWindowPanel extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				if(timeStartFromBox.getSelectedIndex() < timeEndBox.getSelectedIndex()) {
 					
-				Event event = new Event(repeatBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString(), dateEndBox.getSelectedItem().toString());
-				event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
-				event.setName(nameTextBox.getText());
-				mainPage.addEvent(event);
-				eventFrame.dispose();
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+					String startDate = mainPage.getStartDay().format(formatter);
+					String endDate = mainPage.getEndDay().format(formatter);
+					
+					Event event = new Event(repeatBox.getSelectedItem().toString(), startDate, endDate);
+					event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
+					event.setName(nameTextBox.getText());
+					mainPage.addEvent(event);
+					eventFrame.dispose();
 				}
 			}
 		});
