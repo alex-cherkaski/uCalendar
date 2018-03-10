@@ -101,6 +101,9 @@ public class Calendar implements java.io.Serializable {
 		return stringBuilder.toString();
 	}
 	
+	/*
+	 * Will show all the events that are populated in a specific calendar in alphabetical order.
+	 */
 	public void sortEventsByName() {
 		for (int i = 1; i < this.eventList.size(); i++) {
 			for (int j = 0; j < (this.eventList.size() - i); j++) {
