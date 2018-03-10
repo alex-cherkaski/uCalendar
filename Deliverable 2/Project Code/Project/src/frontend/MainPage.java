@@ -65,12 +65,12 @@ public class MainPage extends JPanel{
 		
 		this.previous = new PreviousButton();
 		c1.fill = GridBagConstraints.BOTH;
-		setGridBag(c1, 0.5, 0, 1, 1, 0, 1);
+		setGridBag(c1, 1, 0, 1, 1, 0, 1);
 		this.add(this.previous, c1);
 		
 		this.next = new NextButton();
 		c1.fill = GridBagConstraints.BOTH;
-		setGridBag(c1, 0.5, 0, 1, 1, 7, 1);
+		setGridBag(c1, 1, 0, 1, 1, 7, 1);
 		this.add(this.next, c1);
 		
 		this.currDay = LocalDate.now();
@@ -87,16 +87,15 @@ public class MainPage extends JPanel{
 	    	startDay = startDay.minusDays(1);
 	    }
 		
-		this.currentWeek = new JLabel(this.currDay.toString(), SwingConstants.CENTER);
+		this.currentWeek = new JLabel("Current Date: " + this.currDay.toString(), SwingConstants.CENTER);
 		c1.fill = GridBagConstraints.BOTH;
-		setGridBag(c1, 1, 0, 5, 1, 1, 1);
+		setGridBag(c1, 1, 0, 6, 1, 1, 1);
 		this.add(this.currentWeek, c1);
 		
 		this.next.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				currDay = currDay.plusWeeks(1);
 				startDay = startDay.plusWeeks(1);
 				endDay = endDay.plusWeeks(1);
 				
@@ -111,7 +110,6 @@ public class MainPage extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				currDay = currDay.minusWeeks(1);
 				startDay = startDay.minusWeeks(1);
 				endDay = endDay.minusWeeks(1);
 				
@@ -164,10 +162,6 @@ public class MainPage extends JPanel{
 		}
 	}
 	
-	public void updateCurrentTime(){
-		this.currDay = LocalDate.now();
-	}
-	
 	private void updateWeek() {
 		GridBagConstraints c = new GridBagConstraints();
 		LocalDate y = this.startDay;
@@ -179,8 +173,6 @@ public class MainPage extends JPanel{
 			this.dayX.put(days[i], i + 1);
 			this.add(dayLabel[i], c);
 		}
-		
-		this.currentWeek.setText(this.currDay.toString());
 		
 		this.revalidate();
 		this.repaint();
@@ -319,9 +311,5 @@ public class MainPage extends JPanel{
 	
 	public LocalDate getEndDay() {
 		return this.endDay;
-	}
-	
-	public LocalDate getCurrentDate() {
-		return this.currDay;
 	}
 }
