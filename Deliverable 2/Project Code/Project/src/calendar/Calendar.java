@@ -2,6 +2,7 @@ package calendar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import course.Course;
@@ -98,6 +99,16 @@ public class Calendar implements java.io.Serializable {
 		stringBuilder.append("Events: ");
 		stringBuilder.append(Arrays.toString(this.eventList.toArray()));
 		return stringBuilder.toString();
+	}
+	
+	public void sortEventsByName() {
+		for (int i = 1; i < this.eventList.size(); i++) {
+			for (int j = 0; j < (this.eventList.size() - i); j++) {
+				if (this.eventList.get(j).getName().compareTo(this.eventList.get(j + 1).getName()) > 0) {
+					Collections.swap(this.eventList, j, j + 1);
+				}
+			}
+		}
 	}
 	
 	/*
