@@ -48,6 +48,10 @@ public class Note {
 	public String getNote() {
 		return note;
 	}
+	
+	public int getThisNoteID() {
+		return this.thisNoteID;
+	}
 
 	public void setNote(String note) {
 		this.note = note;

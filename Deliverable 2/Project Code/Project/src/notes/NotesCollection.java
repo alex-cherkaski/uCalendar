@@ -34,6 +34,23 @@ public class NotesCollection {
 	}
 	
 	/*
+	 * Return all the notes ordered by their ID.
+	 */
+	public List<Note> getNotesInAplhaOrder() {
+		List<Note> notes= new ArrayList<Note>();
+		for (List<Note> c : this.notesMap.values()) {
+			notes.addAll(c);
+		}
+		for (int i = 1; i < notes.size(); i++) {
+			for (int j = 0; j < (notes.size() - i); j++) {
+				if (notes.get(j).getThisNoteID() > notes.get(j + 1).getThisNoteID()) {
+					Collections.swap(notes, j, j + 1);
+				}
+			}
+		}
+		return notes;
+	}
+	/*
 	 * Deletes the selected note from the set of notes taken on a specific date, if possible.
 	 * @param date A String object representing the date the note was taken.
 	 * @param note The Note object to be deleted.
