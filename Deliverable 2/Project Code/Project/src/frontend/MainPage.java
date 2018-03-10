@@ -140,7 +140,11 @@ public class MainPage extends JPanel{
 			this.timesLabel[i] = new JLabel(s, SwingConstants.CENTER);
 			c2.fill = GridBagConstraints.BOTH;
 			setGridBag(c2, 0.5, 0.5, 1, 1, 0, 3 + i);
-			s = String.format("%d:00", x);
+			if(x == 9) {
+				s = String.format("0%d:00", x);
+			}else {
+				s = String.format("%d:00", x);
+			}
 			this.timeY.put(s, 3 + i);
 			this.add(this.timesLabel[i], c2);
 			x++;
@@ -170,7 +174,6 @@ public class MainPage extends JPanel{
 		for(int i = 0; i < 7; i++) {
 			this.dayLabel[i].setText(String.format("<html>" + days[i] + "<br>" + "<center>" + y.getDayOfMonth() + "</center>" + "</html>"));
 			y = y.plusDays(1);
-			System.out.println(this.startDay);
 			c.fill = GridBagConstraints.BOTH;
 			setGridBag(c, 1, 1, 1, 1, i + 1, 2);
 			this.dayX.put(days[i], i + 1);
@@ -240,11 +243,11 @@ public class MainPage extends JPanel{
 		
 		List<Tuple<String>> conflicts = CalendarFunctions.calendarConflict(this.calendar);
 		
-		
 		for(Event event: this.calendar.getEventFromAToB(this.startDay.format(formatter), this.endDay.format(formatter))) {
 			for(Tuple<String> block: event.getIntervalList()){
 				EventButton button = new EventButton(event);
 				if(conflicts != null && conflicts.contains(block)) {
+					
 					button.setBackground(Color.red);
 				}
 				c5.fill = GridBagConstraints.BOTH;
