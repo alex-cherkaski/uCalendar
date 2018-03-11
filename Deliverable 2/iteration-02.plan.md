@@ -73,11 +73,11 @@ Another goal we have is to implement all the minimum features to allow for note-
 
 #### Artifacts
 
-Interactive mock-ups of the calendar that demonstrates the behaviour and functionality of importing calendar files, adding and removing items on the calendar as well as notes.
-The purpose of this artifact is to clarify and decide on what features should be kept or added before the backend coding begins.
-We also need this to create a MVP, and video demonstration purposes
-It can also be used to better explain the functionality/features that we want to implement going forward.
-Code segments for implemented features that allow basic functionality of the UI.
-The purpose of this artifact is to present how these features will be implemented and to point out any mistakes and hindsights in the logic of the code.
-Statistics about usage of the features that most calendar apps have.
-The purpose of this artifact is to demonstrate that we have implemented the most desirable and useful features while disregarding gimmicky features.
+* Interactive mock-ups of the calendar that demonstrates the behaviour and functionality of importing calendar files, adding and removing items on the calendar as well as notes
+  * The purpose of this artifact is to clarify and decide on what features should be kept or added before the backend coding begins.
+  * We also need this to create a MVP, and video demonstration purposes.
+  * It can also be used to better explain the functionality/features that we want to implement going forward.
+* Code segments for implemented features that allow basic functionality of the UI
+  * The purpose of this artifact is to present how these features will be implemented and to point out any mistakes and hindsights in the logic of the code.
+* Statistics about usage of the features that most calendar apps have
+  * The purpose of this artifact is to demonstrate that we have implemented the most desirable and useful features while disregarding gimmicky features.
