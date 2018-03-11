@@ -73,8 +73,6 @@ Another goal we have is to implement all the minimum features to allow for note-
 
 #### Artifacts
 
-(PICTURES TO BE ADDED AFTER)
-
 Interactive mock-ups of the calendar that demonstrates the behaviour and functionality of importing calendar files, adding and removing items on the calendar as well as notes.
 The purpose of this artifact is to clarify and decide on what features should be kept or added before the backend coding begins.
 We also need this to create a MVP, and video demonstration purposes
