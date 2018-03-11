@@ -13,13 +13,13 @@
 
 Describe the different roles on the team and the responsibilities associated
 
-Nghiem Ly - Front end UI
-Alexander Cherkaski - ACORN .ics parser, CourseBuilder, Classes which hold events/courses/notes for a specific calendar/user
-Dicky Zeng - Calendar Helper Functions, Course Helper functions, Event class additional features
-Mang Yau - File sharing functionality, function to identify calendar time block conflicts
-Christopher Vander Heide - Calendar Helper Functions, function to identify calendar time block conflicts
-Prince Minhas - Event Class, Calendar Helper Functions
-Jordan Tram - Calendar Helper Functions, Functionality to find free time slots in calendar
+* Nghiem Ly - Front end UI
+* Alexander Cherkaski - ACORN .ics parser, CourseBuilder, Classes which hold events/courses/notes for a specific calendar/user
+* Dicky Zeng - Calendar Helper Functions, Course Helper functions, Event class additional features
+* Mang Yau - File sharing functionality, function to identify calendar time block conflicts
+* Christopher Vander Heide - Calendar Helper Functions, function to identify calendar time block conflicts
+* Prince Minhas - Event Class, Calendar Helper Functions
+* Jordan Tram - Calendar Helper Functions, Functionality to find free time slots in calendar
 
 #### Events
 
