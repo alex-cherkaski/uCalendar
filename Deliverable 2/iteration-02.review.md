@@ -40,8 +40,6 @@ We are also planning to have weekly meetings in addition to the tutorial meeting
 
 #### Goals and/or tasks that were met/completed:
 
-(ARTIFACTS TO BE ADDED)
-
 We met our main goal of having a basic front end with multiple navigable views working. We have a working displayable calendar with the ability to move through different weeks and add events (https://i.imgur.com/RZf6ErZ.png, https://i.imgur.com/CkMPhSp.png, https://i.imgur.com/U1JCm0S.png). However, we noticed when creating the video and simulating user flow, we ran into some bugs. For example, we noticed events don’t get added to the calendar if there are no notes added beforehand. Also, if you scroll through enough, a deleted event may re-appear in the calendar. We have composed a document listing the bugs we encountered and need to address for the next iteration.
 
 We had also planned to implemented the ability to parse an .ics file to allow users to import their ACORN calendars. We managed to successfully implement this; we managed to figure out the format of the .ics file and grab important info such as the course name and times (https://i.imgur.com/h5oTRcL.png). We then pass this info into a list of courses that can be displayed on the calendar. 
