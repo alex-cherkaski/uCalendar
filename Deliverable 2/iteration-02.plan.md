@@ -11,8 +11,6 @@
 
 #### Roles & responsibilities
 
-Describe the different roles on the team and the responsibilities associated
-
 * Nghiem Ly - Front end UI
 * Alexander Cherkaski - ACORN .ics parser, CourseBuilder, Classes which hold events/courses/notes for a specific calendar/user
 * Dicky Zeng - Calendar Helper Functions, Course Helper functions, Event class additional features
