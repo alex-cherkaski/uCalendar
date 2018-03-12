@@ -47,7 +47,7 @@ Since no one in the team particularly has experience with google drive it will i
 
 #### Artifacts
 
-We will be using a Trello task board to organize and delegate our tasks (available at https://trello.com/b/M8U3j738). Each list in the task board will represent a certain stage of the software development cycle. We will move each task between stages as we progress. On the task board, we will colour code the tasks based on priority (red = high priority, yellow = medium priority, blue = low priority). We will assess the complexity of each of the tasks and give appropriate due dates. Based on this assessment, we will assign tasks to team members as equally as possible. Additionally, tasks will be assigned based on what each member has been working on (i.e. the member(s) in charge of the Calendar class will be assigned a majority of the tasks related to Calendar functions).
+We will be using a Trello task board to organize and delegate our tasks (see picture below). Each list in the task board will represent a certain stage of the software development cycle. We will move each task between stages as we progress. On the task board, we will colour code the tasks based on priority (red = high priority, yellow = medium priority, blue = low priority). We will assess the complexity of each of the tasks and give appropriate due dates. Based on this assessment, we will assign tasks to team members as equally as possible. Additionally, tasks will be assigned based on what each member has been working on (i.e. the member(s) in charge of the Calendar class will be assigned a majority of the tasks related to Calendar functions).
 
 ![alt text](https://i.imgur.com/MhqgdmI.jpg)
 
