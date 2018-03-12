@@ -48,6 +48,9 @@ Since no one in the team particularly has experience with google drive it will i
 #### Artifacts
 
 We will be using a Trello task board to organize and delegate our tasks (available at https://trello.com/b/M8U3j738). Each list in the task board will represent a certain stage of the software development cycle. We will move each task between stages as we progress. On the task board, we will colour code the tasks based on priority (red = high priority, yellow = medium priority, blue = low priority). We will assess the complexity of each of the tasks and give appropriate due dates. Based on this assessment, we will assign tasks to team members as equally as possible. Additionally, tasks will be assigned based on what each member has been working on (i.e. the member(s) in charge of the Calendar class will be assigned a majority of the tasks related to Calendar functions).
+
+![alt text](https://i.imgur.com/MhqgdmI.jpg)
+
 We will also be using social media websites like Facebook to facilitate more detailed conversations. These are especially useful in scenarios like these where something unexpected could always happen, and require immediate priority/attention. Whether it is someone getting stuck on a function or not having enough time to complete their part. There are always challenges that arise while trying to complete tasks (i.e. coding and design), so Facebook will allow us to constantly be on top of any problem that any team member may have. Within the larger goals that we have set up on Trello, there will definitely be smaller goals that can be derived from them. Facebook will also be useful for these scenarios in terms of handling the priority and distribution of workload of these smaller challenges.
 
 #### Git / GitHub workflow
