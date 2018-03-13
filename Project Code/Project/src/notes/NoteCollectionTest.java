@@ -2,7 +2,7 @@ package notes;
 
 import java.util.Arrays;
 
-public class Test {
+public class NoteCollectionTest {
 	public static void main(String args[]) {
 		NotesCollection noteCollection = new NotesCollection();
 		Note note1 = new Note("CS1");
