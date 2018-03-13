@@ -4,7 +4,8 @@ package tuple;
  * Used to store intervals of the form (start time, end time, day).
  */
 
-public class Tuple<T> {
+public class Tuple<T> implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private T item1;
 	private T item2;
 	private T item3;

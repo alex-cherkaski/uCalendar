@@ -2,7 +2,8 @@ package notes;
 
 import java.util.Date;
 
-public class Note {
+public class Note implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	// Note ID used to distinguish notes.
 	private static int noteID = 0;
 	private int thisNoteID;

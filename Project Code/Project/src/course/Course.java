@@ -8,7 +8,8 @@ import notes.NotesCollection;
 import parser.CalendarBlock;
 import tuple.Tuple;
 
-public class Course {
+public class Course implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private String courseCode;
 	private String startDate;
 	private String endDate;

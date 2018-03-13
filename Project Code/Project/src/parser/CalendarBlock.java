@@ -1,6 +1,7 @@
 package parser;
 
-public class CalendarBlock {
+public class CalendarBlock implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private String code;
 	private String type;
 	private String number;

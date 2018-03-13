@@ -6,7 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NotesCollection {
+public class NotesCollection implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private Map<String, List<Note>> notesMap = new LinkedHashMap<String, List<Note>>();
 	
 	public NotesCollection() {}

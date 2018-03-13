@@ -7,7 +7,8 @@ import notes.Note;
 import notes.NotesCollection;
 import tuple.Tuple;
 
-public class Event {
+public class Event implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	// EventID is used to uniquely identify this event.
 	private static int eventID = 0;
 	private int thisEventID;
