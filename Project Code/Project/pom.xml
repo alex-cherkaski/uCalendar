@@ -18,11 +18,4 @@
     </plugins>
   </build>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.google.apis</groupId>
-      <artifactId>google-api-services-drive</artifactId>
-      <version>v2-rev298-1.23.0</version>
-    </dependency>
-  </dependencies>
 </project>
