@@ -19,5 +19,6 @@
 	<classpathentry kind="lib" path="C:/Users/user/Desktop/Dropbox Assets/dropbox-core-sdk-3.0.6.jar" sourcepath="C:/Users/user/Desktop/Dropbox Assets/dropbox-core-sdk-3.0.6-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Users/user/Desktop/Dropbox Assets/dropbox-core-sdk-3.0.6-javadoc.jar"/>
 	<classpathentry kind="lib" path="C:/Users/user/Desktop/Dropbox Assets/dropbox-core-sdk-3.0.6-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Desktop/jackson-core-2.9.0.pr3.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
