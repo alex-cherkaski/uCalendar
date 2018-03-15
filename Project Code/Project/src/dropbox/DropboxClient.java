@@ -18,7 +18,7 @@ import com.dropbox.core.v2.files.Metadata;
 import com.dropbox.core.v2.users.FullAccount;
 
 public class DropboxClient {
-	private static final String ACCESS_TOKEN = "Pv42xRRoG2AAAAAAAAAAEgF8XECWuVdrl9AT4ArW8b1djy0HlC5cYTqpZwkZCEit";
+	private static final String ACCESS_TOKEN = "";
 	private DbxRequestConfig config = null;
 	private DbxClientV2 client = null;
 	private FullAccount account = null;
