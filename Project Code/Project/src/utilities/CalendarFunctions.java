@@ -17,6 +17,7 @@ public class CalendarFunctions {
 	 * https://stackoverflow.com/questions/17307761/is-there-a-java-equivalent-to-pythons-easy-string-splicing
 	 */
 	//can be removed
+	/*
 	public static String slice_start(String s, int startIndex) {
 	    if (startIndex < 0) startIndex = s.length() + startIndex;
 	    return s.substring(startIndex);
@@ -32,6 +33,7 @@ public class CalendarFunctions {
 	    if (endIndex < 0) endIndex = s.length() + endIndex;
 	    return s.substring(startIndex, endIndex);
 	}
+	*/
 	
 	/*
 	 * Converts a representation of a day of the week (first three letters) to a number
@@ -125,6 +127,7 @@ public class CalendarFunctions {
 		}
 	}
 	
+	/*
 	public static List<Tuple<String>> getFreePeriods(Calendar obj1, Calendar obj2) {
 	  List<Tuple<String>> conflicts = otherConflict(obj1, obj2);
 	  List<Tuple<String>> freePeriods = new ArrayList<>();
@@ -134,6 +137,7 @@ public class CalendarFunctions {
 	  }
 	  return null;
 	}
+	*/
 	
 	/*
 	 * Given a Calendar object, will return of list of Tuples (start time, end time, day) that are conflicting
@@ -241,11 +245,13 @@ public class CalendarFunctions {
 	 * Given a string in the form of: (13:00, 15:00, Monday), literally anything else
 	 * returns a new Tuple<String>, formatted as expected
 	 */
+	/*
 	public static Tuple<String> stringToTuple(String event){			
 		String[] tuple = event.split(",");
 		Tuple<String> result = new Tuple<String>(slice_range(tuple[0],1,6),slice_range(tuple[1],1,6),slice_range(tuple[2],1,tuple[2].length()-1));
 		return result;
 	}
+	*/
 
 	/*
 	 * Returns the given time as a float. E.g. "16:30" -> 16.5.
@@ -298,6 +304,7 @@ public class CalendarFunctions {
 	 * Given a List<String>, will convert it to a List<Tuple<String>>
 	 */
 	//can remove????
+	/*
 	private static List<Tuple<String>> listOfStringToListOfTuple(List<String> listOfString) {
 		List<Tuple<String>> resultTuple = new ArrayList<Tuple<String>>();
 		for (int i = 0; i < listOfString.size(); i++) {
@@ -306,6 +313,7 @@ public class CalendarFunctions {
 		
 		return resultTuple;
 	}
+	*/
 	
 	/*
 	 * Sorts a given a list of strings (representing intervals)

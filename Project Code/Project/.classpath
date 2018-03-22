@@ -16,9 +16,9 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/Desktop/CSC301/project-team-20/DropboxJars/dropbox-core-sdk-3.0.6.jar"/>
-	<classpathentry kind="lib" path="E:/Desktop/CSC301/project-team-20/DropboxJars/dropbox-core-sdk-3.0.6-javadoc.jar"/>
-	<classpathentry kind="lib" path="E:/Desktop/CSC301/project-team-20/DropboxJars/dropbox-core-sdk-3.0.6-sources.jar"/>
-	<classpathentry kind="lib" path="E:/Desktop/CSC301/project-team-20/DropboxJars/jackson-core-2.9.0.pr3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Christopher/Dropbox/School/3rdyear/csc301/project/project-team-20/DropboxJars/dropbox-core-sdk-3.0.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Christopher/Dropbox/School/3rdyear/csc301/project/project-team-20/DropboxJars/dropbox-core-sdk-3.0.6-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Christopher/Dropbox/School/3rdyear/csc301/project/project-team-20/DropboxJars/dropbox-core-sdk-3.0.6-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Christopher/Dropbox/School/3rdyear/csc301/project/project-team-20/DropboxJars/jackson-core-2.9.0.pr3.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

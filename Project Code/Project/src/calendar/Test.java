@@ -14,18 +14,23 @@ import utilities.CalendarFunctions;
 public class Test {
 
 	public static void main(String[] args) {
-		//String filePath = "C:\\Users\\user\\Desktop\\coursesCalendar.ics";
+		//String filePath = "C:\\Users\\Christopher\\Desktop\\coursesCalendar.ics";
 		String filePath = "D:\\Documents\\coursesCalendar.ics";
 		List<CalendarBlock> blockList = Parser.getCalendarBlocks(filePath);
 		List<Course> courseList = CourseBuilder.getCourseMap(blockList);
 		
+		//String filePath2 = "C:\\Users\\Christopher\\Desktop\\alexcoursesCalendar.ics";
 		String filePath2 = "D:\\Documents\\coursesCalendar2.ics";
 		List<CalendarBlock> blockList2 = Parser.getCalendarBlocks(filePath2);
 		List<Course> courseList2 = CourseBuilder.getCourseMap(blockList2);
 
 		Event eventGen = new Event("NEVER", "06-03-2018", "06-03-2018"); //needs to reflect new event
 		List<Event> eventList = new ArrayList<Event>();
-		Tuple<String> test = CalendarFunctions.stringToTuple("(11:00, 15:00, Monday)");
+		//Tuple<String> test = CalendarFunctions.stringToTuple("(11:00, 15:00, Monday)");
+		String start = "11:00";
+		String end = "15:00";
+		String day ="Monday";
+		Tuple<String> test = new Tuple<String>(start, end, day);
 		eventGen.addInterval(test);
 		eventList.add(eventGen);
 		
