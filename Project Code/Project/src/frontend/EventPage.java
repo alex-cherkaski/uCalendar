@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
+import dropbox.DropboxSingleton;
 import event.Event;
 import notes.Note;
 
@@ -123,6 +124,16 @@ public class EventPage extends JPanel{
 		});
 		buttonPanel.add(deleteNote);
 		
+		// upload the selected note to dropbox.
+		JButton shareNote = new JButton("Share Note");
+		shareNote.addActionListener(new ActionListener() {
+
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            shareNote();
+          }
+		  
+		});
 		String[] sortOptions = {"Oldest", "Newest"};
 		
 		JComboBox<String> sortBox = new JComboBox<String>(sortOptions);
@@ -176,6 +187,12 @@ public class EventPage extends JPanel{
 		Note note = this.list.getSelectedValue();
 		this.event.removeNote(note.getNoteDate(), note);
 		updateListModel();
+	}
+	
+	private void shareNote() {
+	  Note note = this.list.getSelectedValue();
+	  // TODO: change upload path from root directory.
+	  DropboxSingleton.getInstance().uploadFile(note.getNoteFilePath(), "/");
 	}
 	
 	private void updateListModel() {
