@@ -26,6 +26,7 @@ public class Event implements java.io.Serializable {
 	private String toRepeat;
 	private NotesCollection notesCollection;
 	private Map<Integer, Integer> calendarDates;
+	private List<String> dates;
 	
 	public Event(String toRepeat, String startDate, String endDate) {
 		eventID += 1;
@@ -49,6 +50,56 @@ public class Event implements java.io.Serializable {
 		this.calendarDates.put(10, 31);
 		this.calendarDates.put(11, 30);
 		this.calendarDates.put(12, 31);
+		this.dates = new ArrayList<String>();
+	}
+	
+	public void addDates(){
+		String startDateCopy = this.startDate;
+		String changeFormat;
+		List<String> days = new ArrayList<String>();
+		days.addAll(this.getDays());
+		List<String> addedMonths = new ArrayList<String>();
+		while (!startDateCopy.equals(this.endDate)) {
+			String[] parts = startDateCopy.split("-");
+			changeFormat = parts[2] + parts[1] + parts[0];
+			if (this.toRepeat.equals("DAILY")) {
+				if (!this.formatDay(changeFormat).equals("Saturday")){
+					this.dates.add(startDateCopy);
+				}
+				else if (!this.formatDay(changeFormat).equals("Sunday")){
+					this.dates.add(startDateCopy);
+				}
+			}
+			else if (this.toRepeat.equals("WEEKLY")) {
+				if (days.contains(this.formatDay(changeFormat))) {
+					this.dates.add(startDateCopy);
+				}
+			}
+			else if (this.toRepeat.equals("MONTHLY")){
+				if (!addedMonths.contains(parts[1])){
+					this.dates.add(startDateCopy);
+					addedMonths.add(parts[1]);
+				}
+			}
+			else {
+				this.dates.add(startDateCopy);
+				break;
+			}
+			if (this.calendarDates.get(parts[1]).equals(parts[0])) {
+				startDateCopy = "00-" + String.valueOf(Integer.valueOf(parts[1]).intValue() + 1) + "-" + parts[2];
+			}
+			else {
+				startDateCopy = String.valueOf(Integer.valueOf(parts[0]).intValue() + 1) + "-" + parts[1] + "-" + parts[2];
+			}
+		}
+	}
+	
+	public List<String> getDays() {
+		List<String> x = new ArrayList<String>();
+		for(Tuple<String> t : this.intervalList) {
+			x.add(t.getItem3());
+		}
+		return x;
 	}
 
 	public int getThisEventID() {
