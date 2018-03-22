@@ -143,13 +143,11 @@ public class DropboxClient {
 	/*
 	 * Downloads a file off of the dropbox cloud into the specified location.
 	 * @param localPath A String object representing the directory to place the file in.
-	 * @param dropboxPath A String object representing the directory where the file is at.
-	 * @param filename A String object representing the name of the file.
+	 * @param dropboxPath A String object the absolute path of the file on dropbox.
 	 */
-	public void readFile(String localPath, String foldername, String filename)
-	{
-		try
-		{
+	public void readFile(String localPath, String foldername) {
+		try {
+			String filename = DropboxUtilities.getNameFromPath(foldername);
 			File outputFile = new File(localPath + "\\" + filename);
 			System.out.println(outputFile.getAbsolutePath());
 			//output file for download --> storage location on local system to download file
@@ -157,18 +155,15 @@ public class DropboxClient {
 			try {
 				@SuppressWarnings("unused")
 				FileMetadata metadata = client.files().downloadBuilder(foldername).download(downloadFile);
-			} finally
-			{
+			} finally {
 				downloadFile.close();
 			}
 		}
 		//exception handled
-		catch (DbxException e)
-		{
+		catch (DbxException e) {
 			e.printStackTrace();
 		}
-		catch (IOException e)
-		{
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
