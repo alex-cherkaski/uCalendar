@@ -1,7 +1,9 @@
 package event;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import notes.Note;
 import notes.NotesCollection;
@@ -23,6 +25,7 @@ public class Event implements java.io.Serializable {
 //  {"NEVER", "DAILY", "WEEKLY", "MONTHLY"};
 	private String toRepeat;
 	private NotesCollection notesCollection;
+	private Map<Integer, Integer> calendarDates;
 	
 	public Event(String toRepeat, String startDate, String endDate) {
 		eventID += 1;
@@ -33,6 +36,19 @@ public class Event implements java.io.Serializable {
 		this.notesCollection = new NotesCollection();
 		intervalList = new ArrayList<Tuple<String>>();
 		membersList = new ArrayList<String>();
+		this.calendarDates = new HashMap<Integer, Integer>();
+		this.calendarDates.put(1, 31);
+		this.calendarDates.put(2, 28);
+		this.calendarDates.put(3, 31);
+		this.calendarDates.put(4, 30);
+		this.calendarDates.put(5, 31);
+		this.calendarDates.put(6, 30);
+		this.calendarDates.put(7, 31);
+		this.calendarDates.put(8, 31);
+		this.calendarDates.put(9, 30);
+		this.calendarDates.put(10, 31);
+		this.calendarDates.put(11, 30);
+		this.calendarDates.put(12, 31);
 	}
 
 	public int getThisEventID() {
