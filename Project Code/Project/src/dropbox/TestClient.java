@@ -17,9 +17,15 @@ public class TestClient {
 //		dbc.deleteFile("/" + "test.txt");
 //		dbc.createFolder("/" + "TestFolder");
 //		dbc.deleteFile("/" + "TestFolder");
-//		for (String path : dbc.listFolder()) {
-//			System.out.println(path);
-//		}
+		// Root folder on dropbox
+		for (String path : dbc.listFolder("")) {
+			System.out.println(path);
+		}
+		System.out.println();
+		// TestFolder located at root folder.
+		for (String path : dbc.listFolder("/TestFolder")) {
+			System.out.println(path);
+		}
 //		dbc.readFile("C:\\Users\\user\\Desktop", "/ClientClassTest.txt", "ClientClassTest.txt");
 	}
 

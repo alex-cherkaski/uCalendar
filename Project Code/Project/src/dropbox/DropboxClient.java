@@ -20,7 +20,7 @@ import com.dropbox.core.v2.files.Metadata;
 import com.dropbox.core.v2.users.FullAccount;
 
 public class DropboxClient {
-	private static final String ACCESS_TOKEN = "";
+	private static final String ACCESS_TOKEN = "Pv42xRRoG2AAAAAAAAAAGrZUBgi0Ur1oTMIlN6TLZb4OZlkCorat0xX2okX2om83";
 	private DbxRequestConfig config = null;
 	private DbxClientV2 client = null;
 	private FullAccount account = null;
@@ -103,14 +103,25 @@ public class DropboxClient {
 	}
 
 	/*
-	 * Returns a list of all the file paths starting from the root directory.
+	 * Returns a list of all the file paths starting from the specified folderPath 
+	 * on the dropbox cloud.
+	 * @param folderPath Absolute path to the folder in dropbox. See examples in TestClient.
 	 * @return A list of strings representing each representing file paths.
 	 */
-	public List<String> listFolder() {
+	public List<String> listFolder(String folderPath) {
 		List<String> resultList = new ArrayList<String>();
 		try {
-			// Get files and folder metadata from Dropbox root directory
-			ListFolderResult result = client.files().listFolder("");
+			ListFolderResult result;
+			// Contents of root direcotry.
+			if (folderPath.equals("")) {
+				// Get files and folder metadata from Dropbox root directory
+				result = client.files().listFolder("");				
+			}
+			// Contents of folder specified by the dropbox path folderPath. 
+			else {
+				// Get files and folder metadata from Dropbox root directory
+				result = client.files().listFolder(folderPath);
+			}
 			while (true) {
 				for (Metadata metadata : result.getEntries()) {
 //					System.out.println(metadata.getPathLower());
