@@ -172,24 +172,29 @@ public class Calendar implements java.io.Serializable {
 		int eventMonth;
 		int eventYear;
 		for(Event event : this.eventList) {
-			eventDate = Integer.parseInt(event.getStartDate().substring(0, 2));
-			eventMonth = Integer.parseInt(event.getStartDate().substring(3, 5));
-			eventYear = Integer.parseInt(event.getStartDate().substring(6));
-			if(eventYear == year) {
-				if(startMonth == endMonth) {
-					if((eventMonth == startMonth) && (eventDate > startDate - 1) &&  (eventDate < endDate + 1)) {
-						result.add(event);
+			for(String date: event.getDates()) {
+				eventDate = Integer.parseInt(date.substring(0, 2));
+				eventMonth = Integer.parseInt(date.substring(3, 5));
+				eventYear = Integer.parseInt(date.substring(6));
+				if(eventYear == year) {
+					if(startMonth == endMonth) {
+						if((eventMonth == startMonth) && (eventDate > startDate - 1) &&  (eventDate < endDate + 1)) {
+							result.add(event);
+							break;
+						}
+					} else {
+						if(eventMonth == startMonth) {
+							if(eventDate > startDate - 1) {
+								result.add(event);
+								break;
+							}
+						} else if(eventMonth == endMonth) {
+							if(eventDate < endDate + 1) {
+								result.add(event);
+								break;
+							}
+						}	
 					}
-				} else {
-					if(eventMonth == startMonth) {
-						if(eventDate > startDate - 1) {
-							result.add(event);
-						}
-					} else if(eventMonth == endMonth) {
-						if(eventDate < endDate + 1) {
-							result.add(event);
-						}
-					}	
 				}
 			}
 		}
