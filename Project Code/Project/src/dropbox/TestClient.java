@@ -14,18 +14,19 @@ public class TestClient {
 //		dbc.uploadFile("C:\\Users\\user\\Desktop\\test.txt", "/test.txt");
 //		dbc.deleteFile("/" + "test.txt");
 //		dbc.createFolder("/" + "TestFolder");
+		dbc.uploadFile("C:\\Users\\user\\Desktop\\test.txt", "/TestFolder/test.txt");
 //		dbc.deleteFile("/" + "TestFolder");
 		// Root folder on dropbox
-		for (String path : dbc.listFolder("")) {
-			System.out.println(path);
-			System.out.println("NAME: " + DropboxUtilities.getNameFromPath(path));
-		}
-		System.out.println();
+//		for (String path : dbc.listFolder("")) {
+//			System.out.println(path);
+//			System.out.println("NAME: " + DropboxUtilities.getNameFromPath(path));
+//		}
+//		System.out.println();
 		// TestFolder located at root folder.
-		for (String path : dbc.listFolder("/TestFolder")) {
-			System.out.println(path);
-			System.out.println("NAME: " + DropboxUtilities.getNameFromPath(path));
-		}
+//		for (String path : dbc.listFolder("/TestFolder")) {
+//			System.out.println(path);
+//			System.out.println("NAME: " + DropboxUtilities.getNameFromPath(path));
+//		}
 //		dbc.readFile("C:\\Users\\user\\Desktop", "/ClientClassTest.txt", "ClientClassTest.txt");
 	}
 
