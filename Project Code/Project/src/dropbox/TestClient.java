@@ -17,8 +17,10 @@ public class TestClient {
 //		dbc.deleteFile("/" + "test.txt");
 //		dbc.createFolder("/" + "TestFolder");
 //		dbc.deleteFile("/" + "TestFolder");
-//		dbc.listFolder();
-		dbc.readFile("C:\\Users\\user\\Desktop", "/ClientClassTest.txt", "ClientClassTest.txt");
+//		for (String path : dbc.listFolder()) {
+//			System.out.println(path);
+//		}
+//		dbc.readFile("C:\\Users\\user\\Desktop", "/ClientClassTest.txt", "ClientClassTest.txt");
 	}
 
 }

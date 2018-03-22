@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
@@ -101,26 +103,30 @@ public class DropboxClient {
 	}
 
 	/*
-	 * Returns a list of all the files starting from the root directory.
+	 * Returns a list of all the file paths starting from the root directory.
+	 * @return A list of strings representing each representing file paths.
 	 */
-	public void listFolder() {
+	public List<String> listFolder() {
+		List<String> resultList = new ArrayList<String>();
 		try {
 			// Get files and folder metadata from Dropbox root directory
 			ListFolderResult result = client.files().listFolder("");
 			while (true) {
 				for (Metadata metadata : result.getEntries()) {
-					System.out.println(metadata.getPathLower());
+//					System.out.println(metadata.getPathLower());
+					resultList.add(metadata.getPathLower());
 				}
-
 				if (!result.getHasMore()) {
 					break;
 				}
 				result = client.files().listFolderContinue(result.getCursor());
 			}
+			return resultList;
 		}
 		catch (DbxException dbxe) {
 			dbxe.printStackTrace();
 		}         
+		return resultList;
 	}
 
 	/*
