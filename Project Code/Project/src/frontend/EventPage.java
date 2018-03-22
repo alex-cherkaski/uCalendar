@@ -1,9 +1,11 @@
 package frontend;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -12,9 +14,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -36,6 +40,7 @@ public class EventPage extends JPanel{
 	private JButton previous;
 	private JLabel description;
 	private String sortOperation;
+	private JLabel noteDisplayLabel;
 	
 	public EventPage() {
 		this.setLayout(new GridBagLayout());
@@ -48,33 +53,24 @@ public class EventPage extends JPanel{
 		
 		GridBagConstraints c0 = new GridBagConstraints();
 		c0.fill = GridBagConstraints.BOTH;
-		setGridBag(c0, 0.5, 0, 8, 1, 0, 0);
+		setGridBag(c0, 0, 0, 8, 1, 0, 0);
 		this.add(menuPanel, c0);
 		
 		GridBagConstraints c1 = new GridBagConstraints();
 		
 		this.previous = new PreviousButton();
 		c1.fill = GridBagConstraints.BOTH;
-		setGridBag(c1, 0.1, 0, 1, 1, 0, 1);
+		setGridBag(c1, 0, 0, 1, 1, 0, 1);
 		this.add(this.previous, c1);
-		
-		String[] sortOptions = {"Oldest", "Newest"};
-		
-		JComboBox<String> sortBox = new JComboBox<String>(sortOptions);
-		sortBox.setSelectedIndex(0);
-		this.sortOperation = sortBox.getSelectedItem().toString();
-		c1.fill = GridBagConstraints.BOTH;
-		setGridBag(c1, 0.1, 0, 1, 1, 2, 1);
-		this.add(sortBox, c1);
 		
 		this.description = new JLabel("", SwingConstants.CENTER);
 		c1.fill = GridBagConstraints.BOTH;
-		setGridBag(c1, 1, 0, 1, 1, 1, 1);
+		setGridBag(c1, 1, 0, 2, 1, 1, 1);
 		this.add(this.description, c1);
 		
 		this.displayPanel = new JPanel();
 		c1.fill = GridBagConstraints.BOTH;
-		setGridBag(c1, 1, 1, 3, 1, 0, 2);
+		setGridBag(c1, 0, 1, 1, 1, 0, 2);
 		this.add(displayPanel, c1);
 		
 		this.displayPanel.setLayout(new BorderLayout());
@@ -91,6 +87,48 @@ public class EventPage extends JPanel{
 			}
 			
 		});
+		
+		this.noteDisplayLabel = new JLabel();
+		this.noteDisplayLabel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+		c1.fill = GridBagConstraints.BOTH;
+		setGridBag(c1, 1, 1, 1, 1, 1, 2);
+		this.add(this.noteDisplayLabel, c1);
+		
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+		buttonPanel.setLayout(new GridLayout(20 , 1));
+		buttonPanel.setBackground(Color.white);
+		c1.fill = GridBagConstraints.BOTH;
+		setGridBag(c1, 0, 0, 1, 1, 2, 2);
+		this.add(buttonPanel, c1);
+		
+		JButton addNote = new JButton("Add Note");
+		addNote.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				importFile();
+			}
+		});
+		buttonPanel.add(addNote);
+		
+		JButton deleteNote = new JButton("Delete Note");
+		deleteNote.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				deleteNote();
+			}
+			
+		});
+		buttonPanel.add(deleteNote);
+		
+		String[] sortOptions = {"Oldest", "Newest"};
+		
+		JComboBox<String> sortBox = new JComboBox<String>(sortOptions);
+		sortBox.setSelectedIndex(0);
+		this.sortOperation = sortBox.getSelectedItem().toString();
+		buttonPanel.add(sortBox);
 		
 		sortBox.addItemListener(new ItemListener() {
             @Override
@@ -112,25 +150,40 @@ public class EventPage extends JPanel{
 	public void setEvent(Event event) {
 		this.event = event;
 		this.description.setText(this.event.getName());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		updateListModel(LocalDate.now().format(formatter));
+		updateListModel();
 		this.jMenu.setEvent(event);
 	}
-
-	public void addNote(String date, Note note) {
-		this.event.addNote(date, note);
-		updateListModel(date);
+	
+	private void importFile() {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		fileChooser.showOpenDialog(null);
+		
+		if(fileChooser.getSelectedFile() != null){
+			Note note = new Note(fileChooser.getSelectedFile().getName());
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			this.addNote(LocalDate.now().format(formatter), note);
+		}
 	}
 	
-	private void updateListModel(String date) {
+	public void addNote(String date, Note note) {
+		this.event.addNote(date, note);
+		updateListModel();
+	}
+	
+	public void deleteNote() {
+		Note note = this.list.getSelectedValue();
+		this.event.removeNote(note.getNoteDate(), note);
+		updateListModel();
+	}
+	
+	private void updateListModel() {
 		this.listModel.clear();
 		List<Note> notes;
 		if(this.sortOperation.equals("Oldest")){
 			notes = this.event.getNotesIncreasing();
-		}else if(this.sortOperation.equals("Newest")){
+		}else {
 			notes = this.event.getNotesIncreasing();
-		}else{
-			notes = this.event.getNotes(date);
 		}
 		
 		for(Note no: notes) {

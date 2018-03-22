@@ -38,7 +38,7 @@ public class MainJMenu extends JMenuBar{
 			}
 		});
 		
-		JMenuItem fileChooser = new JMenuItem("Open File");
+		JMenuItem fileChooser = new JMenuItem("Import Course Calendar");
 		fileChooser.addActionListener(new ActionListener() {
 
 			@Override

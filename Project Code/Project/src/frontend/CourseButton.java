@@ -40,4 +40,8 @@ public class CourseButton extends JButton {
 	public Tuple<String> getBlock(){
 		return this.block;
 	}
+	
+	public void changeToOriginalColour() {
+		this.setBackground(colors[this.cCode]);
+	}
 }

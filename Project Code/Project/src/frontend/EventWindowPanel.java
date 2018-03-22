@@ -153,33 +153,46 @@ public class EventWindowPanel extends JPanel{
 							event.setName(nameTextBox.getText());
 						}
 						mainPage.addEvent(event);
+						System.out.println("asdasd");
+						for(String date: event.getDates()) {
+							System.out.println(date);
+						}
 					}else if(repeatBox.getSelectedItem().toString().equals("WEEKLY")){
-						while(startDate.getDayOfYear() < 365){
-							Event event = new Event(repeatBox.getSelectedItem().toString(), startDate.format(formatter), startDate.format(formatter));
-							event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
-							event.setName(nameTextBox.getText());
-							mainPage.addEvent(event);
-							startDate = startDate.plusWeeks(1);
-							if(startDate.getDayOfYear() + 7 > 365){
+						while(endDate.getDayOfYear() < 365){
+							endDate = endDate.plusWeeks(1);
+							if(endDate.getDayOfYear() + 7 > 365){
 								break;
 							}
 						}
+						Event event = new Event(repeatBox.getSelectedItem().toString(), startDate.format(formatter), endDate.format(formatter));
+						event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
+						event.setName(nameTextBox.getText());
+						mainPage.addEvent(event);
+						System.out.println("asdasd");
+						for(String date: event.getDates()) {
+							System.out.println(date);
+						}
 					}else if(repeatBox.getSelectedItem().toString().equals("MONTHLY")){
-						while(startDate.getMonthValue() < 13){
-							Event event = new Event(repeatBox.getSelectedItem().toString(), startDate.format(formatter), startDate.format(formatter));
-							event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
-							event.setName(nameTextBox.getText());
-							mainPage.addEvent(event);
-							startDate = startDate.plusMonths(1);
-							if(startDate.getMonthValue() == 12){
-								break;
-							}
+						int monthDiff = 12 - endDate.getMonthValue();
+						endDate = endDate.plusMonths(monthDiff);
+						Event event = new Event(repeatBox.getSelectedItem().toString(), startDate.format(formatter), endDate.format(formatter));
+						event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
+						event.setName(nameTextBox.getText());
+						mainPage.addEvent(event);
+						System.out.println("asdasd");
+						for(String date: event.getDates()) {
+							System.out.println(date);
 						}
 					}else{
 						Event event = new Event(repeatBox.getSelectedItem().toString(), weekStartDate.format(formatter), weekEndDate.format(formatter));
 						event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
 						event.setName(nameTextBox.getText());
 						mainPage.addEvent(event);
+						System.out.println("asdasd");
+						for(String date: event.getDates()) {
+							System.out.println(date);
+						}
+						
 					}
 					eventFrame.dispose();
 				}

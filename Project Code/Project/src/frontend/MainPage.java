@@ -257,6 +257,8 @@ public class MainPage extends JPanel{
 		for(CourseButton button: this.courseButtons) {
 			if(conflicts != null && conflicts.contains(button.getBlock())) {
 				button.setBackground(Color.red);
+			}else if(button.getBackground() == Color.red) {
+				button.changeToOriginalColour();
 			}
 		}
 		
@@ -271,8 +273,7 @@ public class MainPage extends JPanel{
 			}
 		}
 		this.calendar.removeCourse(course);
-		this.revalidate();
-		this.repaint();
+		updateDisplayEventButton();
 	}
 	
 	public void deleteEvent(Event event) {
@@ -282,8 +283,7 @@ public class MainPage extends JPanel{
 			}
 		}
 		this.calendar.removeEvent(event);
-		this.revalidate();
-		this.repaint();
+		updateDisplayEventButton();
 	}
 	
 	
