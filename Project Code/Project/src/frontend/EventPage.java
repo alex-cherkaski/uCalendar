@@ -161,6 +161,7 @@ public class EventPage extends JPanel{
 		
 		if(fileChooser.getSelectedFile() != null){
 			Note note = new Note(fileChooser.getSelectedFile().getName());
+			note.setNoteFilePath(fileChooser.getSelectedFile().getAbsolutePath());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			this.addNote(LocalDate.now().format(formatter), note);
 		}
