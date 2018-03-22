@@ -51,6 +51,7 @@ public class Event implements java.io.Serializable {
 		this.calendarDates.put(11, 30);
 		this.calendarDates.put(12, 31);
 		this.dates = new ArrayList<String>();
+		this.addDates();
 	}
 	
 	public void addDates(){
@@ -86,7 +87,12 @@ public class Event implements java.io.Serializable {
 				break;
 			}
 			if (this.calendarDates.get(Integer.valueOf(parts[1])).equals(Integer.valueOf(parts[0]))) {
-				startDateCopy = "01-" + String.valueOf(Integer.valueOf(parts[1]).intValue() + 1) + "-" + parts[2];
+				if (Integer.valueOf(parts[1]).intValue() + 1 < 10) {
+					startDateCopy = "01-" + "0" + String.valueOf(Integer.valueOf(parts[1]).intValue() + 1) + "-" + parts[2];
+				}
+				else {
+					startDateCopy = "01-" + String.valueOf(Integer.valueOf(parts[1]).intValue() + 1) + "-" + parts[2];
+				}
 			}
 			else {
 				if (Integer.valueOf(parts[0]).intValue() + 1 < 10) {
