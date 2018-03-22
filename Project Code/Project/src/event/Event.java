@@ -58,18 +58,15 @@ public class Event implements java.io.Serializable {
 		String startDateCopy = this.startDate;
 		String changeFormat;
 		List<String> days = new ArrayList<String>();
-		days.addAll(this.getDays());
+		for(Tuple<String> t : this.intervalList) {
+			days.add(t.getItem3());
+		}
 		List<String> addedMonths = new ArrayList<String>();
 		while (!startDateCopy.equals(this.endDate)) {
 			String[] parts = startDateCopy.split("-");
 			changeFormat = parts[2] + parts[1] + parts[0];
 			if (this.toRepeat.equals("DAILY")) {
-				if (!this.formatDay(changeFormat).equals("Saturday")){
-					this.dates.add(startDateCopy);
-				}
-				else if (!this.formatDay(changeFormat).equals("Sunday")){
-					this.dates.add(startDateCopy);
-				}
+				this.dates.add(startDateCopy);
 			}
 			else if (this.toRepeat.equals("WEEKLY")) {
 				if (days.contains(this.formatDay(changeFormat))) {
@@ -77,7 +74,7 @@ public class Event implements java.io.Serializable {
 				}
 			}
 			else if (this.toRepeat.equals("MONTHLY")){
-				if (!addedMonths.contains(parts[1])){
+				if (!addedMonths.contains(parts[1]) && this.getStartDay().equals(parts[0])){
 					this.dates.add(startDateCopy);
 					addedMonths.add(parts[1]);
 				}
@@ -103,14 +100,6 @@ public class Event implements java.io.Serializable {
 				}
 			}
 		}
-	}
-	
-	public List<String> getDays() {
-		List<String> x = new ArrayList<String>();
-		for(Tuple<String> t : this.intervalList) {
-			x.add(t.getItem3());
-		}
-		return x;
 	}
 
 	public int getThisEventID() {
@@ -203,6 +192,11 @@ public class Event implements java.io.Serializable {
 	
 	public List<Note> getNotesDecreasing(){
 		return this.notesCollection.getAllNotesDecreasing();
+	}
+	
+	public String getStartDay(){
+		String[] parts = this.startDate.split("-");
+		return parts[0];
 	}
 	
 	public List<String> getDates() {
