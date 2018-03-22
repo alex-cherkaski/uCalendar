@@ -193,6 +193,10 @@ public class Event implements java.io.Serializable {
 	public List<Note> getNotesDecreasing(){
 		return this.notesCollection.getAllNotesDecreasing();
 	}
+	
+	public List<String> getDates() {
+		return this.dates;
+	}
 
 	@Override
 	public int hashCode() {
