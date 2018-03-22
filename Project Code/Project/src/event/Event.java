@@ -85,11 +85,16 @@ public class Event implements java.io.Serializable {
 				this.dates.add(startDateCopy);
 				break;
 			}
-			if (this.calendarDates.get(parts[1]).equals(parts[0])) {
-				startDateCopy = "00-" + String.valueOf(Integer.valueOf(parts[1]).intValue() + 1) + "-" + parts[2];
+			if (this.calendarDates.get(Integer.valueOf(parts[1])).equals(Integer.valueOf(parts[0]))) {
+				startDateCopy = "01-" + String.valueOf(Integer.valueOf(parts[1]).intValue() + 1) + "-" + parts[2];
 			}
 			else {
-				startDateCopy = String.valueOf(Integer.valueOf(parts[0]).intValue() + 1) + "-" + parts[1] + "-" + parts[2];
+				if (Integer.valueOf(parts[0]).intValue() + 1 < 10) {
+					startDateCopy = "0" + String.valueOf(Integer.valueOf(parts[0]).intValue() + 1) + "-" + parts[1] + "-" + parts[2];
+				}
+				else {
+					startDateCopy = String.valueOf(Integer.valueOf(parts[0]).intValue() + 1) + "-" + parts[1] + "-" + parts[2];
+				}
 			}
 		}
 	}
