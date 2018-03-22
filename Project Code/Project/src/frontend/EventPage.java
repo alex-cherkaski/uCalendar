@@ -134,6 +134,8 @@ public class EventPage extends JPanel{
           }
 		  
 		});
+		buttonPanel.add(shareNote);
+		
 		String[] sortOptions = {"Oldest", "Newest"};
 		
 		JComboBox<String> sortBox = new JComboBox<String>(sortOptions);
