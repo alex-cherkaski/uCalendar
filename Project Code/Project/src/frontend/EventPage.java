@@ -194,7 +194,7 @@ public class EventPage extends JPanel{
 	private void shareNote() {
 	  Note note = this.list.getSelectedValue();
 	  // TODO: change upload path from root directory.
-	  DropboxSingleton.getInstance().uploadFile(note.getNoteFilePath(), "/");
+	  DropboxSingleton.getInstance().uploadFile(note.getNoteFilePath(), "/" + note.getNote());
 	}
 	
 	private void updateListModel() {
