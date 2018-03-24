@@ -37,6 +37,7 @@ public class EventPage extends JPanel{
 	private JLabel noteDisplayLabel;
 	private JButton addNote;
 	private JButton deleteNote;
+	private JButton uploadNote;
 	private JComboBox<String> sortBox;
 	
 	public EventPage() {
@@ -91,17 +92,20 @@ public class EventPage extends JPanel{
 		this.add(buttonPanel, c1);
 		
 		this.addNote = new JButton("Add Note");
-		buttonPanel.add(addNote);
+		buttonPanel.add(this.addNote);
 		
 		this.deleteNote = new JButton("Delete Note");
-		buttonPanel.add(deleteNote);
+		buttonPanel.add(this.deleteNote);
+		
+		this.uploadNote = new JButton("Upload Note");
+		buttonPanel.add(this.uploadNote);
 		
 		String[] sortOptions = {"Oldest", "Newest"};
 		
 		this.sortBox = new JComboBox<String>(sortOptions);
 		sortBox.setSelectedIndex(0);
 		this.sortOperation = sortBox.getSelectedItem().toString();
-		buttonPanel.add(sortBox);
+		buttonPanel.add(this.sortBox);
 		
 	}
 	
@@ -121,6 +125,10 @@ public class EventPage extends JPanel{
 	
 	public JButton getDeleteNoteButton() {
 		return this.deleteNote;
+	}
+	
+	public JButton getUploadNoteButton() {
+		return this.uploadNote;
 	}
 	
 	public JComboBox<String> getSortBox(){

@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 
+import dropbox.DropboxSingleton;
 import frontend.FrontendStartup;
 import notes.Note;
 
@@ -49,6 +50,14 @@ public class EventPageController {
 			
 		});
 		
+		eventPage.getUploadNoteButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				uploadNote();
+			}
+		});
+		
 		eventPage.getSortBox().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -65,6 +74,12 @@ public class EventPageController {
 		});
 	}
 	
+	public static void uploadNote() {
+		Note note = eventPage.getNoteList().getSelectedValue();
+	 	// TODO: change upload path from root directory.
+		DropboxSingleton.getInstance().uploadFile(note.getNoteFilePath(), "/" + note.getNote());
+	}
+	
 	public static void importFile() {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -72,6 +87,7 @@ public class EventPageController {
 		
 		if(fileChooser.getSelectedFile() != null){
 			Note note = new Note(fileChooser.getSelectedFile().getName());
+			note.setNoteFilePath(fileChooser.getSelectedFile().getAbsolutePath());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			addNote(LocalDate.now().format(formatter), note);
 		}

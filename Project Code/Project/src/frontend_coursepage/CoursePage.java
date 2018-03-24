@@ -93,17 +93,17 @@ public class CoursePage extends JPanel {
 		this.add(buttonPanel, c1);
 		
 		this.addNote = new JButton("Add Note");
-		buttonPanel.add(addNote);
+		buttonPanel.add(this.addNote);
 		
 		this.deleteNote = new JButton("Delete Note");
-		buttonPanel.add(deleteNote);
+		buttonPanel.add(this.deleteNote);
 		
 		String[] sortOptions = {"Oldest", "Newest"};
 		
 		this.sortBox = new JComboBox<String>(sortOptions);
 		sortBox.setSelectedIndex(0);
 		this.sortOperation = sortBox.getSelectedItem().toString();
-		buttonPanel.add(sortBox);
+		buttonPanel.add(this.sortBox);
 		
 	}
 	
