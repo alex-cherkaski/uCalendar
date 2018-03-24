@@ -12,6 +12,12 @@ import javax.swing.WindowConstants;
 
 import course.Course;
 import event.Event;
+import frontend_coursepage.CoursePage;
+import frontend_coursepage.CoursePageController;
+import frontend_eventpage.EventPage;
+import frontend_eventpage.EventPageController;
+import frontend_mainpage.MainPage;
+import frontend_mainpage.MainPageController;
 
 public class FrontendStartup {
 	
@@ -27,7 +33,7 @@ public class FrontendStartup {
 	}
 	
 	public static void deleteCourseAndSwitch(Course course) {
-		main.deleteCourse(course);
+		MainPageController.deleteCourse(course);
 		switchMainPage();
 	}
 	
@@ -37,7 +43,7 @@ public class FrontendStartup {
 	}
 	
 	public static void deleteEventAndSwitch(Event event) {
-		main.deleteEvent(event);
+		MainPageController.deleteEvent(event);
 		switchMainPage();
 	}
 	
@@ -51,15 +57,18 @@ public class FrontendStartup {
 		cards = new JPanel(layout);
 		
 		main = new MainPage();
+		MainPageController.setMain(main);
 		main.setBackground(Color.white);
 		cards.add(main, "main panel");
 		
 		course = new CoursePage();
+		CoursePageController.setCoursePage(course);
 		course.setBackground(Color.white);
 		course.setVisible(false);
 		cards.add(course, "course panel");
 		
 		event = new EventPage();
+		EventPageController.setEventPage(event);
 		event.setBackground(Color.white);
 		event.setVisible(false);
 		cards.add(event, "event panel");

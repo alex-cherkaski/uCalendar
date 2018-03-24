@@ -1,10 +1,11 @@
-package frontend;
+package frontend_mainpage;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import course.Course;
+import frontend.FrontendStartup;
 import tuple.Tuple;
 
 @SuppressWarnings("serial")

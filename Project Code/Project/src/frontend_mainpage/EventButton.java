@@ -1,4 +1,4 @@
-package frontend;
+package frontend_mainpage;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import event.Event;
+import frontend.FrontendStartup;
 
 @SuppressWarnings("serial")
 public class EventButton extends JButton {

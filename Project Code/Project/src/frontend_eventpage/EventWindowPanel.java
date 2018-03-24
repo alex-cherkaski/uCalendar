@@ -1,4 +1,4 @@
-package frontend;
+package frontend_eventpage;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import event.Event;
+import frontend_mainpage.MainPage;
+import frontend_mainpage.MainPageController;
 import tuple.Tuple;
 import utilities.CalendarFunctions;
 
@@ -128,8 +130,8 @@ public class EventWindowPanel extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(timeStartFromBox.getSelectedIndex() < timeEndBox.getSelectedIndex() && !nameTextBox.getText().equals("") && !dateStartFromBox.getSelectedItem().equals(dateEndBox.getSelectedItem())) {
-					
+				
+				if(timeStartFromBox.getSelectedIndex() < timeEndBox.getSelectedIndex() && !nameTextBox.getText().equals("")) {
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 					int start = Arrays.asList(days2).indexOf((mainPage.getStartDay().getDayOfWeek().toString()));
 					int start2 = CalendarFunctions.day(dateStartFromBox.getSelectedItem().toString());
@@ -145,6 +147,7 @@ public class EventWindowPanel extends JPanel{
 					
 					String startDateString = startDate.format(formatter);
 					String endDateString = endDate.format(formatter);
+					System.out.println(repeatBox.getSelectedItem().toString());
 					
 					if(repeatBox.getSelectedItem().toString().equals("DAILY")){
 						Event event = new Event(repeatBox.getSelectedItem().toString(), startDateString, endDateString);
@@ -153,12 +156,13 @@ public class EventWindowPanel extends JPanel{
 							event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), days[i]));
 							event.setName(nameTextBox.getText());
 						}
-						mainPage.addEvent(event);
+						MainPageController.addEvent(event);
 						System.out.println("asdasd");
 						for(String date: event.getDates()) {
 							System.out.println(date);
 						}
 					}else if(repeatBox.getSelectedItem().toString().equals("WEEKLY")){
+						
 						while(endDate.getDayOfYear() < 365){
 							endDate = endDate.plusWeeks(1);
 							if(endDate.getDayOfYear() + 7 > 365){
@@ -168,8 +172,8 @@ public class EventWindowPanel extends JPanel{
 						Event event = new Event(repeatBox.getSelectedItem().toString(), startDate.format(formatter), endDate.format(formatter));
 						event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
 						event.setName(nameTextBox.getText());
-						mainPage.addEvent(event);
-						System.out.println("asdasd");
+						MainPageController.addEvent(event);
+
 						for(String date: event.getDates()) {
 							System.out.println(date);
 						}
@@ -179,8 +183,8 @@ public class EventWindowPanel extends JPanel{
 						Event event = new Event(repeatBox.getSelectedItem().toString(), startDate.format(formatter), endDate.format(formatter));
 						event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
 						event.setName(nameTextBox.getText());
-						mainPage.addEvent(event);
-						System.out.println("asdasd");
+						MainPageController.addEvent(event);
+
 						for(String date: event.getDates()) {
 							System.out.println(date);
 						}
@@ -188,8 +192,8 @@ public class EventWindowPanel extends JPanel{
 						Event event = new Event(repeatBox.getSelectedItem().toString(), weekStartDate.format(formatter), weekEndDate.format(formatter));
 						event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
 						event.setName(nameTextBox.getText());
-						mainPage.addEvent(event);
-						System.out.println("asdasd");
+						MainPageController.addEvent(event);
+
 						for(String date: event.getDates()) {
 							System.out.println(date);
 						}
