@@ -11,6 +11,8 @@ public class Note implements java.io.Serializable {
 	// Date used to fingerprint when the note was created. 
 	private Date date;
 	private String noteDate;
+	// Path of the file.
+	private String noteFilePath;
 	
 	public Note(String note) {
 		noteID += 1;
@@ -69,5 +71,13 @@ public class Note implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return this.note;
+	}
+	
+	public void setNoteFilePath(String path) {
+	  this.noteFilePath = path;
+	}
+	
+	public String getNoteFilePath() {
+	  return this.noteFilePath;
 	}
 }
