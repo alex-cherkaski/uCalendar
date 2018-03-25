@@ -60,6 +60,7 @@ public class Event implements java.io.Serializable {
 	
 	public void addDates(){
 		String startDateCopy = this.startDate;
+		String maxDate;
 		String changeFormat;
 		List<String> days = new ArrayList<String>();
 		for(Tuple<String> t : this.intervalList) {
@@ -70,17 +71,30 @@ public class Event implements java.io.Serializable {
 			String[] parts = startDateCopy.split("-");
 			changeFormat = parts[2] + parts[1] + parts[0];
 			if (this.toRepeat.equals("DAILY")) {
-				this.dates.add(startDateCopy);
+				if (!this.dates.contains(startDateCopy)) {
+					this.dates.add(startDateCopy);
+				}
 			}
 			else if (this.toRepeat.equals("WEEKLY")) {
 				if (days.contains(this.formatDay(changeFormat))) {
-					this.dates.add(startDateCopy);
+					if (!this.dates.contains(startDateCopy)) {
+						this.dates.add(startDateCopy);
+					}
 				}
 			}
 			else if (this.toRepeat.equals("MONTHLY")){
 				if (!addedMonths.contains(parts[1]) && this.getStartDay().equals(parts[0])){
-					this.dates.add(startDateCopy);
-					addedMonths.add(parts[1]);
+					if (!this.dates.contains(startDateCopy)) {
+						this.dates.add(startDateCopy);
+						addedMonths.add(parts[1]);
+					}
+				}
+				else if (!addedMonths.contains(parts[1]) && this.calendarDates.get(this.getNumDay(parts[1])) < this.getNumDay(this.getStartDay())) {
+					maxDate = String.valueOf(this.calendarDates.get(this.getNumDay(parts[1]))) + "-" + parts[1] + "-" + parts[2];
+					if (!this.dates.contains(maxDate)) {
+						this.dates.add(maxDate);
+						addedMonths.add(parts[1]);
+					}
 				}
 			}
 			else {
@@ -108,6 +122,10 @@ public class Event implements java.io.Serializable {
 
 	public int getThisEventID() {
 		return this.thisEventID;
+	}
+	
+	public int getNumDay(String day){
+		return Integer.valueOf(day).intValue();
 	}
 
 	public String getToRepeat() {
@@ -160,6 +178,7 @@ public class Event implements java.io.Serializable {
 	
 	public void addInterval(Tuple<String> interval) {
 		this.intervalList.add(interval);
+		this.addDates();
 	}
 	
 	public void removeInterval(Tuple<String> interval) {
