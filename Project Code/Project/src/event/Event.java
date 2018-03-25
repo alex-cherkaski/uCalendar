@@ -54,6 +54,10 @@ public class Event implements java.io.Serializable {
 		this.addDates();
 	}
 	
+	public static void setStaticID(int staticID) {
+		eventID = staticID;
+	}
+	
 	public void addDates(){
 		String startDateCopy = this.startDate;
 		String changeFormat;
@@ -62,6 +66,9 @@ public class Event implements java.io.Serializable {
 			days.add(t.getItem3());
 		}
 		List<String> addedMonths = new ArrayList<String>();
+		if(this.toRepeat.equals("NEVER")) {
+			
+		}
 		while (!startDateCopy.equals(this.endDate)) {
 			String[] parts = startDateCopy.split("-");
 			changeFormat = parts[2] + parts[1] + parts[0];

@@ -12,7 +12,7 @@ public class NoteReader {
 	 * @param norePath the path to the note file.
 	 * @return String a String object representing the contents of the file. 
 	 */
-	public String getNoteContents(String notePath) {
+	public static String getNoteContents(String notePath) {
 		if (notePath == null) {
 			throw new NullPointerException();
 		}

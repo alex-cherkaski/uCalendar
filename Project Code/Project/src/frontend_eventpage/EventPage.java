@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
 import event.Event;
@@ -34,11 +36,11 @@ public class EventPage extends JPanel{
 	private JButton previous;
 	private JLabel description;
 	private String sortOperation;
-	private JLabel noteDisplayLabel;
 	private JButton addNote;
 	private JButton deleteNote;
 	private JButton uploadNote;
 	private JComboBox<String> sortBox;
+	private JTextArea noteTextArea;
 	
 	public EventPage() {
 		this.setLayout(new GridBagLayout());
@@ -68,20 +70,22 @@ public class EventPage extends JPanel{
 		
 		this.displayPanel = new JPanel();
 		c1.fill = GridBagConstraints.BOTH;
-		FrontEndUtilities.setGridBag(c1, 0, 1, 1, 1, 0, 2);
+		FrontEndUtilities.setGridBag(c1, 0.1, 1, 1, 1, 0, 2);
 		this.add(displayPanel, c1);
 		
 		this.displayPanel.setLayout(new BorderLayout());
 		this.listModel = new DefaultListModel<Note>();
 		this.noteList = new JList<Note>(this.listModel);
+		this.noteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.scrollPane = new JScrollPane(this.noteList);
 		this.displayPanel.add(this.scrollPane, BorderLayout.CENTER);
 		
-		this.noteDisplayLabel = new JLabel();
-		this.noteDisplayLabel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+		this.noteTextArea = new JTextArea();
+		noteTextArea.setEditable(false);
+		JScrollPane noteDisplayScrollPane = new JScrollPane(noteTextArea);
 		c1.fill = GridBagConstraints.BOTH;
 		FrontEndUtilities.setGridBag(c1, 1, 1, 1, 1, 1, 2);
-		this.add(this.noteDisplayLabel, c1);
+		this.add(noteDisplayScrollPane, c1);
 		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
@@ -113,6 +117,7 @@ public class EventPage extends JPanel{
 		this.event = event;
 		this.description.setText(this.event.getName());
 		EventPageController.updateListModel();
+		this.noteTextArea.setText("");
 	}
 	
 	public JButton getPreviousButton() {
@@ -157,5 +162,9 @@ public class EventPage extends JPanel{
 	
 	public EventJMenu getJMenuBar() {
 		return this.jMenu;
+	}
+	
+	public JTextArea getNoteDisplayTextArea() {
+		return this.noteTextArea;
 	}
 }

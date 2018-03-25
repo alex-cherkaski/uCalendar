@@ -4,6 +4,8 @@ package frontend;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -37,9 +39,9 @@ public class FrontendStartup {
 		switchMainPage();
 	}
 	
-	public static void switchEventPage(Event c) {
+	public static void switchEventPage(Event e) {
 		layout.show(cards, "event panel");
-		event.setEvent(c);
+		event.setEvent(e);
 	}
 	
 	public static void deleteEventAndSwitch(Event event) {
@@ -58,6 +60,9 @@ public class FrontendStartup {
 		
 		main = new MainPage();
 		MainPageController.setMain(main);
+		MainPageController.createClassesButtons();
+		MainPageController.updateDisplay();
+		Event.setStaticID(MainPageController.getHighestEventID());
 		main.setBackground(Color.white);
 		cards.add(main, "main panel");
 		
@@ -79,6 +84,11 @@ public class FrontendStartup {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.pack();
 		frame.setVisible(true);
+		frame.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+                FrontEndUtilities.serializeCalendar(main.getCalendar());
+            }
+        });
 	}
 
 }

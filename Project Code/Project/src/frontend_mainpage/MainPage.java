@@ -16,9 +16,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import calendar.Calendar;
+import calendar.SerializerDeserializer;
 import course.Course;
 import event.Event;
 import frontend.FrontEndUtilities;
+import frontend_coursepage.CourseButton;
+import frontend_eventpage.EventButton;
 
 @SuppressWarnings("serial")
 public class MainPage extends JPanel{
@@ -39,7 +42,11 @@ public class MainPage extends JPanel{
 	private MainJMenu menu;
 
 	public MainPage() {
-		this.calendar = new Calendar(new ArrayList<Course>(), new ArrayList<Event>());
+		String pwd = System.getProperty("user.dir") + "\\calendar.ser";
+		this.calendar = SerializerDeserializer.deserializeCalendar(pwd);
+		if(this.calendar == null) {
+			this.calendar = new Calendar(new ArrayList<Course>(), new ArrayList<Event>());
+		}
 		this.courseButtons = new ArrayList<CourseButton>();
 		this.eventButtons = new ArrayList<EventButton>();
 		this.setLayout(new GridBagLayout());

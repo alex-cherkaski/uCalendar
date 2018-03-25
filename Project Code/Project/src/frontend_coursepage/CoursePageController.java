@@ -9,14 +9,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import frontend.FrontendStartup;
 import frontend_coursepage.CoursePage;
 import notes.Note;
+import notes.NoteReader;
 
 public class CoursePageController {
 
-private static CoursePage coursePage;
+	private static CoursePage coursePage;
 	
 	public static void setCoursePage(CoursePage crsPage) {
 		coursePage = crsPage;
@@ -28,6 +31,8 @@ private static CoursePage coursePage;
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				coursePage.getNoteList().clearSelection();
+				coursePage.getNoteDisplayTextArea().setText("");
 				FrontendStartup.switchMainPage();
 			}
 			
@@ -64,6 +69,19 @@ private static CoursePage coursePage;
 				FrontendStartup.deleteCourseAndSwitch(coursePage.getCourse());
 			}
 		});
+		
+		coursePage.getNoteList().addListSelectionListener(new ListSelectionListener(){
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(!coursePage.getListModel().isEmpty() && !coursePage.getNoteList().isSelectionEmpty()) {
+					displayNoteOnTextArea();
+				}
+			}
+		});
+	}
+	
+	public static void displayNoteOnTextArea() {
+		coursePage.getNoteDisplayTextArea().setText(NoteReader.getNoteContents(coursePage.getNoteList().getSelectedValue().getNoteFilePath()));
 	}
 	
 	public static void importFile() {
@@ -73,6 +91,7 @@ private static CoursePage coursePage;
 		
 		if(fileChooser.getSelectedFile() != null){
 			Note note = new Note(fileChooser.getSelectedFile().getName());
+			note.setNoteFilePath(fileChooser.getSelectedFile().getAbsolutePath());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			addNote(LocalDate.now().format(formatter), note);
 		}

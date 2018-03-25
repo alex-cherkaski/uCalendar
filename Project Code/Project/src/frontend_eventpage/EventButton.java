@@ -1,4 +1,4 @@
-package frontend_mainpage;
+package frontend_eventpage;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;

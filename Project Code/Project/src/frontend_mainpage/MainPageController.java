@@ -18,6 +18,8 @@ import course.Course;
 import course.CourseBuilder;
 import event.Event;
 import frontend.FrontEndUtilities;
+import frontend_coursepage.CourseButton;
+import frontend_eventpage.EventButton;
 import frontend_eventpage.EventWindowPanel;
 import parser.CalendarBlock;
 import parser.Parser;
@@ -45,7 +47,7 @@ public class MainPageController {
 				mainPage.setEndDay(endDay.plusWeeks(1));
 				
 				updateWeek();
-				updateDisplayEventButton();
+				updateDisplay();
 			}
 			
 		});
@@ -60,7 +62,7 @@ public class MainPageController {
 				mainPage.setEndDay(endDay.minusWeeks(1));
 				
 				updateWeek();
-				updateDisplayEventButton();
+				updateDisplay();
 			}
 			
 		});
@@ -93,7 +95,7 @@ public class MainPageController {
 			List<Course> courseList = CourseBuilder.getCourseMap(blockList);
 			List<Event> events = new ArrayList<Event>();
 			Calendar calendar = new Calendar(courseList, events);
-			MainPageController.addClasses(calendar);
+			MainPageController.transferEventsToNewCalendar(calendar);
 		}
 	}
 	
@@ -109,13 +111,18 @@ public class MainPageController {
 		eventFrame.setVisible(true);
 	}
 
-	public static void addClasses(Calendar calendar2) {
+	public static void transferEventsToNewCalendar(Calendar calendar2) {
 		List<Event> eventList = mainPage.getCalendar().getEventList();
 		mainPage.setCalendar(calendar2);
 		for(Event event: eventList) {
 			mainPage.getCalendar().addEvent(event);
 		}
 		
+		createClassesButtons();
+		
+	}
+	
+	public static void createClassesButtons() {
 		GridBagConstraints c5 = new GridBagConstraints();
 		
 		int i = 0;
@@ -134,18 +141,17 @@ public class MainPageController {
 			i++;
 		}
 		
-		updateDisplayEventButton();
-		
+		updateDisplay();
 	}
 	
 	public static void addEvent(Event event) {
 		mainPage.getCalendar().addEvent(event);
 		
-		updateDisplayEventButton();
+		updateDisplay();
 
 	}
 	
-	public static void updateDisplayEventButton() {
+	public static void updateDisplay() {
 		GridBagConstraints c5 = new GridBagConstraints();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		
@@ -195,7 +201,7 @@ public class MainPageController {
 			}
 		}
 		mainPage.getCalendar().removeCourse(course);
-		updateDisplayEventButton();
+		updateDisplay();
 	}
 	
 	public static void deleteEvent(Event event) {
@@ -205,7 +211,7 @@ public class MainPageController {
 			}
 		}
 		mainPage.getCalendar().removeEvent(event);
-		updateDisplayEventButton();
+		updateDisplay();
 	}
 	
 	public static void updateWeek() {
@@ -223,5 +229,14 @@ public class MainPageController {
 		mainPage.revalidate();
 		mainPage.repaint();
 	}
-
+	
+	public static int getHighestEventID() {
+		int max = 0;
+		for(Event event: mainPage.getCalendar().getEventList()) {
+			if(max < event.getThisEventID()) {
+				max = event.getThisEventID();
+			}
+		}
+		return max;
+	}
 }

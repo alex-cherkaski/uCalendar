@@ -9,10 +9,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import dropbox.DropboxSingleton;
 import frontend.FrontendStartup;
 import notes.Note;
+import notes.NoteReader;
 
 public class EventPageController {
 	
@@ -28,6 +31,8 @@ public class EventPageController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				eventPage.getNoteList().clearSelection();
+				eventPage.getNoteDisplayTextArea().setText("");
 				FrontendStartup.switchMainPage();
 			}
 			
@@ -72,6 +77,19 @@ public class EventPageController {
 				FrontendStartup.deleteEventAndSwitch(eventPage.getEvent());
 			}
 		});
+		
+		eventPage.getNoteList().addListSelectionListener(new ListSelectionListener(){
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(!eventPage.getListModel().isEmpty() && !eventPage.getNoteList().isSelectionEmpty()) {
+					displayNoteOnTextArea();
+				}
+			}
+		});
+	}
+	
+	public static void displayNoteOnTextArea() {
+		eventPage.getNoteDisplayTextArea().setText(NoteReader.getNoteContents(eventPage.getNoteList().getSelectedValue().getNoteFilePath()));
 	}
 	
 	public static void uploadNote() {
@@ -100,6 +118,7 @@ public class EventPageController {
 	
 	public static void deleteNote() {
 		Note note = eventPage.getNoteList().getSelectedValue();
+		eventPage.getNoteDisplayTextArea().setText("");
 		eventPage.getEvent().removeNote(note.getNoteDate(), note);
 		updateListModel();
 	}

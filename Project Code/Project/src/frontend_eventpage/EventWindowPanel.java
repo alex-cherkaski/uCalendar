@@ -189,6 +189,7 @@ public class EventWindowPanel extends JPanel{
 							System.out.println(date);
 						}
 					}else{
+						System.out.println(startDateString + "   " + endDateString);
 						Event event = new Event(repeatBox.getSelectedItem().toString(), weekStartDate.format(formatter), weekEndDate.format(formatter));
 						event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
 						event.setName(nameTextBox.getText());
