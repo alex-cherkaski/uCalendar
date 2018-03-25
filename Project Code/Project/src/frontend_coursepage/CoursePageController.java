@@ -120,6 +120,9 @@ public class CoursePageController {
 		for(Note no: notes) {
 			coursePage.getListModel().addElement(no);
 		}
+		
+		coursePage.revalidate();
+		coursePage.repaint();
 	}
 
 }

@@ -135,6 +135,9 @@ public class EventPageController {
 		for(Note no: notes) {
 			eventPage.getListModel().addElement(no);
 		}
+		
+		eventPage.revalidate();
+		eventPage.repaint();
 	}
 
 }

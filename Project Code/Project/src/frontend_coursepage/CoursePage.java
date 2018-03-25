@@ -71,7 +71,7 @@ public class CoursePage extends JPanel {
 		
 		this.displayPanel = new JPanel();
 		c1.fill = GridBagConstraints.BOTH;
-		FrontEndUtilities.setGridBag(c1, 0, 1, 1, 1, 0, 2);
+		FrontEndUtilities.setGridBag(c1, 0.05, 1, 1, 1, 0, 2);
 		this.add(displayPanel, c1);
 		
 		this.displayPanel.setLayout(new BorderLayout());
