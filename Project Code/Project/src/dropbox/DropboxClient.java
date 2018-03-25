@@ -167,4 +167,28 @@ public class DropboxClient {
 			e.printStackTrace();
 		}
 	}
+	
+	/*
+	 * Reconfigures this dropbox client to work with another dropbox account.
+	 * @param accessToken the A string representing the authentication token of another account.  
+	 */
+	public void reconfigureClient(String accessToken) {
+		if (accessToken == null) {
+			throw new IllegalArgumentException();
+		}
+		if (accessToken.trim().length() == 0) {
+			throw new IllegalArgumentException();
+		}
+		// Create Dropbox client
+		config = DbxRequestConfig.newBuilder("uCalendar/1.0").build();
+		client = new DbxClientV2(config, accessToken);
+
+		try {
+			this.account = client.users().getCurrentAccount();
+			System.out.println(account.getName().getDisplayName());
+		} 
+		catch (DbxException dbxe) {
+			dbxe.printStackTrace();
+		}
+	}
 }
