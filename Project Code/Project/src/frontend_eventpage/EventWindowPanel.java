@@ -162,13 +162,13 @@ public class EventWindowPanel extends JPanel{
 							System.out.println(date);
 						}
 					}else if(repeatBox.getSelectedItem().toString().equals("WEEKLY")){
-						
 						while(endDate.getDayOfYear() < 365){
 							endDate = endDate.plusWeeks(1);
 							if(endDate.getDayOfYear() + 7 > 365){
 								break;
 							}
 						}
+						
 						Event event = new Event(repeatBox.getSelectedItem().toString(), startDate.format(formatter), endDate.format(formatter));
 						event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
 						event.setName(nameTextBox.getText());

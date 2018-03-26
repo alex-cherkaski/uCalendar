@@ -17,7 +17,6 @@ import calendar.Calendar;
 import course.Course;
 import course.CourseBuilder;
 import event.Event;
-import frontend.FrontEndUtilities;
 import frontend_coursepage.CourseButton;
 import frontend_eventpage.EventButton;
 import frontend_eventpage.EventWindowPanel;
@@ -215,15 +214,13 @@ public class MainPageController {
 	}
 	
 	public static void updateWeek() {
-		GridBagConstraints c = new GridBagConstraints();
 		LocalDate y = mainPage.getStartDay();
+		
+		mainPage.getCurrMonthLabel().setText(y.getMonth().toString());
+		
 		for(int i = 0; i < 7; i++) {
 			mainPage.getDayLabels()[i].setText(String.format("<html>" + days[i] + "<br>" + "<center>" + y.getDayOfMonth() + "</center>" + "</html>"));
 			y = y.plusDays(1);
-			c.fill = GridBagConstraints.BOTH;
-			FrontEndUtilities.setGridBag(c, 1, 1, 1, 1, i + 1, 2);
-			mainPage.getDayX().put(days[i], i + 1);
-			mainPage.add(mainPage.getDayLabels()[i], c);
 		}
 		
 		mainPage.revalidate();

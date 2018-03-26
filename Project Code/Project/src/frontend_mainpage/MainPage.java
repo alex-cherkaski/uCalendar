@@ -34,7 +34,7 @@ public class MainPage extends JPanel{
 	private JLabel[] dayLabel = new JLabel[7];
 	private JButton next;
 	private JButton previous;
-	private JLabel currentWeek;
+	private JLabel currentMonth;
 	private HashMap<String, Integer> timeY = new HashMap<String, Integer>();
 	private HashMap<String, Integer> dayX = new HashMap<String, Integer>();
 	private List<CourseButton> courseButtons;
@@ -88,10 +88,10 @@ public class MainPage extends JPanel{
 	    	startDay = startDay.minusDays(1);
 	    }
 		
-		this.currentWeek = new JLabel("Current Date: " + this.currDay.toString(), SwingConstants.CENTER);
+		this.currentMonth = new JLabel(this.currDay.getMonth().toString(), SwingConstants.CENTER);
 		c1.fill = GridBagConstraints.BOTH;
 		FrontEndUtilities.setGridBag(c1, 1, 0, 6, 1, 1, 1);
-		this.add(this.currentWeek, c1);
+		this.add(this.currentMonth, c1);
 		
 		GridBagConstraints c2 = new GridBagConstraints();
 		int x = 9;
@@ -203,5 +203,9 @@ public class MainPage extends JPanel{
 	
 	public MainJMenu getMenuBar() {
 		return this.menu;
+	}
+	
+	public JLabel getCurrMonthLabel() {
+		return this.currentMonth;
 	}
 }
