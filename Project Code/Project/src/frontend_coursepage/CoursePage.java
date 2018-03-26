@@ -61,7 +61,7 @@ public class CoursePage extends JPanel {
 		
 		this.previous = new PreviousButton();
 		c1.fill = GridBagConstraints.BOTH;
-		FrontEndUtilities.setGridBag(c1, 0, 0, 1, 1, 0, 1);
+		FrontEndUtilities.setGridBag(c1, 0.05, 0, 1, 1, 0, 1);
 		this.add(this.previous, c1);
 		
 		this.description = new JLabel("", SwingConstants.CENTER);
@@ -71,7 +71,7 @@ public class CoursePage extends JPanel {
 		
 		this.displayPanel = new JPanel();
 		c1.fill = GridBagConstraints.BOTH;
-		FrontEndUtilities.setGridBag(c1, 0.05, 1, 1, 1, 0, 2);
+		FrontEndUtilities.setGridBag(c1, 1, 1, 3, 1, 0, 2);
 		this.add(displayPanel, c1);
 		
 		this.displayPanel.setLayout(new BorderLayout());
@@ -79,22 +79,18 @@ public class CoursePage extends JPanel {
 		this.noteList = new JList<Note>(this.listModel);
 		this.noteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.scrollPane = new JScrollPane(this.noteList);
-		this.displayPanel.add(this.scrollPane, BorderLayout.CENTER);
+		this.displayPanel.add(this.scrollPane, BorderLayout.LINE_START);
 		
 		this.noteTextArea = new JTextArea();
 		noteTextArea.setEditable(false);
 		JScrollPane noteDisplayScrollPane = new JScrollPane(noteTextArea);
-		c1.fill = GridBagConstraints.BOTH;
-		FrontEndUtilities.setGridBag(c1, 1, 1, 1, 1, 1, 2);
-		this.add(noteDisplayScrollPane, c1);
+		this.displayPanel.add(noteDisplayScrollPane, BorderLayout.CENTER);
 		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		buttonPanel.setLayout(new GridLayout(20 , 1));
 		buttonPanel.setBackground(Color.white);
-		c1.fill = GridBagConstraints.BOTH;
-		FrontEndUtilities.setGridBag(c1, 0, 0, 1, 1, 2, 2);
-		this.add(buttonPanel, c1);
+		this.displayPanel.add(buttonPanel, BorderLayout.LINE_END);
 		
 		this.addNote = new JButton("Add Note");
 		buttonPanel.add(this.addNote);
@@ -109,6 +105,7 @@ public class CoursePage extends JPanel {
 		this.sortOperation = sortBox.getSelectedItem().toString();
 		buttonPanel.add(this.sortBox);
 		
+		this.scrollPane.setPreferredSize(buttonPanel.getPreferredSize());
 	}
 	
 	public void setCourse(Course course) {
