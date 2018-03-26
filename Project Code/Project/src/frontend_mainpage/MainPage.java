@@ -1,5 +1,7 @@
 package frontend_mainpage;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
@@ -34,12 +36,14 @@ public class MainPage extends JPanel{
 	private JLabel[] dayLabel = new JLabel[7];
 	private JButton next;
 	private JButton previous;
-	private JLabel currentMonth;
+	private JLabel currentMonthLabel;
 	private HashMap<String, Integer> timeY = new HashMap<String, Integer>();
 	private HashMap<String, Integer> dayX = new HashMap<String, Integer>();
 	private List<CourseButton> courseButtons;
 	private List<EventButton> eventButtons;
 	private MainJMenu menu;
+	private int maxButtonWidth = 0;
+	private int maxButtonHeight = 0;
 
 	public MainPage() {
 		String pwd = System.getProperty("user.dir") + "\\calendar.ser";
@@ -51,28 +55,26 @@ public class MainPage extends JPanel{
 		this.eventButtons = new ArrayList<EventButton>();
 		this.setLayout(new GridBagLayout());
 		this.menu = new MainJMenu(this);
-		JPanel menuPanel = new JPanel();
 		FlowLayout flow = new FlowLayout();
 		flow.setAlignment(FlowLayout.LEFT );
+		GridBagConstraints c = new GridBagConstraints();
+		
+		JPanel menuPanel = new JPanel();
+		c.fill = GridBagConstraints.BOTH;
+		FrontEndUtilities.setGridBag(c, 0, 0, 8, 1, 0, 0);
 		menuPanel.setLayout(flow);
 		menuPanel.add(menu);
-		
-		GridBagConstraints c0 = new GridBagConstraints();
-		c0.fill = GridBagConstraints.BOTH;
-		FrontEndUtilities.setGridBag(c0, 0.5, 0, 8, 1, 0, 0);
-		this.add(menuPanel, c0);
-		
-		GridBagConstraints c1 = new GridBagConstraints();
+		this.add(menuPanel, c);
 		
 		this.previous = new PreviousButton();
-		c1.fill = GridBagConstraints.BOTH;
-		FrontEndUtilities.setGridBag(c1, 1, 0, 1, 1, 0, 1);
-		this.add(this.previous, c1);
+		c.fill = GridBagConstraints.BOTH;
+		FrontEndUtilities.setGridBag(c, 1, 0, 1, 1, 0, 1);
+		this.add(this.previous, c);
 		
 		this.next = new NextButton();
-		c1.fill = GridBagConstraints.BOTH;
-		FrontEndUtilities.setGridBag(c1, 1, 0, 1, 1, 7, 1);
-		this.add(this.next, c1);
+		c.fill = GridBagConstraints.BOTH;
+		FrontEndUtilities.setGridBag(c, 1, 0, 1, 1, 7, 1);
+		this.add(this.next, c);
 		
 		this.currDay = LocalDate.now();
 
@@ -88,12 +90,16 @@ public class MainPage extends JPanel{
 	    	startDay = startDay.minusDays(1);
 	    }
 		
-		this.currentMonth = new JLabel(this.currDay.getMonth().toString(), SwingConstants.CENTER);
-		c1.fill = GridBagConstraints.BOTH;
-		FrontEndUtilities.setGridBag(c1, 1, 0, 6, 1, 1, 1);
-		this.add(this.currentMonth, c1);
+		this.currentMonthLabel = new JLabel("", SwingConstants.CENTER);
+		if(this.startDay.getMonth().equals(this.startDay.getMonth())) {
+			this.currentMonthLabel.setText(this.startDay.getMonth().toString());
+		}else {
+			this.currentMonthLabel.setText(this.startDay.getMonth().toString() + " \u2192 " + this.startDay.getMonth().toString());
+		}
+		c.fill = GridBagConstraints.BOTH;
+		FrontEndUtilities.setGridBag(c, 1, 0, 6, 1, 1, 1);
+		this.add(this.currentMonthLabel, c);
 		
-		GridBagConstraints c2 = new GridBagConstraints();
 		int x = 9;
 		String s;
 		for(int i = 0; i < 12; i++) {
@@ -109,29 +115,42 @@ public class MainPage extends JPanel{
 			}
 		
 			this.timesLabel[i] = new JLabel(s, SwingConstants.CENTER);
-			c2.fill = GridBagConstraints.BOTH;
-			FrontEndUtilities.setGridBag(c2, 0.5, 0.5, 1, 1, 0, 3 + i);
+			if(this.maxButtonHeight < this.timesLabel[i].getPreferredSize().height) {
+				this.maxButtonHeight = this.timesLabel[i].getPreferredSize().height;
+			}
+			c.fill = GridBagConstraints.BOTH;
+			FrontEndUtilities.setGridBag(c, 1, 1, 1, 1, 0, 3 + i);
 			if(x == 9) {
 				s = String.format("0%d:00", x);
 			}else {
 				s = String.format("%d:00", x);
 			}
 			this.timeY.put(s, 3 + i);
-			this.add(this.timesLabel[i], c2);
+			this.add(this.timesLabel[i], c);
 			x++;
 		}
 		this.timeY.put("21:00", 15);
-		
-		GridBagConstraints c3 = new GridBagConstraints();
+
 		LocalDate y = this.startDay;
-		
 		for(int i = 0; i < 7; i++) {
 			this.dayLabel[i] = new JLabel(String.format("<html>" + MainPageController.days[i] + "<br>" + "<center>" + y.getDayOfMonth() + "</center>" + "</html>"), SwingConstants.CENTER);
+			if(this.maxButtonWidth < this.dayLabel[i].getPreferredSize().width) {
+				this.maxButtonWidth = this.dayLabel[i].getPreferredSize().width;
+			}
+			if(y.equals(this.currDay)) {
+				this.dayLabel[i].setForeground(Color.red);
+			}else {
+				this.dayLabel[i].setForeground(Color.black);
+			}
 			y = y.plusDays(1);
-			c3.fill = GridBagConstraints.BOTH;
-			FrontEndUtilities.setGridBag(c3, 1, 1, 1, 1, i + 1, 2);
+			c.fill = GridBagConstraints.BOTH;
+			FrontEndUtilities.setGridBag(c, 1, 1, 1, 1, i + 1, 2);
 			this.dayX.put(MainPageController.days[i], i + 1);
-			this.add(dayLabel[i], c3);
+			this.add(dayLabel[i], c);
+		}
+		
+		for(JLabel label: this.dayLabel) {
+			label.setPreferredSize(new Dimension(this.maxButtonWidth, label.getPreferredSize().height));
 		}
 	}
 	
@@ -142,7 +161,7 @@ public class MainPage extends JPanel{
         	g.drawLine(0, this.timesLabel[i].getY(), this.getWidth(), this.timesLabel[i].getY());
         }
         
-        g.drawLine(this.timesLabel[0].getWidth(), this.timesLabel[0].getY(), this.timesLabel[0].getWidth(), this.getHeight());
+        g.drawLine(this.dayLabel[0].getX(), this.timesLabel[0].getY(), this.dayLabel[0].getX(), this.getHeight());
     }
 	
 	public HashMap<String, Integer> getTimeY(){
@@ -206,6 +225,18 @@ public class MainPage extends JPanel{
 	}
 	
 	public JLabel getCurrMonthLabel() {
-		return this.currentMonth;
+		return this.currentMonthLabel;
+	}
+
+	public LocalDate getCurrDay() {
+		return this.currDay;
+	}
+
+	public int getMaxButtonWidth() {
+		return this.maxButtonWidth;
+	}
+
+	public int getMaxButtonHeight() {
+		return this.maxButtonHeight;
 	}
 }

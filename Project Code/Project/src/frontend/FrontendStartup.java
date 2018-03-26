@@ -61,7 +61,6 @@ public class FrontendStartup {
 		main = new MainPage();
 		MainPageController.setMain(main);
 		MainPageController.createClassesButtons();
-		MainPageController.updateDisplay();
 		Event.setStaticID(MainPageController.getHighestEventID());
 		main.setBackground(Color.white);
 		cards.add(main, "main panel");

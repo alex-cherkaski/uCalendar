@@ -46,7 +46,7 @@ public class EventWindowPanel extends JPanel{
 		String[] time = new String[13];
 		String s;
 		int x = 9;
-		for(int i = 0; i < 12; i++) {
+		for(int i = 0; i < 13; i++) {
 			if(x == 9) {
 				s = String.format("0%d:00", x);
 			}else {

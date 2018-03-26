@@ -19,6 +19,7 @@ public class EventButton extends JButton {
 		this.setText(this.event.getName());
 		this.setFocusable(false);
 		this.setBackground(Color.orange);
+		this.setMaximumSize(this.getMinimumSize());
 		this.addActionListener(new ActionListener() {
 
 			@Override
@@ -32,4 +33,5 @@ public class EventButton extends JButton {
 	public Event getEvent() {
 		return this.event;
 	}
+	
 }

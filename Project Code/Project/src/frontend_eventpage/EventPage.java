@@ -70,13 +70,14 @@ public class EventPage extends JPanel{
 		
 		this.displayPanel = new JPanel();
 		c1.fill = GridBagConstraints.BOTH;
-		FrontEndUtilities.setGridBag(c1, 0.05, 1, 1, 1, 0, 2);
+		FrontEndUtilities.setGridBag(c1, 0, 1, 1, 1, 0, 2);
 		this.add(displayPanel, c1);
 		
 		this.displayPanel.setLayout(new BorderLayout());
 		this.listModel = new DefaultListModel<Note>();
 		this.noteList = new JList<Note>(this.listModel);
 		this.noteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.noteList.setVisibleRowCount(-1);
 		this.scrollPane = new JScrollPane(this.noteList);
 		this.displayPanel.add(this.scrollPane, BorderLayout.CENTER);
 		

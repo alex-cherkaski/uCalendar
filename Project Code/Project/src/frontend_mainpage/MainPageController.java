@@ -1,6 +1,7 @@
 package frontend_mainpage;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -122,19 +123,18 @@ public class MainPageController {
 	}
 	
 	public static void createClassesButtons() {
-		GridBagConstraints c5 = new GridBagConstraints();
+		GridBagConstraints c = new GridBagConstraints();
 		
 		int i = 0;
 		for (Course course : mainPage.getCalendar().getCourseList()) {
 			for(Tuple<String> block: course.getIntervalList()) {
 				CourseButton button = new CourseButton(course, i, block);
-				c5.fill = GridBagConstraints.BOTH;
-				c5.weightx = 0;
-				c5.weighty = 0;
-				c5.gridheight = mainPage.getTimeY().get(block.getItem2()) - mainPage.getTimeY().get(block.getItem1());
-				c5.gridx = mainPage.getDayX().get(block.getItem3());
-				c5.gridy = mainPage.getTimeY().get(block.getItem1());
-				mainPage.add(button, c5);
+				button.setPreferredSize(new Dimension(mainPage.getMaxButtonWidth(), mainPage.getMaxButtonHeight()));
+				c.fill = GridBagConstraints.BOTH;
+				c.gridheight = mainPage.getTimeY().get(block.getItem2()) - mainPage.getTimeY().get(block.getItem1());
+				c.gridx = mainPage.getDayX().get(block.getItem3());
+				c.gridy = mainPage.getTimeY().get(block.getItem1());
+				mainPage.add(button, c);
 				mainPage.getCourseButtons().add(button);
 			}
 			i++;
@@ -151,7 +151,7 @@ public class MainPageController {
 	}
 	
 	public static void updateDisplay() {
-		GridBagConstraints c5 = new GridBagConstraints();
+		GridBagConstraints c = new GridBagConstraints();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		
 		for(EventButton button: mainPage.getEventButtons()) {
@@ -165,17 +165,16 @@ public class MainPageController {
 		for(Event event: mainPage.getCalendar().getEventFromAToB(mainPage.getStartDay().format(formatter), mainPage.getEndDay().format(formatter))) {
 			for(Tuple<String> block: event.getIntervalList()){
 				EventButton button = new EventButton(event);
+				button.setPreferredSize(new Dimension(mainPage.getMaxButtonWidth(), mainPage.getMaxButtonHeight()));
 				if(conflicts != null && conflicts.contains(block)) {
 					
 					button.setBackground(Color.red);
 				}
-				c5.fill = GridBagConstraints.BOTH;
-				c5.weightx = 0;
-				c5.weighty = 0;
-				c5.gridheight = mainPage.getTimeY().get(block.getItem2()) - mainPage.getTimeY().get(block.getItem1());
-				c5.gridx = mainPage.getDayX().get(block.getItem3());
-				c5.gridy = mainPage.getTimeY().get(block.getItem1());
-				mainPage.add(button, c5);
+				c.fill = GridBagConstraints.BOTH;
+				c.gridheight = mainPage.getTimeY().get(block.getItem2()) - mainPage.getTimeY().get(block.getItem1());
+				c.gridx = mainPage.getDayX().get(block.getItem3());
+				c.gridy = mainPage.getTimeY().get(block.getItem1());
+				mainPage.add(button, c);
 				mainPage.getEventButtons().add(button);
 			}
 		}
@@ -214,12 +213,22 @@ public class MainPageController {
 	}
 	
 	public static void updateWeek() {
+		
+		
+		if(mainPage.getStartDay().getMonth().equals(mainPage.getEndDay().getMonth())) {
+			mainPage.getCurrMonthLabel().setText(mainPage.getStartDay().getMonth().toString());
+		}else {
+			mainPage.getCurrMonthLabel().setText(mainPage.getStartDay().getMonth().toString() + " \u2192 " + mainPage.getEndDay().getMonth().toString());
+		}
+		
 		LocalDate y = mainPage.getStartDay();
-		
-		mainPage.getCurrMonthLabel().setText(y.getMonth().toString());
-		
 		for(int i = 0; i < 7; i++) {
 			mainPage.getDayLabels()[i].setText(String.format("<html>" + days[i] + "<br>" + "<center>" + y.getDayOfMonth() + "</center>" + "</html>"));
+			if(y.equals(mainPage.getCurrDay())) {
+				mainPage.getDayLabels()[i].setForeground(Color.red);
+			}else {
+				mainPage.getDayLabels()[i].setForeground(Color.black);
+			}
 			y = y.plusDays(1);
 		}
 		
