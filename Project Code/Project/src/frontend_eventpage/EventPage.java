@@ -2,6 +2,7 @@ package frontend_eventpage;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -30,7 +31,6 @@ public class EventPage extends JPanel{
 	private Event event;
 	private EventJMenu jMenu;
 	private JPanel displayPanel;
-	private JScrollPane scrollPane;
 	private JList<Note> noteList;
 	private DefaultListModel<Note> listModel;
 	private JButton previous;
@@ -41,6 +41,8 @@ public class EventPage extends JPanel{
 	private JButton uploadNote;
 	private JComboBox<String> sortBox;
 	private JTextArea noteTextArea;
+	private DefaultListModel<Note> listModelDropBox;
+	private JList<Note> noteListDropBox;
 	
 	public EventPage() {
 		this.setLayout(new GridBagLayout());
@@ -51,34 +53,64 @@ public class EventPage extends JPanel{
 		menuPanel.setLayout(flow);
 		menuPanel.add(jMenu);
 		
-		GridBagConstraints c0 = new GridBagConstraints();
-		c0.fill = GridBagConstraints.BOTH;
-		FrontEndUtilities.setGridBag(c0, 0, 0, 8, 1, 0, 0);
-		this.add(menuPanel, c0);
-		
-		GridBagConstraints c1 = new GridBagConstraints();
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.BOTH;
+		FrontEndUtilities.setGridBag(c, 0, 0, 8, 1, 0, 0);
+		this.add(menuPanel, c);
 		
 		this.previous = new PreviousButton();
-		c1.fill = GridBagConstraints.BOTH;
-		FrontEndUtilities.setGridBag(c1, 0.05, 0, 1, 1, 0, 1);
-		this.add(this.previous, c1);
+		c.fill = GridBagConstraints.BOTH;
+		FrontEndUtilities.setGridBag(c, 0.05, 0, 1, 1, 0, 1);
+		this.add(this.previous, c);
 		
 		this.description = new JLabel("", SwingConstants.CENTER);
-		c1.fill = GridBagConstraints.BOTH;
-		FrontEndUtilities.setGridBag(c1, 1, 0, 2, 1, 1, 1);
-		this.add(this.description, c1);
+		c.fill = GridBagConstraints.BOTH;
+		FrontEndUtilities.setGridBag(c, 1, 0, 2, 1, 1, 1);
+		this.add(this.description, c);
 		
 		this.displayPanel = new JPanel();
-		c1.fill = GridBagConstraints.BOTH;
-		FrontEndUtilities.setGridBag(c1, 1, 1, 3, 1, 0, 2);
-		this.add(displayPanel, c1);
+		c.fill = GridBagConstraints.BOTH;
+		FrontEndUtilities.setGridBag(c, 1, 1, 3, 1, 0, 2);
+		this.add(displayPanel, c);
 		
 		this.displayPanel.setLayout(new BorderLayout());
+		JPanel notePanel = new JPanel(new GridLayout(2, 1));
+		JPanel localNotePanel = new JPanel(new GridBagLayout());
+		notePanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+		localNotePanel.setBackground(Color.white);
+		localNotePanel.setOpaque(true);
+		
+		JLabel localNoteLabel = new JLabel("Local Notes:");
+		c.fill = GridBagConstraints.BOTH;
+		FrontEndUtilities.setGridBag(c, 1, 0, 1, 1, 0, 0);
+		localNotePanel.add(localNoteLabel);
+		
 		this.listModel = new DefaultListModel<Note>();
 		this.noteList = new JList<Note>(this.listModel);
 		this.noteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.scrollPane = new JScrollPane(this.noteList);
-		this.displayPanel.add(this.scrollPane, BorderLayout.LINE_START);
+		JScrollPane scrollPane = new JScrollPane(this.noteList);
+		c.fill = GridBagConstraints.BOTH;
+		FrontEndUtilities.setGridBag(c, 1, 1, 1, 1, 0, 1);
+		localNotePanel.add(scrollPane, c);
+		notePanel.add(localNotePanel);
+		
+		JPanel dropBoxNotePanel = new JPanel(new GridBagLayout());
+		dropBoxNotePanel.setBackground(Color.white);
+		dropBoxNotePanel.setOpaque(true);
+		
+		JLabel dropBoxNoteLabel = new JLabel("DropBox Notes:");
+		c.fill = GridBagConstraints.BOTH;
+		FrontEndUtilities.setGridBag(c, 1, 0, 1, 1, 0, 0);
+		dropBoxNotePanel.add(dropBoxNoteLabel);
+		
+		this.listModelDropBox = new DefaultListModel<Note>();
+		this.noteListDropBox = new JList<Note>(this.listModelDropBox);
+		this.noteListDropBox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JScrollPane scrollPaneDropBox = new JScrollPane(this.noteListDropBox);
+		FrontEndUtilities.setGridBag(c, 1, 1, 1, 1, 0, 1);
+		dropBoxNotePanel.add(scrollPaneDropBox, c);
+		notePanel.add(dropBoxNotePanel);
+		this.displayPanel.add(notePanel, BorderLayout.LINE_START);
 		
 		this.noteTextArea = new JTextArea();
 		noteTextArea.setEditable(false);
@@ -106,8 +138,10 @@ public class EventPage extends JPanel{
 		sortBox.setSelectedIndex(0);
 		this.sortOperation = sortBox.getSelectedItem().toString();
 		buttonPanel.add(this.sortBox);
+		buttonPanel.setPreferredSize(new Dimension(buttonPanel.getPreferredSize().width * 2, buttonPanel.getPreferredSize().height));
 		
-		this.scrollPane.setPreferredSize(buttonPanel.getPreferredSize());
+		scrollPane.setPreferredSize(new Dimension(buttonPanel.getPreferredSize().width, scrollPane.getPreferredSize().height));
+		scrollPaneDropBox.setPreferredSize(scrollPane.getPreferredSize());
 	}
 	
 	public void setEvent(Event event) {
