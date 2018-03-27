@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.File;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class MainPage extends JPanel{
 	private int maxButtonHeight = 0;
 
 	public MainPage() {
-		String pwd = System.getProperty("user.dir") + "\\calendar.ser";
+		String pwd = System.getProperty("user.dir") + File.pathSeparator + "calendar.ser";
 		this.calendar = SerializerDeserializer.deserializeCalendar(pwd);
 		if(this.calendar == null) {
 			this.calendar = new Calendar(new ArrayList<Course>(), new ArrayList<Event>());
