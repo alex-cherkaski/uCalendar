@@ -82,6 +82,7 @@ public class CoursePageController {
 	
 	public static void displayNoteOnTextArea() {
 		coursePage.getNoteDisplayTextArea().setText(NoteReader.getNoteContents(coursePage.getNoteList().getSelectedValue().getNoteFilePath()));
+		coursePage.getNoteDisplayTextArea().setCaretPosition(0);
 	}
 	
 	public static void importFile() {

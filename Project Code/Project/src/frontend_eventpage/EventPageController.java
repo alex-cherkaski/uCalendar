@@ -90,6 +90,7 @@ public class EventPageController {
 	
 	public static void displayNoteOnTextArea() {
 		eventPage.getNoteDisplayTextArea().setText(NoteReader.getNoteContents(eventPage.getNoteList().getSelectedValue().getNoteFilePath()));
+		eventPage.getNoteDisplayTextArea().setCaretPosition(0);
 	}
 	
 	public static void uploadNote() {
