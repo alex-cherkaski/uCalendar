@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import calendar.Calendar;
+import calendar.SerializerDeserializer;
 import course.Course;
 import course.CourseBuilder;
 import event.Event;
@@ -82,6 +84,14 @@ public class MainPageController {
 				importFile();
 			}
 		});
+		
+		mainPage.getMenuBar().getExportCalendarItem().addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        exportCalendar();
+      }
+		});
 	}
 	
 	public static void importFile() {
@@ -99,6 +109,21 @@ public class MainPageController {
 		}
 	}
 	
+	/**
+	 * Export the calendar to the selected directory (using calendar serializer).
+	 */
+	public static void exportCalendar() {
+	  JFileChooser fileChooser = new JFileChooser();
+	  fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+	  fileChooser.setDialogTitle("Export calendar");
+	  fileChooser.showOpenDialog(null);
+	  
+	  if (fileChooser.getSelectedFile() != null) {
+	    String directoryPath = fileChooser.getSelectedFile().getAbsolutePath();
+	    String exportPath = directoryPath + File.separator + "calendar.ser";
+	    SerializerDeserializer.serializeCalendar(mainPage.getCalendar(), exportPath);
+	  }
+	}
 	
 	
 	public static void openEventCreationWindow() {
