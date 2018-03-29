@@ -1,6 +1,7 @@
 package frontend;
 
 import java.awt.GridBagConstraints;
+import java.io.File;
 
 import calendar.Calendar;
 import calendar.SerializerDeserializer;
@@ -17,8 +18,8 @@ public class FrontEndUtilities {
 	}
 	
 	public static void serializeCalendar(Calendar calendar) {
-		String pwd = System.getProperty("user.dir") + "\\calendar.ser";
-		SerializerDeserializer.serializeCalendar(calendar, pwd);
+		String cwd = System.getProperty("user.dir") + File.pathSeparator + "calendar.ser";
+		SerializerDeserializer.serializeCalendar(calendar, cwd);
 	}
 
 }
