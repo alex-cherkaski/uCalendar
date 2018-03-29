@@ -6,13 +6,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import course.Course;
 import frontend.FrontendStartup;
+import parser.CalendarBlock;
 import tuple.Tuple;
 
 @SuppressWarnings("serial")
 public class CourseButton extends JButton {
 	
 	private Course course;
-	private static Color[] colors = {Color.cyan, Color.green, Color.magenta, Color.pink, Color.yellow, Color.lightGray, Color.red};
+	private static Color[] colors = {Color.cyan, Color.green, Color.magenta, Color.pink, Color.yellow, Color.lightGray};
 	private int cCode;
 	private Tuple<String> block;
 	
@@ -23,6 +24,16 @@ public class CourseButton extends JButton {
 		this.setText(this.course.getCourseCode());
 		this.setFocusable(false);
 		this.setBackground(colors[this.cCode]);
+		CalendarBlock currBlock = null;
+		for(CalendarBlock block2: course.getBlockList()) {
+			if(block2.getDayOfTheWeek().equals(block.getItem3())) {
+				currBlock = block2;
+			}
+		}
+		String buttonText = "<html>" + course.getCourseCode() + "<br>" + currBlock.getNumber() + "<br>" + "Location: " + currBlock.getLocation() + "</html>";
+		String description = "<html>" + "Description:" + "<br>" + "<br>"  + course.getCourseDescription() + "</html>";
+		this.setText(buttonText);
+		this.setToolTipText(description);
 		this.addActionListener(new ActionListener() {
 
 			@Override

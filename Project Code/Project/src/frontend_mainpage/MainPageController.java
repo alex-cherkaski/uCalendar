@@ -160,7 +160,9 @@ public class MainPageController {
 
 		mainPage.getEventButtons().clear();
 		
-		List<Tuple<String>> conflicts = CalendarFunctions.calendarConflict(mainPage.getCalendar());
+		List<Tuple<String>> intervals = CalendarFunctions.collectCourse(mainPage.getCalendar().getCourseList());
+		intervals.addAll(CalendarFunctions.collectEvent(mainPage.getCalendar().getEventFromAToB(mainPage.getStartDay().format(formatter), mainPage.getEndDay().format(formatter))));
+		List<Tuple<String>> conflicts = CalendarFunctions.conflict(intervals);
 		
 		for(Event event: mainPage.getCalendar().getEventFromAToB(mainPage.getStartDay().format(formatter), mainPage.getEndDay().format(formatter))) {
 			for(Tuple<String> block: event.getIntervalList()){

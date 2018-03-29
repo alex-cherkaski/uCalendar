@@ -13,7 +13,7 @@ public class TestClient {
 //		dbc.uploadFile("C:\\Users\\user\\Desktop\\ClientClassTest.txt", "/ClientClassTest.txt");
 //		dbc.uploadFile("C:\\Users\\user\\Desktop\\test.txt", "/test.txt");
 //		dbc.deleteFile("/" + "test.txt");
-//		dbc.createFolder("/" + "TestFolder");
+		dbc.createFolder("/" + "TestFolder");
 //		dbc.uploadFile("C:\\Users\\user\\Desktop\\test.txt", "/TestFolder/test.txt");
 //		dbc.deleteFile("/" + "TestFolder");
 //		 Root folder on dropbox

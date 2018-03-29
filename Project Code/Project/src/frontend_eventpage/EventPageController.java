@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import dropbox.DropboxSingleton;
+import dropbox.DropboxUtilities;
 import frontend.FrontendStartup;
 import notes.Note;
 import notes.NoteReader;
@@ -33,6 +34,7 @@ public class EventPageController {
 			public void actionPerformed(ActionEvent e) {
 				eventPage.getNoteList().clearSelection();
 				eventPage.getNoteDisplayTextArea().setText("");
+				eventPage.getDeleteNoteButton().setEnabled(false);
 				FrontendStartup.switchMainPage();
 			}
 			
@@ -50,9 +52,19 @@ public class EventPageController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				eventPage.getDeleteNoteButton().setEnabled(false);
 				deleteNote();
 			}
 			
+		});
+		
+		eventPage.getShowDropBoxButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				eventPage.getShowDropBoxButton().setEnabled(false);
+				updateDropBoxNoteListModel();
+			}
 		});
 		
 		eventPage.getUploadNoteButton().addActionListener(new ActionListener() {
@@ -60,6 +72,14 @@ public class EventPageController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				uploadNote();
+			}
+		});
+		
+		eventPage.getDownloadNoteButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("Does Nothing");
 			}
 		});
 		
@@ -82,6 +102,7 @@ public class EventPageController {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(!eventPage.getListModel().isEmpty() && !eventPage.getNoteList().isSelectionEmpty()) {
+					eventPage.getDeleteNoteButton().setEnabled(true);
 					displayNoteOnTextArea();
 				}
 			}
@@ -114,17 +135,17 @@ public class EventPageController {
 	
 	public static void addNote(String date, Note note) {
 		eventPage.getEvent().addNote(date, note);
-		updateListModel();
+		updateLocalNoteListModel();
 	}
 	
 	public static void deleteNote() {
 		Note note = eventPage.getNoteList().getSelectedValue();
 		eventPage.getNoteDisplayTextArea().setText("");
 		eventPage.getEvent().removeNote(note.getNoteDate(), note);
-		updateListModel();
+		updateLocalNoteListModel();
 	}
 	
-	public static void updateListModel() {
+	public static void updateLocalNoteListModel() {
 		eventPage.getListModel().clear();
 		List<Note> notes;
 		if(eventPage.getSortOperation().equals("Oldest")){
@@ -135,6 +156,17 @@ public class EventPageController {
 		
 		for(Note no: notes) {
 			eventPage.getListModel().addElement(no);
+		}
+		
+		eventPage.revalidate();
+		eventPage.repaint();
+	}
+	
+	public static void updateDropBoxNoteListModel() {
+		eventPage.getDropBoxListModel().clear();
+		
+		for (String path : DropboxSingleton.getInstance().listFolder("")) {
+			eventPage.getDropBoxListModel().addElement(DropboxUtilities.getNameFromPath(path));
 		}
 		
 		eventPage.revalidate();

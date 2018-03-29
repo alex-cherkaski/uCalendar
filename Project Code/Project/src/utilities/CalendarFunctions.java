@@ -183,7 +183,7 @@ public class CalendarFunctions {
 	/*
 	 * Helper function for conflict functions
 	 */
-	private static List<Tuple<String>> collectCourse(List<Course> list){
+	public static List<Tuple<String>> collectCourse(List<Course> list){
 		List<Tuple<String>> result = new ArrayList<Tuple<String>>();
 		for (Course course : list) {
 			//String courseName = course.getCourseCode();
@@ -201,7 +201,7 @@ public class CalendarFunctions {
 	/*
 	 * Helper function for conflict functions
 	 */
-	private static List<Tuple<String>> collectEvent(List<Event> list){
+	public static List<Tuple<String>> collectEvent(List<Event> list){
 		List<Tuple<String>> result = new ArrayList<Tuple<String>>();
 		for (Event event : list) {
 			//String eventName = Integer.toString(event.getThisEventID());
@@ -219,7 +219,7 @@ public class CalendarFunctions {
 	/*
 	 * Helper function for conflict functions
 	 */
-	private static List<Tuple<String>> conflict(List<Tuple<String>> intervals){
+	public static List<Tuple<String>> conflict(List<Tuple<String>> intervals){
 		List<Tuple<String>> conflicts = new ArrayList<Tuple<String>>();
 		sort(intervals);		
 		for (int i = 0;i<(intervals.size()-1);i++) {

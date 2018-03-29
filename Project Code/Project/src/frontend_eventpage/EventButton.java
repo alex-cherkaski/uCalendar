@@ -20,6 +20,13 @@ public class EventButton extends JButton {
 		this.setFocusable(false);
 		this.setBackground(Color.orange);
 		this.setMaximumSize(this.getMinimumSize());
+		String description;
+		if(event.getDescription().equals("")) {
+			description = "<html>" + "Description:" + "<br>" + "<br>"  + "No Description" + "</html>";
+		}else {
+			description = "<html>" + "Description:" + "<br>" + "<br>"  + event.getDescription() + "</html>";
+		}
+		this.setToolTipText(description);
 		this.addActionListener(new ActionListener() {
 
 			@Override
