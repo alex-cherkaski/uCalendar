@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import calendar.Calendar;
-import calendar.SerializerDeserializer;
 import course.Course;
 import course.CourseBuilder;
 import event.Event;
@@ -97,7 +95,6 @@ public class MainPageController {
 			List<Course> courseList = CourseBuilder.getCourseMap(blockList);
 			List<Event> events = new ArrayList<Event>();
 			Calendar calendar = new Calendar(courseList, events);
-			SerializerDeserializer.serializeCalendar(calendar, System.getProperty("user.dir") + File.pathSeparator +"calendar.ser");
 			MainPageController.transferEventsToNewCalendar(calendar);
 		}
 	}
