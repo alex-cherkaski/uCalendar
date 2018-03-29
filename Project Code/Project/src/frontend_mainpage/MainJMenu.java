@@ -21,6 +21,8 @@ public class MainJMenu extends JMenuBar{
 		
 		this.fileChooser = new JMenuItem("Import Course Calendar");
 		fileMenu.add(fileChooser);
+		
+		this.exportCalendar = new JMenuItem("Export Calendar");
 		fileMenu.add(exportCalendar);
 		
 		this.add(fileMenu);
