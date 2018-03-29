@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import com.dropbox.core.DbxException;
 
 import dropbox.DropboxSingleton;
 import dropbox.DropboxUtilities;
@@ -32,9 +35,13 @@ public class EventPageController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				eventPage.getNoteList().clearSelection();
+				eventPage.getLocalNoteList().clearSelection();
+				eventPage.getDropBoxNoteList().clearSelection();
 				eventPage.getNoteDisplayTextArea().setText("");
 				eventPage.getDeleteNoteButton().setEnabled(false);
+				eventPage.getUploadNoteButton().setEnabled(false);
+				eventPage.getDownloadNoteButton().setEnabled(false);
+				eventPage.getDeleteFromDropBoxButton().setEnabled(false);
 				FrontendStartup.switchMainPage();
 			}
 			
@@ -52,8 +59,9 @@ public class EventPageController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				eventPage.getDeleteNoteButton().setEnabled(false);
 				deleteNote();
+				eventPage.getDeleteNoteButton().setEnabled(false);
+				eventPage.getUploadNoteButton().setEnabled(false);
 			}
 			
 		});
@@ -63,6 +71,14 @@ public class EventPageController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				eventPage.getShowDropBoxButton().setEnabled(false);
+				try {
+					DropboxSingleton.getInstance().createFolder("/events");
+				} catch (DbxException e) {
+					e.printStackTrace();
+				}
+				if(!eventPage.getLocalNoteList().isSelectionEmpty()) {
+					eventPage.getUploadNoteButton().setEnabled(true);
+				}
 				updateDropBoxNoteListModel();
 			}
 		});
@@ -72,6 +88,12 @@ public class EventPageController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				uploadNote();
+				eventPage.getLocalNoteList().clearSelection();
+				eventPage.getNoteDisplayTextArea().setText("");
+				eventPage.getDeleteNoteButton().setEnabled(false);
+				eventPage.getUploadNoteButton().setEnabled(false);
+				eventPage.getDownloadNoteButton().setEnabled(false);
+				eventPage.getDeleteFromDropBoxButton().setEnabled(false);
 			}
 		});
 		
@@ -79,7 +101,24 @@ public class EventPageController {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Does Nothing");
+				downloadNote();
+				eventPage.getDownloadNoteButton().setEnabled(false);
+				eventPage.getDropBoxNoteList().clearSelection();
+				eventPage.getNoteDisplayTextArea().setText("");
+				eventPage.getDeleteNoteButton().setEnabled(false);
+				eventPage.getUploadNoteButton().setEnabled(false);
+				eventPage.getDeleteFromDropBoxButton().setEnabled(false);
+			}
+		});
+		
+		eventPage.getDeleteFromDropBoxButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				deleteFromDropBox();
+				eventPage.getDeleteFromDropBoxButton().setEnabled(false);
+				eventPage.getDownloadNoteButton().setEnabled(false);
+				eventPage.getDropBoxNoteList().clearSelection();
 			}
 		});
 		
@@ -94,30 +133,69 @@ public class EventPageController {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				eventPage.getLocalNoteList().clearSelection();
+				eventPage.getDropBoxNoteList().clearSelection();
+				eventPage.getNoteDisplayTextArea().setText("");
+				eventPage.getDeleteNoteButton().setEnabled(false);
+				eventPage.getUploadNoteButton().setEnabled(false);
+				eventPage.getDownloadNoteButton().setEnabled(false);
+				eventPage.getDeleteFromDropBoxButton().setEnabled(false);
 				FrontendStartup.deleteEventAndSwitch(eventPage.getEvent());
 			}
 		});
 		
-		eventPage.getNoteList().addListSelectionListener(new ListSelectionListener(){
+		eventPage.getLocalNoteList().addListSelectionListener(new ListSelectionListener(){
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				if(!eventPage.getListModel().isEmpty() && !eventPage.getNoteList().isSelectionEmpty()) {
+				if(!eventPage.getLocalListModel().isEmpty() && !eventPage.getLocalNoteList().isSelectionEmpty()) {
 					eventPage.getDeleteNoteButton().setEnabled(true);
+					if(!eventPage.getShowDropBoxButton().isEnabled()) {
+						eventPage.getUploadNoteButton().setEnabled(true);
+					}
 					displayNoteOnTextArea();
+				}
+			}
+		});
+		
+		eventPage.getDropBoxNoteList().addListSelectionListener(new ListSelectionListener(){
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(!eventPage.getDropBoxListModel().isEmpty() && !eventPage.getDropBoxNoteList().isSelectionEmpty()) {
+					eventPage.getDownloadNoteButton().setEnabled(true);
+					eventPage.getDeleteFromDropBoxButton().setEnabled(true);
 				}
 			}
 		});
 	}
 	
 	public static void displayNoteOnTextArea() {
-		eventPage.getNoteDisplayTextArea().setText(NoteReader.getNoteContents(eventPage.getNoteList().getSelectedValue().getNoteFilePath()));
+		eventPage.getNoteDisplayTextArea().setText(NoteReader.getNoteContents(eventPage.getLocalNoteList().getSelectedValue().getNoteFilePath()));
 		eventPage.getNoteDisplayTextArea().setCaretPosition(0);
 	}
 	
+	public static void deleteFromDropBox() {
+		DropboxSingleton.getInstance().deleteFile("/events/" + eventPage.getDropBoxNoteList().getSelectedValue());
+		updateDropBoxNoteListModel();
+	}
+	
 	public static void uploadNote() {
-		Note note = eventPage.getNoteList().getSelectedValue();
-	 	// TODO: change upload path from root directory.
-		DropboxSingleton.getInstance().uploadFile(note.getNoteFilePath(), "/" + note.getNote());
+		Note note = eventPage.getLocalNoteList().getSelectedValue();
+		DropboxSingleton.getInstance().uploadFile(note.getNoteFilePath(), "/events/" + note.getNote());
+		updateDropBoxNoteListModel();
+	}
+	
+	public static void downloadNote() {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		fileChooser.showOpenDialog(null);
+		
+		if(fileChooser.getSelectedFile() != null){
+			DropboxSingleton.getInstance().readFile(fileChooser.getSelectedFile().getAbsolutePath(), String.format("/events/%s", eventPage.getDropBoxNoteList().getSelectedValue()));
+			Note note = new Note(eventPage.getDropBoxNoteList().getSelectedValue());
+			note.setNoteFilePath(fileChooser.getSelectedFile().getAbsolutePath() + File.separator + eventPage.getDropBoxNoteList().getSelectedValue());
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			addNote(LocalDate.now().format(formatter), note);
+		}
 	}
 	
 	public static void importFile() {
@@ -139,14 +217,14 @@ public class EventPageController {
 	}
 	
 	public static void deleteNote() {
-		Note note = eventPage.getNoteList().getSelectedValue();
+		Note note = eventPage.getLocalNoteList().getSelectedValue();
 		eventPage.getNoteDisplayTextArea().setText("");
 		eventPage.getEvent().removeNote(note.getNoteDate(), note);
 		updateLocalNoteListModel();
 	}
 	
 	public static void updateLocalNoteListModel() {
-		eventPage.getListModel().clear();
+		eventPage.getLocalListModel().clear();
 		List<Note> notes;
 		if(eventPage.getSortOperation().equals("Oldest")){
 			notes = eventPage.getEvent().getNotesIncreasing();
@@ -155,7 +233,7 @@ public class EventPageController {
 		}
 		
 		for(Note no: notes) {
-			eventPage.getListModel().addElement(no);
+			eventPage.getLocalListModel().addElement(no);
 		}
 		
 		eventPage.revalidate();
@@ -165,7 +243,7 @@ public class EventPageController {
 	public static void updateDropBoxNoteListModel() {
 		eventPage.getDropBoxListModel().clear();
 		
-		for (String path : DropboxSingleton.getInstance().listFolder("")) {
+		for (String path : DropboxSingleton.getInstance().listFolder("/events")) {
 			eventPage.getDropBoxListModel().addElement(DropboxUtilities.getNameFromPath(path));
 		}
 		

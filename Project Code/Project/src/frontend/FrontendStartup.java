@@ -12,6 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import com.dropbox.core.DbxException;
+
 import course.Course;
 import event.Event;
 import frontend_coursepage.CoursePage;
@@ -53,7 +55,7 @@ public class FrontendStartup {
 		layout.show(cards, "main panel");
 	}
 	
-	public static void main(String[] args) throws ClassNotFoundException, IOException {
+	public static void main(String[] args) throws ClassNotFoundException, IOException, DbxException {
 		JFrame frame = new JFrame("Calendar");
 		Container content = frame.getContentPane();
 		cards = new JPanel(layout);

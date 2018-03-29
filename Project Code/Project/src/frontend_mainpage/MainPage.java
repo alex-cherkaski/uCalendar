@@ -47,7 +47,7 @@ public class MainPage extends JPanel{
 	private int maxButtonHeight = 0;
 
 	public MainPage() {
-		String pwd = System.getProperty("user.dir") + File.pathSeparator + "calendar.ser";
+		String pwd = System.getProperty("user.dir") + File.separator + "calendar.ser";
 		this.calendar = SerializerDeserializer.deserializeCalendar(pwd);
 		if(this.calendar == null) {
 			this.calendar = new Calendar(new ArrayList<Course>(), new ArrayList<Event>());

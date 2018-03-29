@@ -18,7 +18,7 @@ public class FrontEndUtilities {
 	}
 	
 	public static void serializeCalendar(Calendar calendar) {
-		String cwd = System.getProperty("user.dir") + File.pathSeparator + "calendar.ser";
+		String cwd = System.getProperty("user.dir") + File.separator + "calendar.ser";
 		SerializerDeserializer.serializeCalendar(calendar, cwd);
 	}
 

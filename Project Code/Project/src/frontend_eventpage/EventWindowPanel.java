@@ -175,11 +175,8 @@ public class EventWindowPanel extends JPanel{
 							event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), days[i]));
 							event.setName(nameTextBox.getText());
 						}
+						event.addDates();
 						MainPageController.addEvent(event);
-						System.out.println("asdasd");
-						for(String date: event.getDates()) {
-							System.out.println(date);
-						}
 					}else if(repeatBox.getSelectedItem().toString().equals("WEEKLY")){
 						while(endDate.getDayOfYear() < 365){
 							endDate = endDate.plusWeeks(1);
@@ -191,12 +188,9 @@ public class EventWindowPanel extends JPanel{
 						Event event = new Event(repeatBox.getSelectedItem().toString(), startDate.format(formatter), endDate.format(formatter));
 						event.setDescription(descriptionTextArea.getText());
 						event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
+						event.addDates();
 						event.setName(nameTextBox.getText());
 						MainPageController.addEvent(event);
-
-						for(String date: event.getDates()) {
-							System.out.println(date);
-						}
 					}else if(repeatBox.getSelectedItem().toString().equals("MONTHLY")){
 						int monthDiff = 12 - endDate.getMonthValue();
 						endDate = endDate.plusMonths(monthDiff);
@@ -204,23 +198,16 @@ public class EventWindowPanel extends JPanel{
 						event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
 						event.setName(nameTextBox.getText());
 						event.setDescription(descriptionTextArea.getText());
+						event.addDates();
 						MainPageController.addEvent(event);
-
-						for(String date: event.getDates()) {
-							System.out.println(date);
-						}
 					}else{
 						System.out.println(startDateString + "   " + endDateString);
 						Event event = new Event(repeatBox.getSelectedItem().toString(), weekStartDate.format(formatter), weekEndDate.format(formatter));
 						event.addInterval(new Tuple<String>(timeStartFromBox.getSelectedItem().toString(), timeEndBox.getSelectedItem().toString(), dateStartFromBox.getSelectedItem().toString()));
 						event.setName(nameTextBox.getText());
 						event.setDescription(descriptionTextArea.getText());
-						System.out.println(event.getDescription());
+						event.addDates();
 						MainPageController.addEvent(event);
-
-						for(String date: event.getDates()) {
-							System.out.println(date);
-						}
 						
 					}
 					eventFrame.dispose();

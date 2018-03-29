@@ -42,11 +42,12 @@ public class CoursePage extends JPanel {
 	private JButton deleteNote;
 	private JComboBox<String> sortBox;
 	private JTextArea noteTextArea;
-	private DefaultListModel<String> listModelDropBox;
-	private JList<String> noteListDropBox;
+	private DefaultListModel<String> dropBoxListModel;
+	private JList<String> dropBoxNoteList;
 	private JButton uploadNote;
 	private JButton downloadNote;
 	private JButton showDropBoxButton;
+	private JButton deleteFileFromDropBox;
 	
 	public CoursePage() {
 		this.setLayout(new GridBagLayout());
@@ -107,10 +108,10 @@ public class CoursePage extends JPanel {
 		FrontEndUtilities.setGridBag(c, 1, 0, 1, 1, 0, 0);
 		dropBoxNotePanel.add(dropBoxNoteLabel);
 		
-		this.listModelDropBox = new DefaultListModel<String>();
-		this.noteListDropBox = new JList<String>(this.listModelDropBox);
-		this.noteListDropBox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JScrollPane scrollPaneDropBox = new JScrollPane(this.noteListDropBox);
+		this.dropBoxListModel = new DefaultListModel<String>();
+		this.dropBoxNoteList = new JList<String>(this.dropBoxListModel);
+		this.dropBoxNoteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JScrollPane scrollPaneDropBox = new JScrollPane(this.dropBoxNoteList);
 		FrontEndUtilities.setGridBag(c, 1, 1, 1, 1, 0, 1);
 		dropBoxNotePanel.add(scrollPaneDropBox, c);
 		notePanel.add(dropBoxNotePanel);
@@ -145,6 +146,10 @@ public class CoursePage extends JPanel {
 		this.downloadNote.setEnabled(false);
 		buttonPanel.add(this.downloadNote);
 		
+		this.deleteFileFromDropBox = new JButton("Delete File From DropBox");
+		this.deleteFileFromDropBox.setEnabled(false);
+		buttonPanel.add(this.deleteFileFromDropBox);
+		
 		String[] sortOptions = {"Oldest", "Newest"};
 		
 		this.sortBox = new JComboBox<String>(sortOptions);
@@ -162,7 +167,7 @@ public class CoursePage extends JPanel {
 		this.description.setText(this.course.getCourseCode());
 		CoursePageController.updateLocalNoteListModel();
 		this.noteTextArea.setText("");
-		this.listModelDropBox.clear();
+		this.dropBoxListModel.clear();
 		this.showDropBoxButton.setEnabled(true);
 	}
 	
@@ -194,20 +199,20 @@ public class CoursePage extends JPanel {
 		return this.course;
 	}
 
-	public JList<Note> getNoteList() {
+	public JList<Note> getLocalNoteList() {
 		return this.noteList;
 	}
 
-	public DefaultListModel<Note> getListModel() {
+	public DefaultListModel<Note> getLocalListModel() {
 		return this.listModel;
 	}
 	
 	public JList<String> getDropBoxNoteList() {
-		return this.noteListDropBox;
+		return this.dropBoxNoteList;
 	}
 
 	public DefaultListModel<String> getDropBoxListModel() {
-		return this.listModelDropBox;
+		return this.dropBoxListModel;
 	}
 	
 	public CourseJMenu getJMenuBar() {
@@ -228,5 +233,9 @@ public class CoursePage extends JPanel {
 	
 	public JButton getShowDropBoxButton() {
 		return this.showDropBoxButton;
+	}
+	
+	public JButton getDeleteFromDropBoxButton() {
+		return this.deleteFileFromDropBox;
 	}
 }

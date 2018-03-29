@@ -51,7 +51,6 @@ public class Event implements java.io.Serializable {
 		this.calendarDates.put(11, 30);
 		this.calendarDates.put(12, 31);
 		this.dates = new ArrayList<String>();
-		this.addDates();
 	}
 	
 	public static void setStaticID(int staticID) {
@@ -178,7 +177,6 @@ public class Event implements java.io.Serializable {
 	
 	public void addInterval(Tuple<String> interval) {
 		this.intervalList.add(interval);
-		this.addDates();
 	}
 	
 	public void removeInterval(Tuple<String> interval) {
@@ -274,7 +272,7 @@ public class Event implements java.io.Serializable {
 		}
 		int d = Integer.parseInt(year.substring(2));
 		int c = Integer.parseInt(year.substring(0, 2));
-		int f = (k + ((13 * m - 1)/5) + d + (d/4) + (c/4) - (2 * c)) % 7;
+		int f = (((k + ((13 * m - 1)/5) + d + (d/4) + (c/4) - (2 * c)) % 7) + 7) % 7;
 		String result = "";
 		switch(f) {
 		case 1:

@@ -20,6 +20,8 @@ import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
+import com.dropbox.core.DbxException;
+
 import event.Event;
 import frontend.FrontEndUtilities;
 import frontend_mainpage.PreviousButton;
@@ -41,12 +43,13 @@ public class EventPage extends JPanel{
 	private JButton uploadNote;
 	private JComboBox<String> sortBox;
 	private JTextArea noteTextArea;
-	private DefaultListModel<String> listModelDropBox;
-	private JList<String> noteListDropBox;
+	private DefaultListModel<String> dropBoxListModel;
+	private JList<String> dropBoxNoteList;
 	private JButton downloadNote;
 	private JButton showDropBoxButton;
+	private JButton deleteFileFromDropBox;
 	
-	public EventPage() {
+	public EventPage() throws DbxException {
 		this.setLayout(new GridBagLayout());
 		this.jMenu = new EventJMenu(this);
 		JPanel menuPanel = new JPanel();
@@ -105,10 +108,10 @@ public class EventPage extends JPanel{
 		FrontEndUtilities.setGridBag(c, 1, 0, 1, 1, 0, 0);
 		dropBoxNotePanel.add(dropBoxNoteLabel);
 		
-		this.listModelDropBox = new DefaultListModel<String>();
-		this.noteListDropBox = new JList<String>(this.listModelDropBox);
-		this.noteListDropBox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JScrollPane scrollPaneDropBox = new JScrollPane(this.noteListDropBox);
+		this.dropBoxListModel = new DefaultListModel<String>();
+		this.dropBoxNoteList = new JList<String>(this.dropBoxListModel);
+		this.dropBoxNoteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JScrollPane scrollPaneDropBox = new JScrollPane(this.dropBoxNoteList);
 		FrontEndUtilities.setGridBag(c, 1, 1, 1, 1, 0, 1);
 		dropBoxNotePanel.add(scrollPaneDropBox, c);
 		notePanel.add(dropBoxNotePanel);
@@ -143,6 +146,10 @@ public class EventPage extends JPanel{
 		this.downloadNote.setEnabled(false);
 		buttonPanel.add(this.downloadNote);
 		
+		this.deleteFileFromDropBox = new JButton("Delete File From DropBox");
+		this.deleteFileFromDropBox.setEnabled(false);
+		buttonPanel.add(this.deleteFileFromDropBox);
+		
 		String[] sortOptions = {"Oldest", "Newest"};
 		
 		this.sortBox = new JComboBox<String>(sortOptions);
@@ -160,7 +167,7 @@ public class EventPage extends JPanel{
 		this.description.setText(this.event.getName());
 		EventPageController.updateLocalNoteListModel();
 		this.noteTextArea.setText("");
-		this.listModelDropBox.clear();
+		this.dropBoxListModel.clear();
 		this.showDropBoxButton.setEnabled(true);
 	}
 	
@@ -200,20 +207,20 @@ public class EventPage extends JPanel{
 		return this.event;
 	}
 
-	public JList<Note> getNoteList() {
+	public JList<Note> getLocalNoteList() {
 		return this.noteList;
 	}
 
-	public DefaultListModel<Note> getListModel() {
+	public DefaultListModel<Note> getLocalListModel() {
 		return this.listModel;
 	}
 	
 	public JList<String> getDropBoxNoteList() {
-		return this.noteListDropBox;
+		return this.dropBoxNoteList;
 	}
 
 	public DefaultListModel<String> getDropBoxListModel() {
-		return this.listModelDropBox;
+		return this.dropBoxListModel;
 	}
 	
 	public EventJMenu getJMenuBar() {
@@ -226,5 +233,9 @@ public class EventPage extends JPanel{
 	
 	public JButton getShowDropBoxButton() {
 		return this.showDropBoxButton;
+	}
+	
+	public JButton getDeleteFromDropBoxButton() {
+		return this.deleteFileFromDropBox;
 	}
 }

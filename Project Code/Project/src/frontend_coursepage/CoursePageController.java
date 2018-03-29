@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import com.dropbox.core.DbxException;
 
 import dropbox.DropboxSingleton;
 import dropbox.DropboxUtilities;
@@ -33,9 +36,13 @@ public class CoursePageController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				coursePage.getNoteList().clearSelection();
+				coursePage.getLocalNoteList().clearSelection();
+				coursePage.getDropBoxNoteList().clearSelection();
 				coursePage.getNoteDisplayTextArea().setText("");
 				coursePage.getDeleteNoteButton().setEnabled(false);
+				coursePage.getUploadNoteButton().setEnabled(false);
+				coursePage.getDownloadNoteButton().setEnabled(false);
+				coursePage.getDeleteFromDropBoxButton().setEnabled(false);
 				FrontendStartup.switchMainPage();
 			}
 			
@@ -53,8 +60,9 @@ public class CoursePageController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				coursePage.getDeleteNoteButton().setEnabled(false);
 				deleteNote();
+				coursePage.getDeleteNoteButton().setEnabled(false);
+				coursePage.getUploadNoteButton().setEnabled(false);
 			}
 			
 		});
@@ -64,6 +72,14 @@ public class CoursePageController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				coursePage.getShowDropBoxButton().setEnabled(false);
+				try {
+					DropboxSingleton.getInstance().createFolder(String.format("/%s", coursePage.getCourse().getCourseCode()));
+				} catch (DbxException e) {
+					e.printStackTrace();
+				}
+				if(!coursePage.getLocalNoteList().isSelectionEmpty()) {
+					coursePage.getUploadNoteButton().setEnabled(true);
+				}
 				updateDropBoxNoteListModel();
 			}
 		});
@@ -73,6 +89,12 @@ public class CoursePageController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				uploadNote();
+				coursePage.getLocalNoteList().clearSelection();
+				coursePage.getNoteDisplayTextArea().setText("");
+				coursePage.getDeleteNoteButton().setEnabled(false);
+				coursePage.getUploadNoteButton().setEnabled(false);
+				coursePage.getDownloadNoteButton().setEnabled(false);
+				coursePage.getDeleteFromDropBoxButton().setEnabled(false);
 			}
 		});
 		
@@ -80,7 +102,24 @@ public class CoursePageController {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Does Nothing");
+				downloadNote();
+				coursePage.getDownloadNoteButton().setEnabled(false);
+				coursePage.getDropBoxNoteList().clearSelection();
+				coursePage.getNoteDisplayTextArea().setText("");
+				coursePage.getDeleteNoteButton().setEnabled(false);
+				coursePage.getUploadNoteButton().setEnabled(false);
+				coursePage.getDeleteFromDropBoxButton().setEnabled(false);
+			}
+		});
+		
+		coursePage.getDeleteFromDropBoxButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				deleteFromDropBox();
+				coursePage.getDeleteFromDropBoxButton().setEnabled(false);
+				coursePage.getDownloadNoteButton().setEnabled(false);
+				coursePage.getDropBoxNoteList().clearSelection();
 			}
 		});
 		
@@ -95,30 +134,69 @@ public class CoursePageController {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				coursePage.getLocalNoteList().clearSelection();
+				coursePage.getDropBoxNoteList().clearSelection();
+				coursePage.getNoteDisplayTextArea().setText("");
+				coursePage.getDeleteNoteButton().setEnabled(false);
+				coursePage.getUploadNoteButton().setEnabled(false);
+				coursePage.getDownloadNoteButton().setEnabled(false);
+				coursePage.getDeleteFromDropBoxButton().setEnabled(false);
 				FrontendStartup.deleteCourseAndSwitch(coursePage.getCourse());
 			}
 		});
 		
-		coursePage.getNoteList().addListSelectionListener(new ListSelectionListener(){
+		coursePage.getLocalNoteList().addListSelectionListener(new ListSelectionListener(){
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				if(!coursePage.getListModel().isEmpty() && !coursePage.getNoteList().isSelectionEmpty()) {
+				if(!coursePage.getLocalListModel().isEmpty() && !coursePage.getLocalNoteList().isSelectionEmpty()) {
 					coursePage.getDeleteNoteButton().setEnabled(true);
+					if(!coursePage.getShowDropBoxButton().isEnabled()) {
+						coursePage.getUploadNoteButton().setEnabled(true);
+					}
 					displayNoteOnTextArea();
+				}
+			}
+		});
+		
+		coursePage.getDropBoxNoteList().addListSelectionListener(new ListSelectionListener(){
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(!coursePage.getDropBoxListModel().isEmpty() && !coursePage.getDropBoxNoteList().isSelectionEmpty()) {
+					coursePage.getDownloadNoteButton().setEnabled(true);
+					coursePage.getDeleteFromDropBoxButton().setEnabled(true);
 				}
 			}
 		});
 	}
 	
 	public static void displayNoteOnTextArea() {
-		coursePage.getNoteDisplayTextArea().setText(NoteReader.getNoteContents(coursePage.getNoteList().getSelectedValue().getNoteFilePath()));
+		coursePage.getNoteDisplayTextArea().setText(NoteReader.getNoteContents(coursePage.getLocalNoteList().getSelectedValue().getNoteFilePath()));
 		coursePage.getNoteDisplayTextArea().setCaretPosition(0);
 	}
 	
+	public static void deleteFromDropBox() {
+		DropboxSingleton.getInstance().deleteFile("/" + coursePage.getCourse().getCourseCode() + "/" + coursePage.getDropBoxNoteList().getSelectedValue());
+		updateDropBoxNoteListModel();
+	}
+	
 	public static void uploadNote() {
-		Note note = coursePage.getNoteList().getSelectedValue();
-	 	// TODO: change upload path from root directory.
-		DropboxSingleton.getInstance().uploadFile(note.getNoteFilePath(), "/" + note.getNote());
+		Note note = coursePage.getLocalNoteList().getSelectedValue();
+		DropboxSingleton.getInstance().uploadFile(note.getNoteFilePath(), "/" + coursePage.getCourse().getCourseCode() + "/" + note.getNote());
+		updateDropBoxNoteListModel();
+	}
+	
+	public static void downloadNote() {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		fileChooser.showOpenDialog(null);
+		
+		if(fileChooser.getSelectedFile() != null){
+			DropboxSingleton.getInstance().readFile(fileChooser.getSelectedFile().getAbsolutePath(), String.format("/%s/%s",coursePage.getCourse().getCourseCode(), coursePage.getDropBoxNoteList().getSelectedValue()));
+			Note note = new Note(coursePage.getDropBoxNoteList().getSelectedValue());
+			note.setNoteFilePath(fileChooser.getSelectedFile().getAbsolutePath() + File.separator + coursePage.getDropBoxNoteList().getSelectedValue());
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			addNote(LocalDate.now().format(formatter), note);
+		}
 	}
 	
 	public static void importFile() {
@@ -140,14 +218,14 @@ public class CoursePageController {
 	}
 	
 	public static void deleteNote() {
-		Note note = coursePage.getNoteList().getSelectedValue();
+		Note note = coursePage.getLocalNoteList().getSelectedValue();
 		coursePage.getNoteDisplayTextArea().setText("");
 		coursePage.getCourse().removeNote(note.getNoteDate(), note);
 		updateLocalNoteListModel();
 	}
 	
 	public static void updateLocalNoteListModel() {
-		coursePage.getListModel().clear();
+		coursePage.getLocalListModel().clear();
 		List<Note> notes;
 		if(coursePage.getSortOperation().equals("Oldest")){
 			notes = coursePage.getCourse().getNotesIncreasing();
@@ -156,7 +234,7 @@ public class CoursePageController {
 		}
 		
 		for(Note no: notes) {
-			coursePage.getListModel().addElement(no);
+			coursePage.getLocalListModel().addElement(no);
 		}
 		
 		coursePage.revalidate();
@@ -166,7 +244,7 @@ public class CoursePageController {
 	public static void updateDropBoxNoteListModel() {
 		coursePage.getDropBoxListModel().clear();
 		
-		for (String path : DropboxSingleton.getInstance().listFolder("")) {
+		for (String path : DropboxSingleton.getInstance().listFolder("/" + coursePage.getCourse().getCourseCode())) {
 			coursePage.getDropBoxListModel().addElement(DropboxUtilities.getNameFromPath(path));
 		}
 		
