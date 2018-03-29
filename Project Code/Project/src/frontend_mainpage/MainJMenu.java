@@ -10,6 +10,7 @@ public class MainJMenu extends JMenuBar{
 	
 	private JMenuItem addEvent;
 	private JMenuItem fileChooser;
+	private JMenuItem exportCalendar;
 	
 	public MainJMenu(MainPage mainPage) {
 		JMenu fileMenu = new JMenu("File");
@@ -20,6 +21,7 @@ public class MainJMenu extends JMenuBar{
 		
 		this.fileChooser = new JMenuItem("Import Course Calendar");
 		fileMenu.add(fileChooser);
+		fileMenu.add(exportCalendar);
 		
 		this.add(fileMenu);
 		this.add(editMenu);
@@ -32,5 +34,8 @@ public class MainJMenu extends JMenuBar{
 	public JMenuItem getFileChooserItem() {
 		return this.fileChooser;
 	}
-
+	
+	public JMenuItem getExportCalendarItem() {
+	  return this.exportCalendar;
+	}
 }
