@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 import event.Event;
@@ -18,8 +19,8 @@ public class EventButton extends JButton {
 		this.event = event;
 		this.setText(this.event.getName());
 		this.setFocusable(false);
-		this.setBackground(Color.orange);
-		this.setMaximumSize(this.getMinimumSize());
+		this.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+		this.setBackground(new Color(255, 165, 0));
 		String description;
 		if(event.getDescription().equals("")) {
 			description = "<html>" + "Description:" + "<br>" + "<br>"  + "No Description" + "</html>";

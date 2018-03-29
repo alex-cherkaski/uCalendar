@@ -1,5 +1,7 @@
 package frontend_eventpage;
 
+import java.awt.Color;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -14,6 +16,8 @@ public class EventJMenu extends JMenuBar{
 		this.deleteEvent = new JMenuItem("Delete this event");
 		fileMenu.add(deleteEvent);
 		this.add(fileMenu);
+		this.setBackground(Color.white);
+		this.setBorder(null);
 	}
 	
 	public JMenuItem getDeleteEventButton() {

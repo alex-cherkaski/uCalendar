@@ -53,6 +53,7 @@ public class CoursePage extends JPanel {
 		this.setLayout(new GridBagLayout());
 		this.jMenu = new CourseJMenu(this);
 		JPanel menuPanel = new JPanel();
+		menuPanel.setBackground(Color.white);
 		FlowLayout flow = new FlowLayout();
 		flow.setAlignment(FlowLayout.LEFT );
 		menuPanel.setLayout(flow);
@@ -81,7 +82,6 @@ public class CoursePage extends JPanel {
 		this.displayPanel.setLayout(new BorderLayout());
 		JPanel notePanel = new JPanel(new GridLayout(2, 1));
 		JPanel localNotePanel = new JPanel(new GridBagLayout());
-		notePanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		localNotePanel.setBackground(Color.white);
 		localNotePanel.setOpaque(true);
 		
@@ -94,9 +94,11 @@ public class CoursePage extends JPanel {
 		this.noteList = new JList<Note>(this.listModel);
 		this.noteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollPane = new JScrollPane(this.noteList);
+		scrollPane.setBorder(null);
 		c.fill = GridBagConstraints.BOTH;
 		FrontEndUtilities.setGridBag(c, 1, 1, 1, 1, 0, 1);
 		localNotePanel.add(scrollPane, c);
+		localNotePanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		notePanel.add(localNotePanel);
 		
 		JPanel dropBoxNotePanel = new JPanel(new GridBagLayout());
@@ -112,8 +114,10 @@ public class CoursePage extends JPanel {
 		this.dropBoxNoteList = new JList<String>(this.dropBoxListModel);
 		this.dropBoxNoteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollPaneDropBox = new JScrollPane(this.dropBoxNoteList);
+		scrollPaneDropBox.setBorder(null);
 		FrontEndUtilities.setGridBag(c, 1, 1, 1, 1, 0, 1);
 		dropBoxNotePanel.add(scrollPaneDropBox, c);
+		dropBoxNotePanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		notePanel.add(dropBoxNotePanel);
 		this.displayPanel.add(notePanel, BorderLayout.LINE_START);
 		

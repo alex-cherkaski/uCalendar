@@ -1,5 +1,7 @@
 package frontend_coursepage;
 
+import java.awt.Color;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -15,6 +17,8 @@ public class CourseJMenu extends JMenuBar{
 		this.deleteCourse = new JMenuItem("Delete this course");
 		fileMenu.add(deleteCourse);
 		this.add(fileMenu);
+		this.setBackground(Color.white);
+		this.setBorder(null);
 	}
 	
 	public JMenuItem getDeleteCourseButton() {

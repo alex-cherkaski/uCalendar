@@ -32,6 +32,7 @@ public class MainPageController {
 	
 	private static MainPage mainPage;
 	public static final String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+	private static Color conflict = new Color(204, 0, 0);
 	
 	public static void setMain(MainPage main) {
 		mainPage = main;
@@ -196,8 +197,8 @@ public class MainPageController {
 				EventButton button = new EventButton(event);
 				button.setPreferredSize(new Dimension(mainPage.getMaxButtonWidth(), mainPage.getMaxButtonHeight()));
 				if(conflicts != null && conflicts.contains(block)) {
-					
-					button.setBackground(Color.red);
+					button.setBackground(conflict);
+					button.setForeground(Color.white);
 				}
 				c.fill = GridBagConstraints.BOTH;
 				c.gridheight = mainPage.getTimeY().get(block.getItem2()) - mainPage.getTimeY().get(block.getItem1());
@@ -211,8 +212,9 @@ public class MainPageController {
 		
 		for(CourseButton button: mainPage.getCourseButtons()) {
 			if(conflicts != null && conflicts.contains(button.getBlock())) {
-				button.setBackground(Color.red);
-			}else if(button.getBackground() == Color.red) {
+				button.setBackground(conflict);
+				button.setForeground(Color.white);
+			}else if(button.getBackground() == conflict) {
 				button.changeToOriginalColour();
 			}
 		}

@@ -61,6 +61,7 @@ public class MainPage extends JPanel{
 		GridBagConstraints c = new GridBagConstraints();
 		
 		JPanel menuPanel = new JPanel();
+		menuPanel.setBackground(Color.white);
 		c.fill = GridBagConstraints.BOTH;
 		FrontEndUtilities.setGridBag(c, 0, 0, 8, 1, 0, 0);
 		menuPanel.setLayout(flow);

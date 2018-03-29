@@ -1,5 +1,7 @@
 package frontend_mainpage;
 
+import java.awt.Color;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -15,6 +17,8 @@ public class MainJMenu extends JMenuBar{
 	public MainJMenu(MainPage mainPage) {
 		JMenu fileMenu = new JMenu("File");
 		JMenu editMenu = new JMenu("Edit");
+		this.setBackground(Color.white);
+		this.setBorder(null);
 		
 		this.addEvent = new JMenuItem("Add new event");
 		editMenu.add(addEvent);
