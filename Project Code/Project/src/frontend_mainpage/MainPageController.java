@@ -19,6 +19,7 @@ import calendar.Calendar;
 import calendar.SerializerDeserializer;
 import course.Course;
 import course.CourseBuilder;
+import dropbox.DropboxSingleton;
 import event.Event;
 import frontend_coursepage.CourseButton;
 import frontend_eventpage.EventButton;
@@ -227,6 +228,9 @@ public class MainPageController {
 		for(CourseButton button: mainPage.getCourseButtons()) {
 			if(button.getCourse().equals(course)) {
 				mainPage.remove(button);
+				
+				// Delete all notes from dropbox.
+				DropboxSingleton.getInstance().deleteFile("/" + course.getCourseCode());
 			}
 		}
 		mainPage.getCalendar().removeCourse(course);
