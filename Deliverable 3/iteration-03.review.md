@@ -41,7 +41,11 @@ As this is the last iteration, we don't have any planned changes. However, worki
 
 We were able to complete the serializer/deserializer for users' calendars (see below). We decided to use the most straightforward and convenient way to implement is (which was using the Java .ser file) as we had no specific requirements which would have influenced how we chose to serialize the calendars. 
 
+![alt-text](https://i.imgur.com/W4ZIehp.png)
+
 We also we able to implement the Dropbox API into our application. In addition to this, we have added support to allow users to not only upload files, but also create folders and delete files in the linked Dropbox (see below).
+
+![alt-text](https://i.imgur.com/zhLKzql.png)
 
 We met our final goal of making the UI look more appealing and intuitive (see below). This was an important task for us to get done for this final iteration as a user has to be able to easily navigate through the app when using it.
 
