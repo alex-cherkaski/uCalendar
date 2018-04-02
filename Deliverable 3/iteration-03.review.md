@@ -53,7 +53,7 @@ We met our final goal of making the UI look more appealing and intuitive (see be
 
 #### Goals and/or tasks that were planned but not met/completed:
 
-As this was the final iteration, we made a strong effort to accomplish all the goals we planned in the plan document. We were able to do this, so we did not have any goals/tasks from the plan.md we did not complete. However, if we had more time, we would have liked to add more functionality to the UI such as displaying conflicts in calendars. 
+One goal that we did not manage to get completed (this goal was not included in the plan.md however) was having the UI display event/course conflicts in calendars. We had implemented most of the back-end functions required to identify event/course conflicts, but we did not manage to have the time to have it working in the UI. As nice as it would have been to have this feature included, we felt that the other goals/tasks were more important and we prioritized them.
 
 ## Meeting Highlights
 
