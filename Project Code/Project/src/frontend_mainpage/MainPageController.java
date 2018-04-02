@@ -251,9 +251,9 @@ public class MainPageController {
 		}
 		
 		// Delete all notes from dropbox.
-		DropboxSingleton.getInstance().deleteFile("/" + course.getCourseCode());
-		mainPage.getCalendar().removeCourse(course);
-		updateDisplay();
+//		DropboxSingleton.getInstance().deleteFile("/" + course.getCourseCode());
+//		mainPage.getCalendar().removeCourse(course);
+//		updateDisplay();
 	}
 	
 	public static void deleteEvent(Event event) {
