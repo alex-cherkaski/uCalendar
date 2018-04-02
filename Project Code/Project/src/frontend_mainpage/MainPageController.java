@@ -89,10 +89,18 @@ public class MainPageController {
 		
 		mainPage.getMenuBar().getExportCalendarItem().addActionListener(new ActionListener() {
 
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        exportCalendar();
-      }
+			@Override
+		    public void actionPerformed(ActionEvent e) {
+				exportCalendar();
+		    }
+		});
+		
+		mainPage.getMenuBar().getChangeAccessTokenItem().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				openChangeAccessTokenWindow();
+			}
 		});
 	}
 	
@@ -127,6 +135,17 @@ public class MainPageController {
 	  }
 	}
 	
+	public static void openChangeAccessTokenWindow() {
+		JFrame changeAccessTokenFrame = new JFrame();
+		JPanel panel = new AccessTokenWindowPanel(mainPage, changeAccessTokenFrame);
+		changeAccessTokenFrame.getContentPane().add(panel);
+		
+		changeAccessTokenFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		changeAccessTokenFrame.setSize(500, 200);
+		changeAccessTokenFrame.setResizable(false);
+		changeAccessTokenFrame.setLocationRelativeTo(null);
+		changeAccessTokenFrame.setVisible(true);
+	}
 	
 	public static void openEventCreationWindow() {
 		JFrame eventFrame = new JFrame();
@@ -228,11 +247,11 @@ public class MainPageController {
 		for(CourseButton button: mainPage.getCourseButtons()) {
 			if(button.getCourse().equals(course)) {
 				mainPage.remove(button);
-				
-				// Delete all notes from dropbox.
-				DropboxSingleton.getInstance().deleteFile("/" + course.getCourseCode());
 			}
 		}
+		
+		// Delete all notes from dropbox.
+		DropboxSingleton.getInstance().deleteFile("/" + course.getCourseCode());
 		mainPage.getCalendar().removeCourse(course);
 		updateDisplay();
 	}
