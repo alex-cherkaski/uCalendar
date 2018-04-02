@@ -45,6 +45,8 @@ We also we able to implement the Dropbox API into our application. In addition t
 
 We met our final goal of making the UI look more appealing and intuitive (see below). This was an important task for us to get done for this final iteration as a user has to be able to easily navigate through the app when using it.
 
+![alt-text](https://scontent.fykz1-1.fna.fbcdn.net/v/t35.0-12/29955448_1923475687664539_1012182279_o.png?_nc_cat=0&_nc_eui2=v1%3AAeFqPp_uZmxjhzrd__vJ_yWyufTM_qQ8yhrFeuUwtmJxmJNQHt8IMCjr6ROCOUAE38klaXDNcZyglOg5N0fetO-PK4_J-DSAFfbdvjEBC82nfw&oh=cacae0aa53a9fba4048b7f6a6b0d852e&oe=5AC4B61B)
+
 #### Goals and/or tasks that were planned but not met/completed:
 
 As this was the final iteration, we made a strong effort to accomplish all the goals we planned in the plan document. We were able to do this, so we did not have any goals/tasks from the plan.md we did not complete. However, if we had more time, we would have liked to add more functionality to the UI such as displaying conflicts in calendars. 
