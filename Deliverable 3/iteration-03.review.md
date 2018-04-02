@@ -13,6 +13,8 @@
 * Trello task board
   * The task board allowed us to know exactly which tasks we needed to complete and what stage of development each task was at
   * Allowed us to see and plan for future tasks
+  
+![alt text](https://i.imgur.com/iKMfRpE.jpg)
 
 * Working directly on the repository
   * Because we worked mostly on isolated parts of code and based on past experience didn't have many merge conflicts, this method of working allowed us to work efficiently and not have to worry about all the separate forks/branches.
